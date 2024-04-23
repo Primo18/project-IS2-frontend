@@ -8,15 +8,17 @@ Proyecto frontend en React para la asignatura de Ingeniería de Software 2 de la
 - react
 - react-router-dom
 
-## Instalación
-1. Clonar el repositorio
-2. Instalar las dependencias
+## Instalación y ejecución
+
+### Con npm
 ```bash
-npm install
+npm i # Instalar dependencias
+npm run dev # Iniciar el servidor de desarrollo
 ```
 
-# Uso
+### Con pnpm (más rápido que npm)
 ```bash
-npm start
+npm i -g pnpm # Instalar pnpm si no lo tienes
+pnpm i # Instalar dependencias
+pnpm dev # Iniciar el servidor de desarrollo
 ```
-
