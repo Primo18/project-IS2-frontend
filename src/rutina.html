@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rutinas de Gimnasio</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f7f7f7;
+    }
+
+    .container {
+      width: 80%;
+      margin: 20px auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid #ddd;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 4px;
+      border: none;
+      font-size: 16px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Rutinas de Entrenamiento</h1>
+    <table>
+      <tr>
+        <th>Nombre del Cliente</th>
+        <th>Entrenador</th>
+        <th>Rutina</th>
+        <th>Fecha</th>
+        <th>Detalle</th>
+      </tr>
+      <!-- Itera sobre tus rutinas aquí -->
+      <tr>
+        <td>John Doe</td>
+        <td>Jane Smith</td>
+        <td>A</td>
+        <td>2024-04-26</td>
+        <td><button class="button">Ver Detalle</button></td>
+      </tr>
+      <!-- Más entradas de rutinas -->
+    </table>
+  </div>
+
+</body>
+
+</html>
