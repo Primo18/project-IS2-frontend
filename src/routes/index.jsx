@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import { ClientRoutines } from "../pages";
-import { fetchCliente, fetchRutinasCliente } from "../services/fetch-clientes";
+import { fetchCliente } from "../services/fetch-clientes";
 
 export const router = createBrowserRouter([
     {
@@ -8,14 +8,13 @@ export const router = createBrowserRouter([
         element: <ClientRoutines />,
     },
     {
-        path: "/cliente/:id/rutinas",
+        path: "/cliente/:id/",
         element: <ClientRoutines />,
         loader: async ({ params }) => {
             const { id } = params;
             try {
                 const cliente = await fetchCliente(id);
-                const rutinas = await fetchRutinasCliente(id);
-                return { cliente, rutinas };
+                return cliente;
             } catch (error) {
                 console.error("Error loading data:", error);
                 return { cliente: null, rutinas: [] };  // Retorna valores predeterminados en caso de error

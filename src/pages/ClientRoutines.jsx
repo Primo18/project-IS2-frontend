@@ -1,25 +1,21 @@
 import { useLoaderData } from "react-router-dom";
 import { WorkoutRoutine } from '../components';
+import { Container, Heading, Text } from '@tremor/react';
 import './ClientRoutines.css';
 
-
 function ClientRoutines() {
-  // Usa useLoaderData para obtener los datos cargados
-  const { cliente, rutinas } = useLoaderData();
+  const cliente = useLoaderData();
 
   return (
-    <>
-      <main className="container">
-        <h1>Rutinas de Entrenamiento</h1>
-        <h2>Nombre: {cliente.nombre}</h2>
-        <h2>Suscripción: {cliente.suscripcion}</h2>
-        <h2>Telefóno: {cliente.telefono}</h2>
+    <Container>
+      <Heading level={1}>Rutinas de Entrenamiento para {cliente.nombre}</Heading>
+      <Text size="lg">Suscripción: {cliente.suscripcion}</Text>
+      <Text size="lg">Teléfono: {cliente.telefono}</Text>
 
-        {rutinas.map((rutina) => (
-          <WorkoutRoutine key={rutina.id_rutina} rutina={rutina} />
-        ))}
-      </main >
-    </>
+      {cliente.rutinas.map((rutina) => (
+        <WorkoutRoutine key={rutina.id_rutina} rutina={rutina} />
+      ))}
+    </Container>
   );
 }
 

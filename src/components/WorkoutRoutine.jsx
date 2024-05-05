@@ -1,15 +1,25 @@
 import PropTypes from 'prop-types';
-import './WorkoutRoutine.css';
+import { Card, List, ListItem, Text, Title } from '@tremor/react';
+
 
 export const WorkoutRoutine = ({ rutina }) => {
     return (
-        <div className="container">
-            <div className="rutina-header">
-                <h2>{rutina.clasificacion}</h2> {/* Mostrar el tipo de rutina */}
-            </div>
-            {/* Ejercicios aquí - Asumiendo que hay datos de ejercicios para mostrar */}
-            {/* Aquí es donde iterarías sobre los ejercicios de la rutina si están disponibles */}
-        </div>
+        <Card shadow="md" interactive>
+            <Card.Body>
+                <Title order={3}>{rutina.clasificacion}</Title>
+                <List as="ol">
+                    {rutina.ejercicios.map((ejercicio, index) => (
+                        <ListItem key={index}>
+                            <Text strong>{ejercicio.nombre}</Text>
+                            <Text>Descripción: {ejercicio.descripcion}</Text>
+                            <Text>Clasificación: {ejercicio.clasificacion}</Text>
+                            <Text>Repeticiones: {ejercicio.repeticiones}</Text>
+                            <Text>Series: {ejercicio.series}</Text>
+                        </ListItem>
+                    ))}
+                </List>
+            </Card.Body>
+        </Card>
     );
 };
 
