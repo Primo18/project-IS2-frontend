@@ -1,9 +1,9 @@
-import { createHashRouter } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import { ClientRoutines } from "../pages";
 import { fetchCliente } from "../services/fetch-clientes";
 import { Home } from "../pages";
 
-export const router = createHashRouter([
+export const router = createBrowserRouter([
     {
         path: "/",
         element: <Home />,
