@@ -1,4 +1,5 @@
 import ClientRoutines from "./ClientRoutines";
+import Home from "./Home";
 
 
-export { ClientRoutines };
+export { ClientRoutines, Home };
