@@ -18,12 +18,11 @@ function Add() {
     const [endTime, setEndTime] = useState(null);
     const [message, setMessage] = useState('');
     const location = useLocation();
-    const searchParams = new URLSearchParams(location.search);
-
     useEffect(() => {
+        const searchParams = new URLSearchParams(location.search);
         const dateParam = searchParams.get('date');
         setSelectedDate(dateParam);
-    }, [searchParams]);
+    }, [location.search]);
 
     const handleChange = value => {
         setInstructor(value);

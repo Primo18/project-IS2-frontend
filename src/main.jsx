@@ -9,17 +9,19 @@ import Home from './pages/Home.jsx'
 import Usuarios from './pages/Usuarios.jsx'
 import Info from './pages/Info.jsx'
 
+
 const Layout = () => {
   return (
     <div>
-      <div className="w-full h-screen bg-gray-200
-        object-cover flex items-center">
+      <div className="w-full h-screen bg-gray-200 object-cover flex items-center">
         <SideBar />
       </div>
       <Outlet />
     </div>
   );
 };
+
+export default Layout;
 
 const router = createBrowserRouter([{
   path: '/',
