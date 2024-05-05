@@ -1,4 +1,3 @@
-import React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 
@@ -23,21 +22,21 @@ const rows = [
 ];
 
 function Usuarios() {
-    return (
-      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        <Box>
-          <div style={{ height: 350, width: '100%' }} className="custom-table ">
-            <DataGrid
-              rows={rows}
-              columns={columns}
-              pageSize={5}
-              checkboxSelection
-              disableRowSelectionOnClick
-            />
-          </div>
-        </Box>
-      </div>
-    );
-  }
-  
-  export default Usuarios;
+  return (
+    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+      <Box>
+        <div style={{ height: 350, width: '100%' }} className="custom-table ">
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            pageSize={5}
+            checkboxSelection
+            disableRowSelectionOnClick
+          />
+        </div>
+      </Box>
+    </div>
+  );
+}
+
+export default Usuarios;
