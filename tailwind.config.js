@@ -1,18 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  mode: 'jit',
-  content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-tailwindcss-select/dist/index.esm.js",
+  ],
   theme: {
-    extend: {
-
-    },
-  },
-  variants: {
-    extend: {
-      fontFamily: {
-        'oswald': ['Oswald', 'sans-serif'],
-      },
-    },
+    extend: {},
   },
   plugins: [],
-};
+}
