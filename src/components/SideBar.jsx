@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import DataSlider from './DataSlider.jsx'
 
-const SideBar = () => {
+export const SideBar = () => {
     const [toggle, setToggle] = useState(true);
 
     return (
@@ -17,4 +17,4 @@ const SideBar = () => {
     );
 }
 
-export default SideBar;
+
