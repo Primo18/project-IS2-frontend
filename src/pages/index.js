@@ -6,5 +6,6 @@ import Add from "./Add";
 import Usuarios from "./Usuarios";
 import Info from "./Info";
 import DashboardCliente from "./DashboardCliente";
+import RegistroRutinas from "./RegistroRutinas";
 
-export { ClientRoutines, Home, Calendario, Horas, Add, Usuarios, Info, DashboardCliente};
+export { ClientRoutines, Home, Calendario, Horas, Add, Usuarios, Info, DashboardCliente, RegistroRutinas};

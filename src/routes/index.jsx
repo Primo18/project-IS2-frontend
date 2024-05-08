@@ -3,7 +3,7 @@ import { ClientRoutines } from "../pages";
 import { fetchCliente } from "../services/fetch-clientes";
 import { Layout } from "../components/Layout";
 import { Home, Calendario, Horas, Add, Usuarios, Info } from "../pages";
-import { DashboardCliente } from "../pages";
+import { DashboardCliente, RegistroRutinas } from "../pages";
 
 export const router = createBrowserRouter([
     {
@@ -14,28 +14,24 @@ export const router = createBrowserRouter([
             element: <Home />
         },
         {
-            path: "/Calendario",
+            path: "/calendario",
             element: <Calendario />
         },
         {
-            path: "/Horas",
+            path: "/horas",
             element: <Horas />
         },
         {
-            path: "/Add",
+            path: "/add",
             element: <Add />
         },
         {
-            path: "/Usuarios",
+            path: "/usuarios",
             element: <Usuarios />
         },
         {
-            path: "/Info",
+            path: "/info",
             element: <Info />
-        },
-        {
-            path: "/DashboardCliente",
-            element: <DashboardCliente />
         },
 
         ],
@@ -56,6 +52,12 @@ export const router = createBrowserRouter([
         fallback: () => <h1>Cargando...</h1>,
         ErrorBoundary: () => <h1>Ocurrió un error al cargar las rutinas del cliente</h1>,
     },
-
-    
+    {
+        path: "/dashboard",
+        element: <DashboardCliente />
+    },
+    {
+        path: "/registro-rutinas",
+        element: <RegistroRutinas />
+    }
 ]);
