@@ -61,8 +61,19 @@ function Home() {
                   Página del Cliente
                 </Button>
               </Link>
+              <a href="https://project-is2-backend-production.up.railway.app/evaluacion/createEvaluacion" style={{ marginLeft: 10, textDecoration: 'none' }}>
+                <Button variant="contained" color="secondary">
+                  Crear Evaluación
+                </Button>
+              </a>
+              <a href="https://project-is2-backend-production.up.railway.app/rutina/createRutina" style={{ marginLeft: 10, textDecoration: 'none' }}>
+                <Button variant="contained" color="secondary">
+                  Crear Rutina
+                </Button>
+              </a>
             </Item>
           </Grid>
+
           <Grid item xs={12}>
             <Item>
               <h3 className='DescripcionHome'>Presentación del Home de la solución web presentada, aquí el administrador
