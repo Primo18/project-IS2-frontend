@@ -14,23 +14,23 @@ export const router = createBrowserRouter([
             element: <Home />
         },
         {
-            path: "/Calendario",
+            path: "/calendario",
             element: <Calendario />
         },
         {
-            path: "/Horas",
+            path: "/horas",
             element: <Horas />
         },
         {
-            path: "/Add",
+            path: "/add",
             element: <Add />
         },
         {
-            path: "/Usuarios",
+            path: "/usuarios",
             element: <Usuarios />
         },
         {
-            path: "/Info",
+            path: "/info",
             element: <Info />
         },
 
@@ -53,11 +53,11 @@ export const router = createBrowserRouter([
         ErrorBoundary: () => <h1>Ocurrió un error al cargar las rutinas del cliente</h1>,
     },
     {
-        path: "/DashboardCliente",
+        path: "/dashboard",
         element: <DashboardCliente />
     },
     {
-        path: "/RegistroRutinas",
+        path: "/registro-rutinas",
         element: <RegistroRutinas />
     }
 ]);

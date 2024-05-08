@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -9,6 +9,7 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import catImage from '../assets/gato.png';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -38,7 +39,7 @@ function Home() {
             <Item>
               <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
                 {/* Redondear las esquinas de la imagen */}
-                <img src="./src/assets/gato.png" alt="Descripción de la imagen" style={{ maxWidth: '100%', maxHeight: '100%', borderRadius: '10px' }} />
+                <img src={catImage} alt="Descripción de la imagen" style={{ maxWidth: '100%', maxHeight: '100%', borderRadius: '10px' }} />
               </div>
             </Item>
           </Grid>
@@ -53,7 +54,7 @@ function Home() {
           <Grid item xs={12}>
             <Item>
               <h3 className='DescripcionHome'>Presentación del Home de la solución web presentada, aquí el administrador
-              en un futuro podrá conocer diversos ambitos importantes del gimnasio.
+                en un futuro podrá conocer diversos ambitos importantes del gimnasio.
               </h3>
             </Item>
           </Grid>
