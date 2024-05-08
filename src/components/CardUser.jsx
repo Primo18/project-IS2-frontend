@@ -1,6 +1,7 @@
-import { Card, Metric, Text } from '@tremor/react';
+import { Card } from '@tremor/react';
+import PropTypes from 'prop-types';
 
-export function CardUser({title,info}) {
+export function CardUser({ title, info }) {
   return (
     <Card
       className="mx-auto max-w-xs"
@@ -12,3 +13,8 @@ export function CardUser({title,info}) {
     </Card>
   );
 }
+
+CardUser.propTypes = {
+  title: PropTypes.string.isRequired,
+  info: PropTypes.string.isRequired,
+};

@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -26,41 +27,51 @@ function Home() {
     setOpen(false);
   };
 
-  useEffect(() => {
-    setOpen(true); // Abre el pop-up cuando se monta la página Home
-  }, []); // El segundo argumento, una matriz vacía, garantiza que este efecto solo se ejecute una vez
 
   return (
     <div className="fixed left-1/2 transform -translate-x-1/2 -translate-y-1/2">
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={4}>
-          {/* Grid para la imagen */}
           <Grid item xs={12} md={6}>
             <Item>
               <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                {/* Redondear las esquinas de la imagen */}
                 <img src={catImage} alt="Descripción de la imagen" style={{ maxWidth: '100%', maxHeight: '100%', borderRadius: '10px' }} />
               </div>
             </Item>
           </Grid>
-          {/* Grid para el título */}
           <Grid item xs={12} md={6}>
             <Item>
               <h2 className='TituloHome'>Gimnasio Gato Mamadísimo</h2>
             </Item>
           </Grid>
-
-          {/* Otro cuadrado grande */}
+          <Grid item xs={12}>
+            <Item>
+              <Link to="/dashboard" style={{ textDecoration: 'none' }}>
+                <Button variant="contained" color="secondary">
+                  Dashboard
+                </Button>
+              </Link>
+              <Link to="/registro-rutinas" style={{ marginLeft: 10, textDecoration: 'none' }}>
+                <Button variant="contained" color="secondary">
+                  Registro de Rutinas
+                </Button>
+              </Link>
+              <Link to="/cliente/41" style={{ marginLeft: 10, textDecoration: 'none' }}>
+                <Button variant="contained" color="secondary">
+                  Página del Cliente
+                </Button>
+              </Link>
+            </Item>
+          </Grid>
           <Grid item xs={12}>
             <Item>
               <h3 className='DescripcionHome'>Presentación del Home de la solución web presentada, aquí el administrador
-                en un futuro podrá conocer diversos ambitos importantes del gimnasio.
+                en un futuro podrá conocer diversos ámbitos importantes del gimnasio.
               </h3>
             </Item>
           </Grid>
         </Grid>
       </Box>
-
       <div className="h-screen flex justify-center items-center">
         <div>
           <Dialog

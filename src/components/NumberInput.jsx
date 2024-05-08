@@ -1,5 +1,5 @@
 import { NumberInput } from '@tremor/react';
-import React from 'react'; // Importa React para utilizar componentes de React
+import PropTypes from 'prop-types';
 
 export function NumberInputHero({ value, onChange }) {
   const handleInputChange = (event) => {
@@ -19,3 +19,8 @@ export function NumberInputHero({ value, onChange }) {
     </div>
   );
 }
+
+NumberInputHero.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};

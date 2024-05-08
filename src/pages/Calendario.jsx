@@ -5,7 +5,7 @@ import 'react-calendar/dist/Calendar.css';
 
 function Calendario() {
     const [date, setDate] = useState(new Date());
-    const [selectedDate, setSelectedDate] = useState(null); // Aquí era el error, arreglado
+    const [setSelectedDate] = useState(null); // Aquí era el error, arreglado
 
     const onChange = (newDate) => {
         setDate(newDate);
