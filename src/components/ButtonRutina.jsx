@@ -1,6 +1,6 @@
 // import { RiArrowRightLine, RiSearch2Line } from '@remixicon/react';
 import { Button } from '@tremor/react';
-import { props } from 'prop-types';
+import PropTypes from 'prop-types';
 
 
 export const ButtonHero = ({ onClick, buttonName, color }) => (
@@ -11,7 +11,8 @@ export const ButtonHero = ({ onClick, buttonName, color }) => (
 
 
 ButtonHero.propTypes = {
-  onClick: props.func,
-  buttonName: props.string,
-  color: props.string
-}
+  onClick: PropTypes.func.isRequired,
+  buttonName: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired
+};
+
