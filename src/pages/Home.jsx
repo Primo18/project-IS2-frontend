@@ -46,33 +46,39 @@ function Home() {
           </Grid>
           <Grid item xs={12}>
             <Item>
-              <Link to="/dashboard" style={{ textDecoration: 'none' }}>
+              <Link to="/dashboard" style={{ textDecoration: 'none', marginRight: 10 }}>
                 <Button variant="contained" color="secondary">
                   Dashboard
                 </Button>
               </Link>
-              <Link to="/registro-rutinas" style={{ marginLeft: 10, textDecoration: 'none' }}>
+              <Link to="/registro-rutinas" style={{ textDecoration: 'none', marginRight: 10 }}>
                 <Button variant="contained" color="secondary">
                   Registro de Rutinas
                 </Button>
               </Link>
-              <Link to="/cliente/41" style={{ marginLeft: 10, textDecoration: 'none' }}>
+              <Link to="/cliente/41" style={{ textDecoration: 'none', marginRight: 10 }}>
                 <Button variant="contained" color="secondary">
                   Página del Cliente
                 </Button>
               </Link>
-              <a href="https://project-is2-backend-production.up.railway.app/evaluacion/createEvaluacion" style={{ marginLeft: 10, textDecoration: 'none' }}>
+              <Link to="/login" style={{ textDecoration: 'none', marginRight: 10 }}>
+                <Button variant="contained" color="secondary">
+                  Login
+                </Button>
+              </Link>
+              <a href="https://project-is2-backend-production.up.railway.app/evaluacion/createEvaluacion" style={{ textDecoration: 'none', marginRight: 10 }}>
                 <Button variant="contained" color="secondary">
                   Crear Evaluación
                 </Button>
               </a>
-              <a href="https://project-is2-backend-production.up.railway.app/rutina/createRutina" style={{ marginLeft: 10, textDecoration: 'none' }}>
+              <a href="https://project-is2-backend-production.up.railway.app/rutina/createRutina" style={{ textDecoration: 'none' }}>
                 <Button variant="contained" color="secondary">
                   Crear Rutina
                 </Button>
               </a>
             </Item>
           </Grid>
+
 
           <Grid item xs={12}>
             <Item>

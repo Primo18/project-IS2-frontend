@@ -2,8 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { ClientRoutines } from "../pages";
 import { fetchCliente } from "../services/fetch-clientes";
 import { Layout } from "../components/Layout";
-import { Home, Calendario, Horas, Add, Usuarios, Info } from "../pages";
-import { DashboardCliente, RegistroRutinas } from "../pages";
+import { Home, Calendario, Horas, Add, Usuarios, LoginPage, DashboardCliente, RegistroRutinas } from "../pages";
 
 export const router = createBrowserRouter([
     {
@@ -29,11 +28,6 @@ export const router = createBrowserRouter([
             path: "/usuarios",
             element: <Usuarios />
         },
-        {
-            path: "/info",
-            element: <Info />
-        },
-
         ],
     },
     {
@@ -59,5 +53,9 @@ export const router = createBrowserRouter([
     {
         path: "/registro-rutinas",
         element: <RegistroRutinas />
+    },
+    {
+        path: '/login',
+        element: <LoginPage />
     }
 ]);
