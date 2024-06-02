@@ -1,6 +1,7 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import SideBar from './SideBar';
+import AdminSideBar from './AdminSideBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -14,25 +15,44 @@ const darkTheme = createTheme({
 
 const drawerWidth = 240;
 
+const sideBarMap = {
+  '/HomeAdmin': <AdminSideBar />,
+  '/ClientesAdmin': <AdminSideBar />,
+  '/MaquinasAdmin': <AdminSideBar />,
+  '/RutinasAdmin': <AdminSideBar />,
+  '/EntrenadoresAdmin': <AdminSideBar />,
+  // Se pueden añadir aquí más paginas si es necesario, aunque si es un subpath no se requiere.
+  // Tambien sirve para añadir más SideBars
+};
 
 export const Layout = () => {
+  const location = useLocation();
+
+  // Determina SideBar como el predeterminado
+  const getSideBar = () => {
+    for (const path in sideBarMap) {
+      if (location.pathname.startsWith(path)) {
+        return sideBarMap[path];
+      }
+    }
+    return <SideBar />; 
+  };
+
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <Box sx={{ display: 'flex' }}>
-      <SideBar />
-      <Box
-        component="main"
-        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
-      >
-        <Toolbar /> {/* Add this to account for the height of the AppBar */}
-        <Outlet />
+        {getSideBar()}
+        <Box
+          component="main"
+          sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
+        >
+          <Toolbar />
+          <Outlet />
+        </Box>
       </Box>
-    </Box>
     </ThemeProvider>
-    
   );
 };
 
 export default Layout;
-

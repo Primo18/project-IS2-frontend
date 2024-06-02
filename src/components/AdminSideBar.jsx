@@ -65,7 +65,8 @@ const BackgroundImage = styled('div')({
   width: '100%',
 });
 
-function SideBar(props) {
+function AdminSideBar
+(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
@@ -97,10 +98,11 @@ function SideBar(props) {
 
       <List>
         {[
-          { text: 'HOME', icon: <HomeIcon />, link: '/HomeEntrenador' },
-          { text: 'CLIENTES', icon: <PersonIcon />, link: '/Clientes' },
-          { text: 'MÁQUINAS', icon: <MaquinaIcon />, link: '/Maquinas' },
-          { text: 'RUTINAS', icon: <RutinaIcon />, link: '/Rutinas' },
+          { text: 'HOME', icon: <HomeIcon />, link: '/HomeAdmin' },
+          { text: 'CLIENTES', icon: <PersonIcon />, link: '/ClientesAdmin' },
+          { text: 'COACHES', icon: <PersonIcon />, link: '/EntrenadoresAdmin' },
+          { text: 'MÁQUINAS', icon: <MaquinaIcon />, link: '/MaquinasAdmin' },
+          { text: 'RUTINAS', icon: <RutinaIcon />, link: '/RutinasAdmin' },
         ].map((item, index) => (
           <ListItem key={item.text} disablePadding>
             <BottomButton component={Link} to={item.link}>
@@ -191,8 +193,10 @@ function SideBar(props) {
   );
 }
 
-SideBar.propTypes = {
+AdminSideBar
+.propTypes = {
   window: PropTypes.func,
 };
 
-export default SideBar;
+export default AdminSideBar
+;
