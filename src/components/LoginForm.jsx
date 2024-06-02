@@ -1,12 +1,39 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { login } from '../services/authService'; // Importar el servicio de autenticación
+
 export const LoginForm = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const result = await login(email, password);
+            if (result.success) {
+                setMessage('Login successful!');
+                navigate('/dashboard'); // Redirige al usuario a la página del dashboard
+            } else {
+                setMessage('Login failed: ' + result.message);
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+            setMessage('An error occurred. Please try again.');
+        }
+    };
+
     return (
-        <form action="/auth/api/login" method="POST" className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
             <div className="form-group">
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
                 <input
                     type="email"
                     id="email"
                     name="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
@@ -17,6 +44,8 @@ export const LoginForm = () => {
                     type="password"
                     id="password"
                     name="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
@@ -27,6 +56,7 @@ export const LoginForm = () => {
             >
                 Login
             </button>
+            {message && <p>{message}</p>}
         </form>
     );
 };
