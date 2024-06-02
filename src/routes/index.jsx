@@ -1,61 +1,36 @@
 import { createBrowserRouter } from "react-router-dom";
-import { ClientRoutines } from "../pages";
-import { fetchCliente } from "../services/fetch-clientes";
 import { Layout } from "../components/Layout";
-import { Home, Calendario, Horas, Add, Usuarios, LoginPage, DashboardCliente, RegistroRutinas } from "../pages";
+import HomeEntrenador from "../pages/HomeEntrenador";
+import HomeAdmin from "../pages/HomeAdmin";
+import Clientes from "../pages/Clientes"
+import Maquinas from "../pages/Maquinas"
+import Rutinas from "../pages/Rutinas"
 
 export const router = createBrowserRouter([
     {
         path: '/',
         element: <Layout />,
+
         children: [{
             path: "/",
-            element: <Home />
+            element: <HomeAdmin />
         },
         {
-            path: "/calendario",
-            element: <Calendario />
+            path: "/HomeEntrenador",
+            element: <HomeEntrenador />
         },
         {
-            path: "/horas",
-            element: <Horas />
+            path: "/Clientes",
+            element: <Clientes />
         },
         {
-            path: "/add",
-            element: <Add />
+            path: "/Maquinas",
+            element: <Maquinas />
         },
         {
-            path: "/usuarios",
-            element: <Usuarios />
+            path: "/Rutinas",
+            element: <Rutinas />
         },
-        ],
-    },
-    {
-        path: "/cliente/:id/",
-        element: <ClientRoutines />,
-        loader: async ({ params }) => {
-            const { id } = params;
-            try {
-                const cliente = await fetchCliente(id);
-                return cliente;
-            } catch (error) {
-                console.error("Error loading data:", error);
-                return { cliente: null, rutinas: [] };  // Retorna valores predeterminados en caso de error
-            }
-        },
-        fallback: () => <h1>Cargando...</h1>,
-        ErrorBoundary: () => <h1>Ocurrió un error al cargar las rutinas del cliente</h1>,
-    },
-    {
-        path: "/dashboard",
-        element: <DashboardCliente />
-    },
-    {
-        path: "/registro-rutinas",
-        element: <RegistroRutinas />
-    },
-    {
-        path: '/login',
-        element: <LoginPage />
+        ]
     }
 ]);
