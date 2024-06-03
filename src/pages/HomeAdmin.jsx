@@ -11,7 +11,7 @@ const HomeAdmin = () => {
   return (
     <Box sx={{ p: 3 }}>
       <Typography variant="h4" gutterBottom>
-        Dashboard
+        Dashboard Admin
       </Typography>
 
       <Grid container spacing={3}>
