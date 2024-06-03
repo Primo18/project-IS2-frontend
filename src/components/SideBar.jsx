@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Typography from '@mui/material/Typography';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,9 +18,10 @@ import RutinaIcon from '@mui/icons-material/Route';
 import PersonIcon from '@mui/icons-material/Person';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import bannerImage from '../assets/banner.png';
+import profileImage from '../assets/Profile.png';
+import Avatar from '@mui/material/Avatar';
 
 const drawerWidth = 200;
 
@@ -34,16 +36,36 @@ const CustomDrawer = styled(Drawer)(({ theme }) => ({
 }));
 
 const LogoCircle = styled('div')(({ theme }) => ({
-  width: 80,
-  height: 80,
+  width: 90,
+  height: 90,
   borderRadius: '50%',
-  backgroundColor: '#fff',
+  backgroundColor: '#EC9C00',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   margin: '2px auto',
   boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
 }));
+
+const ProfileImage = styled('img')(({ theme }) => ({
+  width: 85,
+  height: 85,
+  borderRadius: '50%',
+  objectFit: 'cover',
+}));
+
+const NombreButton = styled(ListItemButton)(({ theme }) => ({
+  backgroundColor: '#FFA102',
+  borderRadius: '20px',
+  margin: '10px 14px',
+  width: 'auto',
+  height: '50px',
+}));
+
+const NombreListItemText = styled(ListItemText)({
+  textAlign: 'center',
+  fontFamily: 'Titillium Web',
+});
 
 const BottomButton = styled(ListItemButton)(({ theme }) => ({
   backgroundColor: '#FFA800',
@@ -54,21 +76,17 @@ const BottomButton = styled(ListItemButton)(({ theme }) => ({
   '& .MuiListItemText-root': {
     textAlign: 'center',
   },
+  '&.selected': {
+    backgroundColor: '#BA7B00', // Color diferente para el botón seleccionado
+  },
 }));
-
-const BackgroundImage = styled('div')({
-  backgroundImage: `url('url_de_tu_imagen')`, // Reemplaza 'url_de_tu_imagen' con la URL de tu imagen
-  backgroundSize: 'cover',
-  backgroundRepeat: 'no-repeat',
-  backgroundPosition: 'center',
-  height: '100%',
-  width: '100%',
-});
 
 function SideBar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
+
+  const location = useLocation();
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -89,25 +107,32 @@ function SideBar(props) {
     <div>
       <Toolbar />
       <LogoCircle sx={{ mt: '-5px', mb: '5px' }}>
-        <Typography variant="h6">Logo</Typography>
+        <ProfileImage src={profileImage} alt="Profile" />
       </LogoCircle>
-      <Typography variant="body1" align="center" gutterBottom>
-        Nombre Apellido
-      </Typography>
+      <NombreButton component={Link} to="/profile" onClick={handleDrawerClose}>
+        <NombreListItemText disableTypography primary=
+          {<Typography variant="subtitle2" style={{ color: '#000000' }}>Juanito Entrenador</Typography>}
+        />
+      </NombreButton>
 
+  
       <List>
         {[
-          { text: 'HOME', icon: <HomeIcon />, link: '/HomeEntrenador' },
-          { text: 'CLIENTES', icon: <PersonIcon />, link: '/Clientes' },
-          { text: 'MÁQUINAS', icon: <MaquinaIcon />, link: '/Maquinas' },
-          { text: 'RUTINAS', icon: <RutinaIcon />, link: '/Rutinas' },
+          { text: 'HOME', icon: <HomeIcon sx={{ color: "#000000" }} />, link: '/HomeEntrenador' },
+          { text: 'CLIENTES', icon: <PersonIcon sx={{ color: "#000000" }} />, link: '/Clientes' },
+          { text: 'MÁQUINAS', icon: <MaquinaIcon sx={{ color: "#000000" }} />, link: '/Maquinas' },
+          { text: 'RUTINAS', icon: <RutinaIcon sx={{ color: "#000000" }} />, link: '/Rutinas' },
         ].map((item, index) => (
           <ListItem key={item.text} disablePadding>
-            <BottomButton component={Link} to={item.link}>
+            <BottomButton
+              component={Link}
+              to={item.link}
+              className={location.pathname === item.link ? 'selected' : ''}
+            >
               <ListItemIcon>
                 {item.icon}
               </ListItemIcon>
-              <ListItemText primary={item.text} sx={{ color: 'black' }} />
+              <ListItemText primary={item.text} sx={{ color: 'black',}} />
             </BottomButton>
           </ListItem>
         ))}
@@ -138,7 +163,9 @@ function SideBar(props) {
             onClick={handleDrawerToggle}
             sx={{ mr: 2, display: { sm: 'none' } }}
           >
-            <MenuIcon />
+            <Avatar sx={{ bgcolor: '#EC9C00' }} >
+              <MenuIcon />
+            </Avatar>
           </IconButton>
         </Toolbar>
       </AppBar>
@@ -148,8 +175,8 @@ function SideBar(props) {
           sx={{
             width: { sm: drawerWidth },
             flexShrink: { sm: 0 },
-            flexGrow: 1, // Para que el Drawer ocupe todo el espacio vertical
-            overflowY: 'auto', // Añadir scroll si es necesario
+            flexGrow: 1,
+            overflowY: 'auto',
           }}
           aria-label="mailbox folders"
         >
@@ -165,7 +192,7 @@ function SideBar(props) {
               '& .MuiDrawer-paper': {
                 boxSizing: 'border-box',
                 width: drawerWidth,
-                mt: '110px', // Margen superior Drawer en móviles
+                mt: '110px',
               },
             }}
           >
@@ -178,7 +205,7 @@ function SideBar(props) {
               '& .MuiDrawer-paper': {
                 boxSizing: 'border-box',
                 width: drawerWidth,
-                marginTop: '110px', // Ajuste del margen superior para la Toolbar en escritorio
+                marginTop: '110px',
               },
             }}
             open

@@ -11,6 +11,25 @@ const darkTheme = createTheme({
   palette: {
     mode: 'dark',
   },
+  typography: {
+    fontFamily: [
+      'Baloo Tammudu 2', // Fuente principal
+      'Inter Tight', // Segunda fuente
+      'Titillium Web', // Tercera fuente
+      'Arial', // Fallback genérico
+      'sans-serif', // Fallback genérico
+    ].join(','),
+    subtitle2: {
+      fontWeight: 600,
+      fontSize: 17
+    },
+    body1: {
+      fontWeight: 600,
+    },
+    body2: {
+      fontWeight: 400,
+    }
+  },
 });
 
 const drawerWidth = 240;
