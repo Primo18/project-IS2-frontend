@@ -18,7 +18,7 @@ import swal from 'sweetalert2';
 dayjs.locale('es');
 
 async function buscarUsuario(id) {
-    const response = await fetch(`http://localhost:8080/api/clientes/${id}`);
+    const response = await fetch(`https://project-is2-backend-production.up.railway.app/api/clientes/${id}`);
     console.log(id);
     const data = await response.json();
     console.log(data);
