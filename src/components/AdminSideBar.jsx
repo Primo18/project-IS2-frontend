@@ -17,10 +17,11 @@ import MaquinaIcon from '@mui/icons-material/FitnessCenter';
 import RutinaIcon from '@mui/icons-material/Route';
 import PersonIcon from '@mui/icons-material/Person';
 import MenuIcon from '@mui/icons-material/Menu';
+import CoachIcon from '@mui/icons-material/Sports';
 import Toolbar from '@mui/material/Toolbar';
 import { styled } from '@mui/material/styles';
 import bannerImage from '../assets/banner.png';
-import profileImage from '../assets/Profile.png';
+import profileImage from '../assets/ProfileAdmin.png';
 import Avatar from '@mui/material/Avatar';
 
 const drawerWidth = 200;
@@ -111,18 +112,19 @@ function SideBar(props) {
       </LogoCircle>
       <NombreButton component={Link} to="/profile" onClick={handleDrawerClose}>
         <NombreListItemText disableTypography primary=
-          {<Typography variant="subtitle2" style={{ color: '#000000' }}>Juanito Entrenador</Typography>}
+          {<Typography variant="subtitle2" style={{ color: '#000000' }}>Juanito Admin</Typography>}
         />
       </NombreButton>
 
   
       <List>
-        {[
-          { text: 'HOME', icon: <HomeIcon sx={{ color: "#000000" }} />, link: '/HomeEntrenador' },
-          { text: 'CLIENTES', icon: <PersonIcon sx={{ color: "#000000" }} />, link: '/Clientes' },
-          { text: 'MÁQUINAS', icon: <MaquinaIcon sx={{ color: "#000000" }} />, link: '/Maquinas' },
-          { text: 'RUTINAS', icon: <RutinaIcon sx={{ color: "#000000" }} />, link: '/Rutinas' },
-        ].map((item, index) => (
+      {[
+        { text: 'HOME', icon: <HomeIcon sx={{ color: "#000000" }} />, link: '/HomeAdmin' },
+        { text: 'CLIENTES', icon: <PersonIcon sx={{ color: "#000000" }} />, link: '/ClientesAdmin' },
+        { text: 'COACHES', icon: <CoachIcon sx={{ color: "#000000" }} />, link: '/EntrenadoresAdmin' },
+        { text: 'MÁQUINAS', icon: <MaquinaIcon sx={{ color: "#000000" }} />, link: '/MaquinasAdmin' },
+        { text: 'RUTINAS', icon: <RutinaIcon sx={{ color: "#000000" }} />, link: '/RutinasAdmin' },
+      ].map((item, index) => (
           <ListItem key={item.text} disablePadding>
             <BottomButton
               component={Link}
@@ -223,3 +225,5 @@ SideBar.propTypes = {
 };
 
 export default SideBar;
+
+
