@@ -1,14 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
-import { Layout } from "../components/Layout";
-import HomeEntrenador from "../pages/HomeEntrenador";
-import HomeAdmin from "../pages/HomeAdmin";
+import { Layout } from "../components/Layout/Layout";
+import Home from "../pages/Home";
 import Clientes from "../pages/Clientes"
 import Maquinas from "../pages/Maquinas"
 import Rutinas from "../pages/Rutinas"
-import ClientesAdmin from "../pages/ClientesAdmin"
-import MaquinasAdmin from "../pages/MaquinasAdmin"
-import RutinasAdmin from "../pages/RutinasAdmin"
-import EntrenadoresAdmin from "../pages/EntrenadoresAdmin"
 
 export const router = createBrowserRouter([
     {
@@ -16,12 +11,8 @@ export const router = createBrowserRouter([
         element: <Layout />,
 
         children: [{
-            path: "/HomeAdmin",
-            element: <HomeAdmin />
-        },
-        {
-            path: "/HomeEntrenador",
-            element: <HomeEntrenador />
+            path: "/Home",
+            element: <Home />
         },
         {
             path: "/Clientes",
@@ -34,23 +25,7 @@ export const router = createBrowserRouter([
         {
             path: "/Rutinas",
             element: <Rutinas />
-        },
-        {
-            path: "/ClientesAdmin",
-            element: <ClientesAdmin />
-        },
-        {
-            path: "/MaquinasAdmin",
-            element: <MaquinasAdmin />
-        },
-        {
-            path: "/RutinasAdmin",
-            element: <RutinasAdmin />
-        },
-        {
-            path: "/EntrenadoresAdmin",
-            element: <EntrenadoresAdmin />
-        },
+        }
         ]
     }
 ]);

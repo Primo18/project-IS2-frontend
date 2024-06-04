@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { ProSidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
 import { styled } from '@mui/material/styles';
-import bannerImage from '../assets/banner.png';
-import profileImage from '../assets/Profile.png';
+import bannerImage from '../../assets/banner.png';
+import profileImage from '../../assets/Profile.png';
 import HomeIcon from '@mui/icons-material/Home';
 import MaquinaIcon from '@mui/icons-material/FitnessCenter';
 import RutinaIcon from '@mui/icons-material/Route';
@@ -121,17 +121,17 @@ function SideBar(props) {
                 </TextContainer>
               </MenuItem>
             )}
-            <MenuItem icon={<HomeIcon />} active={location.pathname === '/HomeAdmin'}>
-              <Link to="/HomeAdmin">Home</Link>
+            <MenuItem icon={<HomeIcon />} active={location.pathname === '/Home'}>
+              <Link to="/Home">Home</Link>
             </MenuItem>
-            <MenuItem icon={<PersonIcon />} active={location.pathname === '/ClientesAdmin'}>
-              <Link to="/ClientesAdmin">Clientes</Link>
+            <MenuItem icon={<PersonIcon />} active={location.pathname === '/Clientes'}>
+              <Link to="/Clientes">Clientes</Link>
             </MenuItem>
-            <MenuItem icon={<MaquinaIcon />} active={location.pathname === '/MaquinasAdmin'}>
-              <Link to="/MaquinasAdmin">Máquinas</Link>
+            <MenuItem icon={<MaquinaIcon />} active={location.pathname === '/Maquinas'}>
+              <Link to="/Maquinas">Máquinas</Link>
             </MenuItem>
-            <MenuItem icon={<RutinaIcon />} active={location.pathname === '/RutinasAdmin'}>
-              <Link to="/RutinasAdmin">Rutinas</Link>
+            <MenuItem icon={<RutinaIcon />} active={location.pathname === '/Rutinas'}>
+              <Link to="/Rutinas">Rutinas</Link>
             </MenuItem>
           </Menu>
         </StyledProSidebar>

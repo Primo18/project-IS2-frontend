@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../services/authService'; // Importar el servicio de autenticación
+import { login } from '../../services/authService'; // Importar el servicio de autenticación
 
 export const LoginForm = () => {
     const [email, setEmail] = useState('');

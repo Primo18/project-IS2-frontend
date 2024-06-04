@@ -1,7 +1,6 @@
 import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import SideBar from './SideBar';
-import AdminSideBar from './AdminSideBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -35,11 +34,10 @@ const darkTheme = createTheme({
 const drawerWidth = 240;
 
 const sideBarMap = {
-  '/HomeAdmin': <AdminSideBar />,
-  '/ClientesAdmin': <AdminSideBar />,
-  '/MaquinasAdmin': <AdminSideBar />,
-  '/RutinasAdmin': <AdminSideBar />,
-  '/EntrenadoresAdmin': <AdminSideBar />,
+  '/Home': <SideBar />,
+  '/Clientes': <SideBar />,
+  '/Maquinas': <SideBar />,
+  '/Rutinas': <SideBar />,
   // Se pueden añadir aquí más paginas si es necesario, aunque si es un subpath no se requiere.
   // Tambien sirve para añadir más SideBars
 };

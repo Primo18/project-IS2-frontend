@@ -1,5 +1,5 @@
-import { Layout } from './Layout';
-import { SideBar } from './SideBar';
+import { Layout } from './Layout/Layout';
+import { SideBar } from './Layout/SideBar';
 
 export { Layout, SideBar };
 
