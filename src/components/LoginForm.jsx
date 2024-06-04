@@ -15,7 +15,7 @@ export const LoginForm = () => {
             const result = await login(email, password);
             if (result.success) {
                 setMessage('Login successful!');
-                navigate('/home'); // Redirige al usuario a la página del dashboard
+                navigate('/'); //
             } else {
                 setMessage('Login failed: ' + result.message);
             }

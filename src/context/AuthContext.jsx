@@ -9,10 +9,11 @@ export const AuthProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        // Aquí puedes verificar si el usuario ya tiene una sesión activa al cargar la aplicación
         const fetchProfile = async () => {
-            // Lógica para obtener el perfil del usuario
-            // Si el usuario está autenticado, actualiza el estado del usuario
+            const storedUser = localStorage.getItem('user');
+            if (storedUser) {
+                setUser(JSON.parse(storedUser));
+            }
             setIsLoading(false);
         };
 
@@ -23,13 +24,14 @@ export const AuthProvider = ({ children }) => {
         const result = await loginService(email, password);
         if (result.success) {
             setUser(result.data);
+            localStorage.setItem('user', JSON.stringify(result.data));
         }
         return result;
     };
 
     const logout = () => {
-        // Lógica para cerrar sesión
         setUser(null);
+        localStorage.removeItem('user');
     };
 
     return (
@@ -38,7 +40,6 @@ export const AuthProvider = ({ children }) => {
         </AuthContext.Provider>
     );
 };
-
 
 AuthProvider.propTypes = {
     children: PropTypes.node.isRequired,
