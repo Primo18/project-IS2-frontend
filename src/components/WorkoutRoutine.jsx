@@ -1,24 +1,58 @@
 import PropTypes from 'prop-types';
+import { styled } from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 
-export const WorkoutRoutine = ({ rutina }) => {
+const CustomPaper = styled(Paper)(({ theme }) => ({
+    backgroundColor: '#2D2D2D', // Modo oscuro
+    color: '#FFFFFF',
+    borderRadius: '10px',
+    padding: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
+}));
+
+const Exercise = styled('div')(({ theme }) => ({
+    padding: theme.spacing(2),
+    '&:hover': {
+        backgroundColor: '#FFB24A',
+    },
+    transition: 'background-color 0.2s',
+    borderRadius: '10px',
+}));
+
+export const WorkoutRoutine = ({ rutina, onEdit, onDelete }) => {
     return (
-        <div className="bg-white shadow-xl rounded-lg p-6 mb-6"> {/* Fondo blanco, sombra, bordes redondeados, padding y margen abajo */}
-            <h2 className="text-xl font-semibold  mb-4 text-center">{rutina.clasificacion}</h2>
+        <CustomPaper>
+            <Typography variant="h5" component="h2" gutterBottom>
+                {rutina.clasificacion}
+            </Typography>
             {rutina.ejercicios.map((ejercicio, index) => (
-                <div key={index} className="p-4 hover:bg-blue-50 transition-colors duration-200 rounded-md"> {/* Padding, hover effect, transition para suavidad */}
-                    <h3 className="text-lg font-medium text-gray-800">{ejercicio.nombre}</h3>
-                    <p className="text-sm text-gray-600">Descripción: {ejercicio.descripcion}</p>
-                    <p className="text-sm text-gray-600">Clasificación: {ejercicio.clasificacion}</p>
-                    <div className="text-sm font-bold text-gray-800">
-                        <span>Repeticiones: {ejercicio.repeticiones} - </span>
-                        <span>Series: {ejercicio.series}</span>
-                    </div>
-                </div>
+                <Exercise key={index}>
+                    <Typography variant="h6">{ejercicio.nombre}</Typography>
+                    <Typography variant="body2">Descripción: {ejercicio.descripcion}</Typography>
+                    <Typography variant="body2">Clasificación: {ejercicio.clasificacion}</Typography>
+                    <Typography variant="body2">
+                        Repeticiones: {ejercicio.repeticiones} - Series: {ejercicio.series}
+                    </Typography>
+                </Exercise>
             ))}
-        </div>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
+                <Button variant="outlined" color="primary" onClick={onEdit}>
+                    Editar
+                </Button>
+                <Button variant="outlined" color="secondary" onClick={onDelete}>
+                    Eliminar
+                </Button>
+            </Box>
+        </CustomPaper>
     );
 };
 
 WorkoutRoutine.propTypes = {
-    rutina: PropTypes.object.isRequired
+    rutina: PropTypes.object.isRequired,
+    onEdit: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
 };

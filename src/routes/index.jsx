@@ -1,16 +1,14 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { Layout } from '../components/Layout';
-import HomeEntrenador from '../pages/HomeEntrenador';
-import HomeAdmin from '../pages/HomeAdmin';
+import Home from '../pages/HomeAdmin';
 import Clientes from '../pages/Clientes';
 import Maquinas from '../pages/Maquinas';
 import Rutinas from '../pages/Rutinas';
-import ClientesAdmin from '../pages/ClientesAdmin';
-import MaquinasAdmin from '../pages/MaquinasAdmin';
-import RutinasAdmin from '../pages/RutinasAdmin';
-import EntrenadoresAdmin from '../pages/EntrenadoresAdmin';
+import Entrenadores from '../pages/EntrenadoresAdmin';
 import LoginPage from '../pages/LoginPage';
 import { ProtectedRoute } from '../components/ProtectedRoute';
+import ClientRoutines from '../pages/ClientRoutines';
+import { fetchCliente } from '../services/fetch-clientes';
 
 export const router = createBrowserRouter([
     {
@@ -26,40 +24,32 @@ export const router = createBrowserRouter([
                 children: [
                     {
                         path: '/home',
-                        element: <HomeAdmin />
+                        element: <Home />
                     },
                     {
-                        path: '/HomeEntrenador',
-                        element: <HomeEntrenador />
-                    },
-                    {
-                        path: '/Clientes',
+                        path: '/clientes',
                         element: <Clientes />
                     },
                     {
-                        path: '/Maquinas',
+                        path: '/maquinas',
                         element: <Maquinas />
                     },
                     {
-                        path: '/Rutinas',
+                        path: '/rutinas',
                         element: <Rutinas />
                     },
                     {
-                        path: '/ClientesAdmin',
-                        element: <ClientesAdmin />
+                        path: '/entrenadores',
+                        element: <Entrenadores />
                     },
                     {
-                        path: '/MaquinasAdmin',
-                        element: <MaquinasAdmin />
-                    },
-                    {
-                        path: '/RutinasAdmin',
-                        element: <RutinasAdmin />
-                    },
-                    {
-                        path: '/EntrenadoresAdmin',
-                        element: <EntrenadoresAdmin />
-                    },
+                        path: '/clientes/:clienteId/rutinas',
+                        element: <ClientRoutines />,
+                        loader: async ({ params }) => {
+                            const cliente = await fetchCliente(params.clienteId);
+                            return cliente;
+                        }
+                    }
                 ]
             }
         ]

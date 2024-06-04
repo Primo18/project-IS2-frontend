@@ -1,4 +1,3 @@
-import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import SideBar from './SideBar';
 import AdminSideBar from './AdminSideBar';
@@ -54,7 +53,7 @@ export const Layout = () => {
         return sideBarMap[path];
       }
     }
-    return <SideBar />; 
+    return <SideBar />;
   };
 
   return (

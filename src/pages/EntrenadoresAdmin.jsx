@@ -1,9 +1,7 @@
-import React from 'react'
-
-function EntrenadoresAdmin() {
+function Entrenadores() {
   return (
     <div>EntrenadoresAdmin</div>
   )
 }
 
-export default EntrenadoresAdmin
+export default Entrenadores

@@ -6,7 +6,7 @@ const data = [
   { id: 3, name: 'Sam Green', email: 'sam.green@example.com', role: 'Moderator' },
 ];
 
-const HomeAdmin = () => {
+const Home = () => {
   return (
     <Box sx={{ p: 3 }}>
       <Typography variant="h4" gutterBottom>
@@ -93,4 +93,4 @@ const HomeAdmin = () => {
   );
 };
 
-export default HomeAdmin;
+export default Home;

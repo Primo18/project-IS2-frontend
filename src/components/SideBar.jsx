@@ -17,17 +17,20 @@ import MaquinaIcon from '@mui/icons-material/FitnessCenter';
 import RutinaIcon from '@mui/icons-material/Route';
 import PersonIcon from '@mui/icons-material/Person';
 import MenuIcon from '@mui/icons-material/Menu';
+import LogoutIcon from '@mui/icons-material/Logout';
 import Toolbar from '@mui/material/Toolbar';
 import { styled } from '@mui/material/styles';
 import bannerImage from '../assets/banner.png';
 import profileImage from '../assets/Profile.png';
 import Avatar from '@mui/material/Avatar';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
-const drawerWidth = 200;
+const drawerWidth = 240;
 
-const CustomDrawer = styled(Drawer)(({ theme }) => ({
+const CustomDrawer = styled(Drawer)(() => ({
   '& .MuiDrawer-paper': {
-    backgroundColor: '#515151',
+    backgroundColor: '#2D2D2D', // Fondo más oscuro para un mejor contraste
     borderRadius: '10px',
     margin: '10px',
     boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
@@ -35,7 +38,7 @@ const CustomDrawer = styled(Drawer)(({ theme }) => ({
   },
 }));
 
-const LogoCircle = styled('div')(({ theme }) => ({
+const LogoCircle = styled('div')(() => ({
   width: 90,
   height: 90,
   borderRadius: '50%',
@@ -47,19 +50,24 @@ const LogoCircle = styled('div')(({ theme }) => ({
   boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
 }));
 
-const ProfileImage = styled('img')(({ theme }) => ({
+const ProfileImage = styled('img')(() => ({
   width: 85,
   height: 85,
   borderRadius: '50%',
   objectFit: 'cover',
+  border: '2px solid #FFA102',
 }));
 
-const NombreButton = styled(ListItemButton)(({ theme }) => ({
+const NombreButton = styled(ListItemButton)(() => ({
   backgroundColor: '#FFA102',
   borderRadius: '20px',
   margin: '10px 14px',
   width: 'auto',
   height: '50px',
+  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+  '&:hover': {
+    backgroundColor: '#FFB24A',
+  },
 }));
 
 const NombreListItemText = styled(ListItemText)({
@@ -67,14 +75,18 @@ const NombreListItemText = styled(ListItemText)({
   fontFamily: 'Titillium Web',
 });
 
-const BottomButton = styled(ListItemButton)(({ theme }) => ({
+const BottomButton = styled(ListItemButton)(() => ({
   backgroundColor: '#FFA800',
   borderRadius: '10px',
   margin: '10px 14px',
   width: 'auto',
   height: '40px',
+  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
   '& .MuiListItemText-root': {
     textAlign: 'center',
+  },
+  '&:hover': {
+    backgroundColor: '#FFB24A',
   },
   '&.selected': {
     backgroundColor: '#BA7B00', // Color diferente para el botón seleccionado
@@ -85,6 +97,7 @@ function SideBar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
+  const { logout } = useContext(AuthContext);
 
   const location = useLocation();
 
@@ -103,6 +116,11 @@ function SideBar(props) {
     }
   };
 
+  const handleLogout = () => {
+    logout();
+    handleDrawerClose();
+  };
+
   const drawer = (
     <div>
       <Toolbar />
@@ -110,19 +128,18 @@ function SideBar(props) {
         <ProfileImage src={profileImage} alt="Profile" />
       </LogoCircle>
       <NombreButton component={Link} to="/profile" onClick={handleDrawerClose}>
-        <NombreListItemText disableTypography primary=
-          {<Typography variant="subtitle2" style={{ color: '#000000' }}>Juanito Entrenador</Typography>}
+        <NombreListItemText disableTypography primary={
+          <Typography variant="subtitle2" style={{ color: '#000000' }}>Juanito Entrenador</Typography>}
         />
       </NombreButton>
 
-  
       <List>
         {[
-          { text: 'HOME', icon: <HomeIcon sx={{ color: "#000000" }} />, link: '/HomeEntrenador' },
-          { text: 'CLIENTES', icon: <PersonIcon sx={{ color: "#000000" }} />, link: '/Clientes' },
-          { text: 'MÁQUINAS', icon: <MaquinaIcon sx={{ color: "#000000" }} />, link: '/Maquinas' },
-          { text: 'RUTINAS', icon: <RutinaIcon sx={{ color: "#000000" }} />, link: '/Rutinas' },
-        ].map((item, index) => (
+          { text: 'HOME', icon: <HomeIcon sx={{ color: "#000000" }} />, link: '/home' },
+          { text: 'CLIENTES', icon: <PersonIcon sx={{ color: "#000000" }} />, link: '/clientes' },
+          { text: 'MÁQUINAS', icon: <MaquinaIcon sx={{ color: "#000000" }} />, link: '/maquinas' },
+          { text: 'RUTINAS', icon: <RutinaIcon sx={{ color: "#000000" }} />, link: '/rutinas' },
+        ].map((item) => (
           <ListItem key={item.text} disablePadding>
             <BottomButton
               component={Link}
@@ -132,10 +149,18 @@ function SideBar(props) {
               <ListItemIcon>
                 {item.icon}
               </ListItemIcon>
-              <ListItemText primary={item.text} sx={{ color: 'black',}} />
+              <ListItemText primary={item.text} sx={{ color: 'black', }} />
             </BottomButton>
           </ListItem>
         ))}
+        <ListItem disablePadding>
+          <BottomButton onClick={handleLogout}>
+            <ListItemIcon>
+              <LogoutIcon sx={{ color: "#000000" }} />
+            </ListItemIcon>
+            <ListItemText primary="CERRAR SESIÓN" sx={{ color: 'black' }} />
+          </BottomButton>
+        </ListItem>
       </List>
     </div>
   );
@@ -223,3 +248,4 @@ SideBar.propTypes = {
 };
 
 export default SideBar;
+

@@ -12,11 +12,13 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AddIcon from '@mui/icons-material/Add';
 import EditarClientes from '../components/Cliente/EditarClientes';
 import { TableContainer, Paper } from '@mui/material';
+import { Link } from 'react-router-dom'; // Importar Link de react-router-dom
+
 const VISIBLE_FIELDS = ['rut', 'nombre', 'apellido', 'email', 'fecha_nacimiento', 'suscripcion', 'telefono', 'actions'];
 
 function QuickSearchToolbar() {
   const [openRegistro, setOpenRegistro] = useState(false);
-  
+
   const handleClickOpenRegistro = () => {
     setOpenRegistro(true);
   };
@@ -35,23 +37,23 @@ function QuickSearchToolbar() {
       }}
     >
       <GridToolbarQuickFilter />
-      
+
       <Button color="primary" startIcon={<AddIcon />} onClick={handleClickOpenRegistro}>
         Agregar cliente
       </Button>
-      <Dialog 
-      open={openRegistro} 
-      onClose={handleCloseRegistro}
-      PaperProps={{
-        style: {
-          backgroundColor: 'rgb(0.13, 0.13, 0.13)', // Establece el color de fondo a #222222
-        },
-      }}
-      sx={{ 
-        '& .MuiBackdrop-root': {
-          backdropFilter: 'blur(4px)', // Efecto de desenfoque
-        }
-      }}
+      <Dialog
+        open={openRegistro}
+        onClose={handleCloseRegistro}
+        PaperProps={{
+          style: {
+            backgroundColor: 'rgb(0.13, 0.13, 0.13)', // Establece el color de fondo a #222222
+          },
+        }}
+        sx={{
+          '& .MuiBackdrop-root': {
+            backdropFilter: 'blur(4px)', // Efecto de desenfoque
+          }
+        }}
       >
         <DialogContent style={{ paddingTop: '0px' }}>
           <RegistroClientes />
@@ -70,12 +72,11 @@ export default function QuickFilteringGrid() {
   const handleClickOpenEditar = (id) => {
     setIdToEdit(id);
     setOpenEditar(true);
-    
   };
-  
+
   const handleCloseEditar = () => {
     setOpenEditar(false);
-    setDataChanged(true); 
+    setDataChanged(true);
   };
 
   useEffect(() => {
@@ -88,31 +89,28 @@ export default function QuickFilteringGrid() {
             headerName: field.charAt(0).toUpperCase() + field.slice(1),
             width: 150,
           })),
-          
           {
             field: 'actions',
             headerName: 'Actions',
-            width: 100,
-            renderCell: (params) => [
-              <IconButton key="edit" onClick={(event) => { handleClickOpenEditar(params.row.id_cliente); }}>
-                <EditIcon />
-              </IconButton>,
-              <IconButton key="delete" onClick={() => { console.log(`Delete row with id: ${params.id}`); }}>
-                <AccountCircleIcon />
-              </IconButton>,
-            ],
+            width: 200, // Aumentar el ancho para acomodar más botones
+            renderCell: (params) => (
+              <>
+                <IconButton key="edit" onClick={() => handleClickOpenEditar(params.row.id_cliente)}>
+                  <EditIcon />
+                </IconButton>
+                <IconButton key="view-routines" component={Link} to={`/clientes/${params.row.id_cliente}/rutinas`}>
+                  <AccountCircleIcon />
+                </IconButton>
+              </>
+            ),
           },
-
         ];
 
         const rows = clientes.map(cliente => ({ ...cliente, id: cliente.id_cliente }));
         setData({ columns, rows });
         setDataChanged(false); // Restablece dataChanged a false después de actualizar los datos
-
       });
   }, [dataChanged]);
-
-  
 
   // Otherwise filter will be applied on fields such as the hidden column id
   const columns = React.useMemo(
@@ -122,38 +120,38 @@ export default function QuickFilteringGrid() {
 
   return (
     <TableContainer component={Paper}>
-    <Box sx={{ height: 500, width: 1 , mt:3}}>
-      <DataGrid
-        localeText={{
-          toolbarQuickFilterPlaceholder: "Buscar cliente",
-        }}
-        {...data}
-        disableColumnFilter
-        disableColumnSelector
-        disableDensitySelector
-        disableRowSelectionOnClick
-        columns={columns}
-        slots={{ toolbar: QuickSearchToolbar }}
-      />
-      <Dialog 
-      open={openEditar} 
-      onClose={handleCloseEditar}
-      PaperProps={{
-        style: {
-          backgroundColor: 'rgb(0.13, 0.13, 0.13)', // Establece el color de fondo a #222222
-        },
-      }}
-      sx={{ 
-        '& .MuiBackdrop-root': {
-          backdropFilter: 'blur(4px)', // Efecto de desenfoque
-        }
-      }}
-      >
-        <DialogContent style={{ paddingTop: '0px' }}>
-         <EditarClientes id={idToEdit}/>
-        </DialogContent>
-      </Dialog>
-    </Box>
+      <Box sx={{ height: 500, width: 1, mt: 3 }}>
+        <DataGrid
+          localeText={{
+            toolbarQuickFilterPlaceholder: "Buscar cliente",
+          }}
+          {...data}
+          disableColumnFilter
+          disableColumnSelector
+          disableDensitySelector
+          disableRowSelectionOnClick
+          columns={columns}
+          slots={{ toolbar: QuickSearchToolbar }}
+        />
+        <Dialog
+          open={openEditar}
+          onClose={handleCloseEditar}
+          PaperProps={{
+            style: {
+              backgroundColor: 'rgb(0.13, 0.13, 0.13)', // Establece el color de fondo a #222222
+            },
+          }}
+          sx={{
+            '& .MuiBackdrop-root': {
+              backdropFilter: 'blur(4px)', // Efecto de desenfoque
+            }
+          }}
+        >
+          <DialogContent style={{ paddingTop: '0px' }}>
+            <EditarClientes id={idToEdit} />
+          </DialogContent>
+        </Dialog>
+      </Box>
     </TableContainer>
   );
 }
