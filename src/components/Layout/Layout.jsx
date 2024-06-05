@@ -1,4 +1,3 @@
-import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import SideBar from './SideBar';
 import Box from '@mui/material/Box';
@@ -34,10 +33,10 @@ const darkTheme = createTheme({
 const drawerWidth = 240;
 
 const sideBarMap = {
-  '/Home': <SideBar />,
-  '/Clientes': <SideBar />,
-  '/Maquinas': <SideBar />,
-  '/Rutinas': <SideBar />,
+  '/home': <SideBar />,
+  '/clientes': <SideBar />,
+  '/maquinas': <SideBar />,
+  '/rutinas': <SideBar />,
   // Se pueden añadir aquí más paginas si es necesario, aunque si es un subpath no se requiere.
   // Tambien sirve para añadir más SideBars
 };
@@ -52,7 +51,7 @@ export const Layout = () => {
         return sideBarMap[path];
       }
     }
-    return <SideBar />; 
+    return <SideBar />;
   };
 
   return (

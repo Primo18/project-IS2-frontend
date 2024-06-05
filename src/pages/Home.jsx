@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Typography, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 
 const data = [
@@ -90,7 +89,7 @@ const HomeAdmin = () => {
         </TableContainer>
       </Box>
     </Box>
-    
+
   );
 };
 

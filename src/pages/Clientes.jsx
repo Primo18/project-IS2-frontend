@@ -17,7 +17,7 @@ const VISIBLE_FIELDS = ['rut', 'nombre', 'apellido', 'email', 'fecha_nacimiento'
 
 function QuickSearchToolbar() {
   const [openRegistro, setOpenRegistro] = useState(false);
-  
+
   const handleClickOpenRegistro = () => {
     setOpenRegistro(true);
   };
@@ -36,19 +36,19 @@ function QuickSearchToolbar() {
       }}
     >
       <GridToolbarQuickFilter />
-      
+
       <Button color="primary" startIcon={<AddIcon />} onClick={handleClickOpenRegistro} sx={{ bgcolor: '#EC9C00', '&:hover': { bgcolor: '#EC9C00' }, color: '#000000' }}>
         Agregar cliente
       </Button>
-      <Dialog 
-        open={openRegistro} 
+      <Dialog
+        open={openRegistro}
         onClose={handleCloseRegistro}
         PaperProps={{
           style: {
             backgroundColor: 'rgb(0.13, 0.13, 0.13)', // Establece el color de fondo a #222222
           },
         }}
-        sx={{ 
+        sx={{
           '& .MuiBackdrop-root': {
             backdropFilter: 'blur(4px)', // Efecto de desenfoque
           }
@@ -72,10 +72,10 @@ export default function ClientesAdmin() {
     setIdToEdit(id);
     setOpenEditar(true);
   };
-  
+
   const handleCloseEditar = () => {
     setOpenEditar(false);
-    setDataChanged(true); 
+    setDataChanged(true);
   };
 
   useEffect(() => {
@@ -89,7 +89,7 @@ export default function ClientesAdmin() {
             flex: 1,
             minWidth: 150,
           })),
-          
+
           {
             field: 'actions',
             headerName: '',
@@ -119,58 +119,58 @@ export default function ClientesAdmin() {
 
   return (
     <Box sx={{ p: 3 }}>
-    <TableContainer component={Paper} sx={{ }}>
-      <Box sx={{ height: 'calc(100vh - 200px)', width: '100%', overflow: 'auto' }}>
-        <DataGrid
-          localeText={{
-            toolbarQuickFilterPlaceholder: "Buscar cliente",
-          }}
-          {...data}
-          disableColumnFilter
-          disableColumnSelector
-          disableDensitySelector
-          disableRowSelectionOnClick
-          columns={columns}
-          slots={{ toolbar: QuickSearchToolbar }}
-          sx={{
-            '& .MuiDataGrid-columnHeaders': {
-              backgroundColor: '#EC9C00',
-              color: '#FFFFFF',
-            },
-            '& .MuiDataGrid-cell': {
-              borderBottom: '1px solid rgba(224, 224, 224, 1)',
-            },
-            '& .MuiDataGrid-row:hover': {
-              backgroundColor: 'rgba(236, 156, 0, 0.2)',
-            },
-            '& .MuiDataGrid-row.Mui-selected': {
-              backgroundColor: 'rgba(236, 156, 0, 0.3)',
-              '&:hover': {
-                backgroundColor: 'rgba(236, 156, 0, 0.3)',
+      <TableContainer component={Paper} sx={{}}>
+        <Box sx={{ height: 'calc(100vh - 200px)', width: '100%', overflow: 'auto' }}>
+          <DataGrid
+            localeText={{
+              toolbarQuickFilterPlaceholder: "Buscar cliente",
+            }}
+            {...data}
+            disableColumnFilter
+            disableColumnSelector
+            disableDensitySelector
+            disableRowSelectionOnClick
+            columns={columns}
+            slots={{ toolbar: QuickSearchToolbar }}
+            sx={{
+              '& .MuiDataGrid-columnHeaders': {
+                backgroundColor: '#EC9C00',
+                color: '#FFFFFF',
               },
-            },
-          }}
-        />
-        <Dialog 
-          open={openEditar} 
-          onClose={handleCloseEditar}
-          PaperProps={{
-            style: {
-              backgroundColor: 'rgb(0.13, 0.13, 0.13)', // Establece el color de fondo a #222222
-            },
-          }}
-          sx={{ 
-            '& .MuiBackdrop-root': {
-              backdropFilter: 'blur(4px)', // Efecto de desenfoque
-            }
-          }}
-        >
-          <DialogContent style={{ paddingTop: '0px' }}>
-            <EditarClientes id={idToEdit} />
-          </DialogContent>
-        </Dialog>
-      </Box>
-    </TableContainer>
+              '& .MuiDataGrid-cell': {
+                borderBottom: '1px solid rgba(224, 224, 224, 1)',
+              },
+              '& .MuiDataGrid-row:hover': {
+                backgroundColor: 'rgba(236, 156, 0, 0.2)',
+              },
+              '& .MuiDataGrid-row.Mui-selected': {
+                backgroundColor: 'rgba(236, 156, 0, 0.3)',
+                '&:hover': {
+                  backgroundColor: 'rgba(236, 156, 0, 0.3)',
+                },
+              },
+            }}
+          />
+          <Dialog
+            open={openEditar}
+            onClose={handleCloseEditar}
+            PaperProps={{
+              style: {
+                backgroundColor: 'rgb(0.13, 0.13, 0.13)', // Establece el color de fondo a #222222
+              },
+            }}
+            sx={{
+              '& .MuiBackdrop-root': {
+                backdropFilter: 'blur(4px)', // Efecto de desenfoque
+              }
+            }}
+          >
+            <DialogContent style={{ paddingTop: '0px' }}>
+              <EditarClientes id={idToEdit} />
+            </DialogContent>
+          </Dialog>
+        </Box>
+      </TableContainer>
     </Box>
   );
 }
