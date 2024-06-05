@@ -11,7 +11,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AddIcon from '@mui/icons-material/Add';
 import EditarClientes from '../components/Cliente/EditarClientes';
-import { TableContainer, Paper } from '@mui/material';
+import { TableContainer, Paper, Card } from '@mui/material';
 
 const VISIBLE_FIELDS = ['rut', 'nombre', 'apellido', 'email', 'fecha_nacimiento', 'suscripcion', 'telefono', 'actions'];
 
@@ -37,22 +37,22 @@ function QuickSearchToolbar() {
     >
       <GridToolbarQuickFilter />
       
-      <Button color="primary" startIcon={<AddIcon />} onClick={handleClickOpenRegistro}>
+      <Button color="primary" startIcon={<AddIcon />} onClick={handleClickOpenRegistro} sx={{ bgcolor: '#EC9C00', '&:hover': { bgcolor: '#EC9C00' }, color: '#000000' }}>
         Agregar cliente
       </Button>
       <Dialog 
-      open={openRegistro} 
-      onClose={handleCloseRegistro}
-      PaperProps={{
-        style: {
-          backgroundColor: 'rgb(0.13, 0.13, 0.13)', // Establece el color de fondo a #222222
-        },
-      }}
-      sx={{ 
-        '& .MuiBackdrop-root': {
-          backdropFilter: 'blur(4px)', // Efecto de desenfoque
-        }
-      }}
+        open={openRegistro} 
+        onClose={handleCloseRegistro}
+        PaperProps={{
+          style: {
+            backgroundColor: 'rgb(0.13, 0.13, 0.13)', // Establece el color de fondo a #222222
+          },
+        }}
+        sx={{ 
+          '& .MuiBackdrop-root': {
+            backdropFilter: 'blur(4px)', // Efecto de desenfoque
+          }
+        }}
       >
         <DialogContent style={{ paddingTop: '0px' }}>
           <RegistroClientes />
@@ -96,10 +96,10 @@ export default function ClientesAdmin() {
             minWidth: 100,
             renderCell: (params) => [
               <IconButton key="edit" onClick={() => { handleClickOpenEditar(params.row.id_cliente); }}>
-                <EditIcon />
+                <EditIcon sx={{ color: '#EC9C00' }} />
               </IconButton>,
               <IconButton key="delete" onClick={() => { console.log(`Delete row with id: ${params.id}`); }}>
-                <AccountCircleIcon />
+                <AccountCircleIcon sx={{ color: '#EC9C00' }} />
               </IconButton>,
             ],
           },
@@ -118,8 +118,9 @@ export default function ClientesAdmin() {
   );
 
   return (
-    <TableContainer>
-      <Box sx={{ height: 500, width: '100%', mt: 3, overflow: 'auto'}}>
+    <Box sx={{ p: 3 }}>
+    <TableContainer component={Paper} sx={{ }}>
+      <Box sx={{ height: 'calc(100vh - 200px)', width: '100%', overflow: 'auto' }}>
         <DataGrid
           localeText={{
             toolbarQuickFilterPlaceholder: "Buscar cliente",
@@ -131,6 +132,24 @@ export default function ClientesAdmin() {
           disableRowSelectionOnClick
           columns={columns}
           slots={{ toolbar: QuickSearchToolbar }}
+          sx={{
+            '& .MuiDataGrid-columnHeaders': {
+              backgroundColor: '#EC9C00',
+              color: '#FFFFFF',
+            },
+            '& .MuiDataGrid-cell': {
+              borderBottom: '1px solid rgba(224, 224, 224, 1)',
+            },
+            '& .MuiDataGrid-row:hover': {
+              backgroundColor: 'rgba(236, 156, 0, 0.2)',
+            },
+            '& .MuiDataGrid-row.Mui-selected': {
+              backgroundColor: 'rgba(236, 156, 0, 0.3)',
+              '&:hover': {
+                backgroundColor: 'rgba(236, 156, 0, 0.3)',
+              },
+            },
+          }}
         />
         <Dialog 
           open={openEditar} 
@@ -152,5 +171,6 @@ export default function ClientesAdmin() {
         </Dialog>
       </Box>
     </TableContainer>
+    </Box>
   );
 }

@@ -18,6 +18,7 @@ import Toolbar from '@mui/material/Toolbar';
 import MenuIcon from '@mui/icons-material/Menu';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
+import { MenuBook } from '@mui/icons-material';
 
 const LogoCircle = styled('div')(({ theme }) => ({
   width: 105,
@@ -66,7 +67,7 @@ const StyledProSidebar = styled(ProSidebar)({
 
 function SideBar(props) {
   const { window } = props;
-  const [collapsed, setCollapsed] = React.useState(true);
+  const [collapsed, setCollapsed] = React.useState(false);
 
   const location = useLocation();
 
@@ -79,33 +80,10 @@ function SideBar(props) {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <CssBaseline />
-      <AppBar
-        position="fixed"
-        sx={{
-          backgroundImage: `url(${bannerImage})`,
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center',
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-        }}
-      >
-        <Toolbar sx={{ height: '100px' }}>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleToggleSidebar}
-            sx={{ mr: 2 }}
-          >
-            <Avatar sx={{ bgcolor: '#EC9C00' }}>
-              <MenuIcon />
-            </Avatar>
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <Box sx={{ display: 'flex', flexGrow: 1, marginTop: '100px' }}>
+      <Box sx={{ display: 'flex', flexGrow: 1}}>
         <StyledProSidebar collapsed={collapsed} width="250px" image="src/assets/gym_snap.jpeg"  >
           <Menu iconShape="circle">
+          <MenuItem icon={<MenuIcon />} onClick={handleToggleSidebar}></MenuItem>
             {!collapsed && (
               <MenuItem className="no-hover">
                 <LogoCircle>
@@ -135,9 +113,6 @@ function SideBar(props) {
             </MenuItem>
           </Menu>
         </StyledProSidebar>
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-          {/* Aquí iría el contenido principal del dashboard */}
-        </Box>
       </Box>
     </Box>
   );
