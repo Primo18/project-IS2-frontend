@@ -11,7 +11,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AddIcon from '@mui/icons-material/Add';
 import EditarClientes from '../components/Cliente/EditarClientes';
-import { TableContainer, Paper, Card } from '@mui/material';
+import { TableContainer, Paper } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const VISIBLE_FIELDS = ['rut', 'nombre', 'apellido', 'email', 'fecha_nacimiento', 'suscripcion', 'telefono', 'actions'];
 
@@ -63,6 +64,7 @@ function QuickSearchToolbar() {
 }
 
 export default function ClientesAdmin() {
+  const navigate = useNavigate();
   const [data, setData] = useState({ columns: [], rows: [] });
   const [openEditar, setOpenEditar] = useState(false);
   const [idToEdit, setIdToEdit] = useState(null);
@@ -98,7 +100,7 @@ export default function ClientesAdmin() {
               <IconButton key="edit" onClick={() => { handleClickOpenEditar(params.row.id_cliente); }}>
                 <EditIcon sx={{ color: '#EC9C00' }} />
               </IconButton>,
-              <IconButton key="delete" onClick={() => { console.log(`Delete row with id: ${params.id}`); }}>
+              <IconButton key="view" onClick={() => { navigate(`/clientes/${params.row.id_cliente}/rutinas`); }}>
                 <AccountCircleIcon sx={{ color: '#EC9C00' }} />
               </IconButton>,
             ],
