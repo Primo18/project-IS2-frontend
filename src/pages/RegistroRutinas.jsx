@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { TextField, Button, Card, Box, Typography, Grid, Autocomplete } from '@mui/material';
 import Circuito from '../components/RegistroRutinas/Circuito';
@@ -82,15 +81,15 @@ function RegistroRutinas() {
           dataEj={dataEj}
         />
       ))}
-      <Box sx={{ display: 'flex', justifyContent: 'center'}}>
-      <Button 
-        variant="contained" 
-        color="primary"
-        size='large'
-        sx={{ mt:4, bgcolor: '#EC9C00', '&:hover': { bgcolor: '#C68100' }, color: '#000000' }} 
-        onClick={handleSaveRoutine}>
-        Guardar Rutina
-      </Button>
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          variant="contained"
+          color="primary"
+          size='large'
+          sx={{ mt: 4, bgcolor: '#EC9C00', '&:hover': { bgcolor: '#C68100' }, color: '#000000' }}
+          onClick={handleSaveRoutine}>
+          Guardar Rutina
+        </Button>
       </Box>
     </Box>
   );

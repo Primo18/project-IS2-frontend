@@ -1,6 +1,8 @@
 const BASE_URL =
     "https://project-is2-backend-production.up.railway.app/api";
 
+// const BASE_URL_LOCAL = "http://localhost:8080/api";
+
 // Permite obtener todos los clientes
 export async function fetchClientes() {
     const url = new URL(`${BASE_URL}/clientes`);
@@ -22,5 +24,17 @@ export async function fetchCliente(id) {
         return await response.json();
     } catch (error) {
         console.error("fetchCliente", error);
+    }
+}
+
+// Permite obtener todos los datos de una rutina dado un cliente 
+export async function fetchRutinasByClienteId(clienteId) {
+    const url = new URL(`${BASE_URL}/clientes/${clienteId}/rutinas`);
+
+    try {
+        const response = await fetch(url);
+        return await response.json();
+    } catch (error) {
+        console.error("fetchRutinasByClienteId", error);
     }
 }

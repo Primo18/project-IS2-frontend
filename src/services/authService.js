@@ -14,7 +14,6 @@ export const login = async (email, password) => {
 
     if (response.ok) {
         const data = await response.json();
-        document.cookie = `token=${data.token}`;
         return { success: true, data };
     } else {
         const errorData = await response.json();
@@ -22,4 +21,21 @@ export const login = async (email, password) => {
     }
 };
 
+export async function fetchProfile(token) {
+    const url = new URL(`${BASE_URL}/auth/profile`);
 
+    try {
+        const response = await fetch(url, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        if (response.ok) {
+            return await response.json();
+        } else {
+            throw new Error('Error fetching profile');
+        }
+    } catch (error) {
+        console.error("fetchProfile", error);
+    }
+}

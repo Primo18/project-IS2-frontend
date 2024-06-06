@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Grid, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
+import { useState } from 'react';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Grid, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 
 const initialMachines = [
   { id: 1, name: 'Cinta de Correr', status: 'Funcional' },
@@ -35,7 +35,7 @@ function Maquinas() {
 
   return (
     <div>
-      <Grid container spacing={2} sx={{padding:3}}>
+      <Grid container spacing={2} sx={{ padding: 3 }}>
         <Grid item xs={12} >
           <TableContainer component={Paper}>
             <Table>
@@ -48,7 +48,7 @@ function Maquinas() {
               </TableHead>
               <TableBody>
                 {machines.map(machine => (
-                  <TableRow 
+                  <TableRow
                     key={machine.id}
                     hover
                     onClick={() => handleRowClick(machine)}
@@ -78,8 +78,8 @@ function Maquinas() {
           <Button onClick={handleClose} color="primary">
             Cancelar
           </Button>
-          <Button 
-            onClick={handleConfirm} 
+          <Button
+            onClick={handleConfirm}
             color="primary"
             variant="contained"
           >

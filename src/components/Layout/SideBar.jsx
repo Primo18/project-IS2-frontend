@@ -42,7 +42,6 @@ const TextContainer = styled('div')({
 
 const StyledProSidebar = styled(ProSidebar)({
   '& .pro-sidebar-inner': {
-    // agregar opacidad a la imagen de fondo
     '&::before': {
       content: '""',
       position: 'absolute',
@@ -82,9 +81,9 @@ function SideBar() {
   return (
     <Box>
       <CssBaseline />
-      <Box sx={{height:"100vh", position:'sticky', top:0 }}>
-        <StyledProSidebar 
-          collapsed={collapsed} 
+      <Box sx={{ height: "100vh", position: 'sticky', top: 0 }}>
+        <StyledProSidebar
+          collapsed={collapsed}
           width="250px"
           image="src/assets/gym_snap.jpeg"  >
           <Menu iconShape="circle">
@@ -92,13 +91,15 @@ function SideBar() {
             {!collapsed && (
               <>
                 <MenuItem className="no-hover">
-                  <LogoCircle>
-                    <ProfileImage src={profileImage} alt="Profile" />
-                  </LogoCircle>
+                  <Link to="/profile">
+                    <LogoCircle>
+                      <ProfileImage src={profileImage} alt="Profile" />
+                    </LogoCircle>
+                  </Link>
                 </MenuItem>
                 <MenuItem className="no-hover">
                   <TextContainer>
-                    <Typography variant="h4">{user ? user.name : 'Usuario'}</Typography>
+                    <Typography variant="h4">{user ? user.nombre : 'Usuario'}</Typography>
                     <Typography variant="subtitle1">{user ? user.role : 'Rol'}</Typography>
                   </TextContainer>
                 </MenuItem>

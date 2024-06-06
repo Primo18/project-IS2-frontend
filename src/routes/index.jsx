@@ -8,9 +8,10 @@ import Entrenadores from '../pages/Entrenadores';
 import LoginPage from '../pages/LoginPage';
 import { ProtectedRoute } from '../components/Login/ProtectedRoute';
 import Cliente from '../pages/Cliente';
-import { fetchCliente } from '../services/fetch-clientes';
-import { fetchDatosRutina } from "../services/fetch-datosRutina";
+import { fetchCliente, fetchRutinasByClienteId } from '../services/fetch-clientes';
 import Layout from '../components/Layout/Layout';
+import { fetchDatosRutina } from '../services/fetch-datosRutina';
+import Profile from '../components/Profile';
 
 export const router = createBrowserRouter([
     {
@@ -49,7 +50,7 @@ export const router = createBrowserRouter([
                                 return datosRutina;
                             } catch (error) {
                                 console.error("Error loading data:", error);
-                                return { rutina: [] }; // Datos predeterminados si hay error
+                                return { rutina: [] };
                             }
                         },
                     },
@@ -62,8 +63,13 @@ export const router = createBrowserRouter([
                         element: <Cliente />,
                         loader: async ({ params }) => {
                             const cliente = await fetchCliente(params.clienteId);
-                            return cliente;
+                            const rutinas = await fetchRutinasByClienteId(params.clienteId);
+                            return { cliente, rutinas };
                         }
+                    },
+                    {
+                        path: 'profile',
+                        element: <Profile />
                     }
                 ]
             }
