@@ -8,6 +8,8 @@ import Info from "./Info";
 import DashboardCliente from "./DashboardCliente";
 import RegistroRutinas from "./RegistroRutinas";
 import LoginPage from "./LoginPage";
+import Layout from "./Layout"
+import Presentacion from "./Presentacion";
 
 
-export { ClientRoutines, Home, Calendario, Horas, Add, Usuarios, Info, DashboardCliente, RegistroRutinas, LoginPage };
+export { ClientRoutines, Home, Calendario, Horas, Add, Usuarios, Info, DashboardCliente, RegistroRutinas, LoginPage,Presentacion,Layout };

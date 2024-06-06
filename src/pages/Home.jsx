@@ -16,27 +16,27 @@ const HomeAdmin = () => {
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6} md={4}>
           <Paper sx={{ p: 2, textAlign: 'center' }}>
-            <Typography variant="h6">Users</Typography>
+            <Typography variant="h6">Clientes</Typography>
             <Typography variant="h4">150</Typography>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
           <Paper sx={{ p: 2, textAlign: 'center' }}>
-            <Typography variant="h6">Posts</Typography>
-            <Typography variant="h4">45</Typography>
+            <Typography variant="h6">Máquinas Operativas</Typography>
+            <Typography variant="h4">45/50</Typography>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
           <Paper sx={{ p: 2, textAlign: 'center' }}>
-            <Typography variant="h6">Comments</Typography>
-            <Typography variant="h4">120</Typography>
+            <Typography variant="h6">Entrenadores</Typography>
+            <Typography variant="h4">12</Typography>
           </Paper>
         </Grid>
       </Grid>
 
       <Box sx={{ mt: 4 }}>
         <Typography variant="h6" gutterBottom>
-          Recent Users
+          Usuarios Recientes
         </Typography>
         <TableContainer component={Paper}>
           <Table>
@@ -63,7 +63,7 @@ const HomeAdmin = () => {
       </Box>
       <Box sx={{ mt: 4 }}>
         <Typography variant="h6" gutterBottom>
-          Recent Users
+          Entrenadores Recientes
         </Typography>
         <TableContainer component={Paper}>
           <Table>
