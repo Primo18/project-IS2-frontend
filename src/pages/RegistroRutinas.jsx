@@ -1,118 +1,98 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
-import { Container, Typography, Box, Button, TextField, FormControl, InputLabel, Select, MenuItem, Card, IconButton } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import CircuitForm from './CircuitForm';
+import { TextField, Button, Card, Box, Typography, Grid, Autocomplete } from '@mui/material';
+import Circuito from '../components/RegistroRutinas/Circuito';
+import useRutinaForm from '../hooks/useRutinaForm';
 
 function RegistroRutinas() {
-  const [cliente, setCliente] = useState('');
-  const [entrenador, setEntrenador] = useState('');
-  const [clasificacion, setClasificacion] = useState('');
-  const [circuitos, setCircuitos] = useState([{ id: Date.now(), puntuacion: '', repeticiones: '', observaciones: '', ejercicios: [{ id: Date.now(), ejercicio: '', series: '', frecuencia: '', orden: '', descanso: '' }] }]);
-
   const dataCl = useLoaderData().clientes;
   const dataEj = useLoaderData().ejercicios;
-
-  const addCircuito = () => {
-    const newCircuito = {
-      id: Date.now(),
-      puntuacion: '',
-      repeticiones: '',
-      observaciones: '',
-      ejercicios: [{ id: Date.now(), ejercicio: '', series: '', frecuencia: '', orden: '', descanso: '' }]
-    };
-    setCircuitos([...circuitos, newCircuito]);
-  };
-
-  const handleSaveRoutine = () => {
-    const routineData = {
-      clasificacion,
-      id_cliente: cliente,
-      id_usuario: Number(entrenador),
-      circuitos: circuitos.map(circuito => ({
-        puntuacion: circuito.puntuacion,
-        repeticiones: Number(circuito.repeticiones),
-        observaciones: circuito.observaciones,
-        ejercicios: circuito.ejercicios.map(ejercicio => ({
-          id_ejercicio: ejercicio.ejercicio,
-          series: Number(ejercicio.series),
-          frecuencia: ejercicio.frecuencia,
-          orden: Number(ejercicio.orden),
-          descanso: ejercicio.descanso,
-        })),
-      })),
-    };
-
-    const jsonData = JSON.stringify(routineData, null, 2);
-    console.log(jsonData);
-
-    fetch("https://project-is2-backend-production.up.railway.app/rutina/api", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: jsonData
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Success:', data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  };
+  const {
+    cliente,
+    entrenador,
+    clasificacion,
+    circuitos,
+    clienteError,
+    entrenadorError,
+    clasificacionError,
+    setCliente,
+    setEntrenador,
+    setClasificacion,
+    setCircuitos,
+    handleSaveRoutine,
+    addCircuito,
+  } = useRutinaForm(dataCl, dataEj);
 
   return (
-    <Container>
-      <Typography variant="h4" align="center" gutterBottom>
-        Registro de Rutinas
-      </Typography>
-      <Box component="form" sx={{ '& .MuiTextField-root': { mb: 2, width: '100%' } }} noValidate autoComplete="off">
-        <FormControl fullWidth sx={{ mb: 2 }}>
-          <InputLabel>Usuario</InputLabel>
-          <Select
-            value={cliente}
-            onChange={(event) => setCliente(event.target.value)}
+    <Box sx={{ maxWidth: 1000, mx: 'auto', mt: 3 }}>
+      <Typography variant="h4" textAlign="center" mb={4}>Registro de Rutinas</Typography>
+      <Card variant="outlined" sx={{ p: 2 }}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={4}>
+            <Autocomplete
+              options={dataCl}
+              getOptionKey={(option) => option.value} // Utiliza el ID del cliente como clave
+              getOptionLabel={(option) => option.label}
+              renderInput={(params) => (
+                <TextField {...params} label="Usuario" error={clienteError} helperText={clienteError ? 'Campo requerido' : ''} />
+              )}
+              onChange={(event, newValue) => setCliente(newValue)}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <TextField
+              label="Entrenador"
+              value={entrenador}
+              onChange={(e) => setEntrenador(e.target.value)}
+              fullWidth
+              error={entrenadorError}
+              helperText={entrenadorError ? 'Campo requerido' : ''}
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <TextField
+              label="Clasificación"
+              value={clasificacion}
+              onChange={(e) => setClasificacion(e.target.value)}
+              fullWidth
+              error={clasificacionError}
+              helperText={clasificacionError ? 'Campo requerido' : ''}
+            />
+          </Grid>
+        </Grid>
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{ bgcolor: '#EC9C00', '&:hover': { bgcolor: '#C68100' }, color: '#000000' }}
+            onClick={addCircuito}
           >
-            {dataCl.map(cliente => (
-              <MenuItem key={cliente.id} value={cliente.id}>
-                {cliente.nombre}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <TextField
-          label="Entrenador"
-          value={entrenador}
-          onChange={(event) => setEntrenador(event.target.value)}
-        />
-        <TextField
-          label="Clasificación"
-          value={clasificacion}
-          onChange={(event) => setClasificacion(event.target.value)}
-        />
-        <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={addCircuito}>
-          Agregar Circuito
-        </Button>
-      </Box>
+            Agregar Circuito
+          </Button>
+        </Box>
+      </Card>
 
-      {circuitos.map((circuito, index) => (
-        <CircuitForm
+      {circuitos.map((circuito, circuitoIndex) => (
+        <Circuito
           key={circuito.id}
           circuito={circuito}
-          index={index}
-          circuitos={circuitos}
+          circuitoIndex={circuitoIndex}
           setCircuitos={setCircuitos}
           dataEj={dataEj}
         />
       ))}
-
-      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
-        <Button variant="contained" color="primary" onClick={handleSaveRoutine}>
-          Guardar Rutina
-        </Button>
+      <Box sx={{ display: 'flex', justifyContent: 'center'}}>
+      <Button 
+        variant="contained" 
+        color="primary"
+        size='large'
+        sx={{ mt:4, bgcolor: '#EC9C00', '&:hover': { bgcolor: '#C68100' }, color: '#000000' }} 
+        onClick={handleSaveRoutine}>
+        Guardar Rutina
+      </Button>
       </Box>
-    </Container>
+    </Box>
   );
 }
 

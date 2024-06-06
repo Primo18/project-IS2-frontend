@@ -37,11 +37,7 @@ export const router = createBrowserRouter([
                         element: <Maquinas />
                     },
                     {
-                        path: 'rutinas',
-                        element: <Rutinas />
-                    },
-                    {
-                        path: "registro-rutina",
+                        path: "rutinas",
                         element: <RegistroRutinas />,
                         loader: async () => {
                             try {

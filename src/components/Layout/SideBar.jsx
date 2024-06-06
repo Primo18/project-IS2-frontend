@@ -15,7 +15,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import MenuIcon from '@mui/icons-material/Menu';
 import Typography from '@mui/material/Typography';
 import { AuthContext } from '../../context/AuthContext';
-import gymSnap from '../../assets/gym_snap.jpeg';
 
 const LogoCircle = styled('div')({
   width: 105,
@@ -43,8 +42,6 @@ const TextContainer = styled('div')({
 
 const StyledProSidebar = styled(ProSidebar)({
   '& .pro-sidebar-inner': {
-    backgroundColor: '#2D2D2D',
-    backgroundImage: `url(${gymSnap})`,
     // agregar opacidad a la imagen de fondo
     '&::before': {
       content: '""',
@@ -83,10 +80,13 @@ function SideBar() {
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+    <Box>
       <CssBaseline />
-      <Box sx={{ display: 'flex', flexGrow: 1 }}>
-        <StyledProSidebar collapsed={collapsed} width="250px">
+      <Box sx={{height:"100vh", position:'sticky', top:0 }}>
+        <StyledProSidebar 
+          collapsed={collapsed} 
+          width="250px"
+          image="src/assets/gym_snap.jpeg"  >
           <Menu iconShape="circle">
             <MenuItem icon={<MenuIcon />} onClick={handleToggleSidebar}></MenuItem>
             {!collapsed && (
