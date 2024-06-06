@@ -19,10 +19,10 @@ export const router = createBrowserRouter([
     },
     {
         path: '/',
-        element: <Layout />,
+        element: <ProtectedRoute />, // Protege todas las rutas anidadas
         children: [
             {
-                element: <ProtectedRoute />, // Protege todas las rutas a continuación
+                element: <Layout />,
                 children: [
                     {
                         path: 'home',
