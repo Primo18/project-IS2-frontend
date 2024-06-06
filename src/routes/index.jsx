@@ -1,9 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { Layout } from '../components/Layout/Layout';
+import Presentacion from '../pages/Presentacion';
 import Home from '../pages/Home';
 import Clientes from '../pages/Clientes';
 import Maquinas from '../pages/Maquinas';
-import Rutinas from '../pages/Rutinas';
 import RegistroRutinas from '../pages/RegistroRutinas';
 import Entrenadores from '../pages/Entrenadores';
 import LoginPage from '../pages/LoginPage';
@@ -11,6 +10,7 @@ import { ProtectedRoute } from '../components/Login/ProtectedRoute';
 import Cliente from '../pages/Cliente';
 import { fetchCliente } from '../services/fetch-clientes';
 import { fetchDatosRutina } from "../services/fetch-datosRutina";
+import Layout from '../components/Layout/Layout';
 
 export const router = createBrowserRouter([
     {
@@ -19,10 +19,14 @@ export const router = createBrowserRouter([
     },
     {
         path: '/',
-        element: <ProtectedRoute />, // Protege todas las rutas anidadas
+        element: <Presentacion />
+    },
+    {
+        path: '/',
+        element: <Layout />,
         children: [
             {
-                element: <Layout />,
+                element: <ProtectedRoute />, // Protege todas las rutas a continuación
                 children: [
                     {
                         path: 'home',
