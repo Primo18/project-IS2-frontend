@@ -7,9 +7,9 @@ const data = [
 ];
 
 const data2 = [
-  { id: 1, nombre: 'Alonso Miau', email: 'alonso.miau@example.com', horario: 'mañana' },
-  { id: 2, nombre: 'Juan Caballero', email: 'juan.caballero@example.com', horario: 'tarde' },
-  { id: 3, nombre: 'Saimon Petricov', email: 'saimon.petricov@example.com', horario: 'tarde' },
+  { id: 1, nombre: 'Alonso Miau', email: 'alonso.miau@example.com', horario: 'Mañana' },
+  { id: 2, nombre: 'Juan Caballero', email: 'juan.caballero@example.com', horario: 'Tarde' },
+  { id: 3, nombre: 'Saimon Petricov', email: 'saimon.petricov@example.com', horario: 'Tarde' },
 ];
 
 const HomeAdmin = () => {
