@@ -15,6 +15,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import MenuIcon from '@mui/icons-material/Menu';
 import Typography from '@mui/material/Typography';
 import { AuthContext } from '../../context/AuthContext';
+import gymSnap from '../../assets/gym_snap.jpeg';
 
 const LogoCircle = styled('div')({
   width: 105,
@@ -85,7 +86,7 @@ function SideBar() {
         <StyledProSidebar
           collapsed={collapsed}
           width="250px"
-          image="src/assets/gym_snap.jpeg"  >
+          image={gymSnap} >
           <Menu iconShape="circle">
             <MenuItem icon={<MenuIcon />} onClick={handleToggleSidebar}></MenuItem>
             {!collapsed && (
