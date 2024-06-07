@@ -49,9 +49,9 @@ const HomeAdmin = () => {
             <TableHead>
               <TableRow>
                 <TableCell>ID</TableCell>
-                <TableCell>Name</TableCell>
+                <TableCell>Nombre</TableCell>
                 <TableCell>Email</TableCell>
-                <TableCell>Role</TableCell>
+                <TableCell>Suscripción</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -76,9 +76,9 @@ const HomeAdmin = () => {
             <TableHead>
               <TableRow>
                 <TableCell>ID</TableCell>
-                <TableCell>Name</TableCell>
+                <TableCell>Nombre</TableCell>
                 <TableCell>Email</TableCell>
-                <TableCell>Role</TableCell>
+                <TableCell>Horario</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
