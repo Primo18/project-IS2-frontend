@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
-import { TextField, Button, Card, Box, Typography, Grid, Autocomplete } from '@mui/material';
+import { TextField, Button, Card, Box, Typography, Grid, Autocomplete, Paper } from '@mui/material';
 import Circuito from '../components/RegistroRutinas/Circuito';
 import useRutinaForm from '../hooks/useRutinaForm';
 
@@ -26,7 +26,7 @@ function RegistroRutinas() {
   return (
     <Box sx={{ maxWidth: 1000, mx: 'auto', mt: 3 }}>
       <Typography variant="h4" textAlign="center" mb={4}>Registro de Rutinas</Typography>
-      <Card variant="outlined" sx={{ p: 2 }}>
+      <Card variant="outlined" sx={{ p: 2 }} component={Paper}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={4}>
             <Autocomplete

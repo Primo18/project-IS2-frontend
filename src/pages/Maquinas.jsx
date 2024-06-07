@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Grid, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
+import { Typography } from '@mui/material';
 
 const initialMachines = [
   { id: 1, name: 'Cinta de Correr', status: 'Funcional' },
@@ -35,6 +36,7 @@ function Maquinas() {
 
   return (
     <div>
+      <Typography variant="h4" textAlign="center" mb={4}>Maquinas</Typography>
       <Grid container spacing={2} sx={{ padding: 3 }}>
         <Grid item xs={12} >
           <TableContainer component={Paper}>

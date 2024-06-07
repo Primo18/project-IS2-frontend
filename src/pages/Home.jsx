@@ -15,9 +15,7 @@ const data2 = [
 const HomeAdmin = () => {
   return (
     <Box sx={{ p: 3 }}>
-      <Typography variant="h4" gutterBottom>
-        Dashboard Admin
-      </Typography>
+      <Typography variant="h4" textAlign="center" mb={4}>Dashboard Admin</Typography>
 
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6} md={4}>

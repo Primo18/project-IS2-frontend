@@ -13,6 +13,7 @@ import AddIcon from '@mui/icons-material/Add';
 import EditarClientes from '../components/Cliente/EditarClientes';
 import { TableContainer, Paper } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { Typography } from '@mui/material';
 
 const VISIBLE_FIELDS = ['rut', 'nombre', 'apellido', 'email', 'fecha_nacimiento', 'suscripcion', 'telefono', 'actions'];
 
@@ -121,6 +122,7 @@ export default function ClientesAdmin() {
 
   return (
     <Box sx={{ p: 3 }}>
+      <Typography variant="h4" textAlign="center" mb={4}>Clientes</Typography>
       <TableContainer component={Paper} sx={{}}>
         <Box sx={{ height: 'calc(100vh - 200px)', width: '100%', overflow: 'auto' }}>
           <DataGrid

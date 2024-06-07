@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, TextField, Button, Card, Box, Typography, IconButton } from '@mui/material';
+import { Grid, TextField, Button, Card, Box, Typography, IconButton, Paper } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Ejercicio from './Ejercicio';
 import { v4 as uuidv4 } from 'uuid';
@@ -28,7 +28,7 @@ function Circuito({ circuito, circuitoIndex, setCircuitos, dataEj }) {
   };
 
   return (
-    <Card variant="outlined" sx={{ mt: 4, p: 2 }}>
+    <Card component={Paper} variant="outlined" sx={{ mt: 4, p: 2 }}>
       <Typography variant="h6">Circuito {circuitoIndex + 1}</Typography>
       <Grid container spacing={2} mt={2}>
         <Grid item xs={12} md={4}>
@@ -39,8 +39,10 @@ function Circuito({ circuito, circuitoIndex, setCircuitos, dataEj }) {
             onChange={(e) => handleCircuitoChange(circuito.id, 'puntuacion', e.target.value)}
             fullWidth
             sx={{ mb: 2 }}
+            /*
             error={circuito.puntuacionError}
             helperText={circuito.puntuacionError ? 'Campo requerido' : ''}
+            */
             disabled
           />
         </Grid>
@@ -63,9 +65,11 @@ function Circuito({ circuito, circuitoIndex, setCircuitos, dataEj }) {
             onChange={(e) => handleCircuitoChange(circuito.id, 'observaciones', e.target.value)}
             fullWidth
             sx={{ mb: 2 }}
+            /* 
             error={circuito.observacionesError}
             helperText={circuito.observacionesError ? 'Campo requerido' : ''}
-            disabled
+            disabled 
+            */
           />
         </Grid>
       </Grid>

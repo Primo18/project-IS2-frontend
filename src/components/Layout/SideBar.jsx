@@ -100,8 +100,8 @@ function SideBar() {
                 </MenuItem>
                 <MenuItem className="no-hover">
                   <TextContainer>
-                    <Typography variant="h4">{user ? user.nombre : 'Usuario'}</Typography>
-                    <Typography variant="subtitle1">{user ? user.role : 'Rol'}</Typography>
+                    <Typography variant="h4">Juanito</Typography>
+                    <Typography variant="subtitle1">Administrador</Typography>
                   </TextContainer>
                 </MenuItem>
               </>

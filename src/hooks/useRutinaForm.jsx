@@ -74,12 +74,15 @@ const useRutinaForm = (dataCl, dataEj) => {
     const updatedCircuitos = circuitos.map(circuito => {
       let circuitoIsValid = true;
 
+      /* 
       if (circuito.puntuacion.trim() === '') {
         circuitoIsValid = false;
         circuito.puntuacionError = true;
       } else {
         circuito.puntuacionError = false;
       }
+      */
+      circuito.puntuacionError = false;
 
       if (circuito.repeticiones.trim() === '') {
         circuitoIsValid = false;
@@ -87,14 +90,16 @@ const useRutinaForm = (dataCl, dataEj) => {
       } else {
         circuito.repeticionesError = false;
       }
-
+      /*
       if (circuito.observaciones.trim() === '') {
         circuitoIsValid = false;
         circuito.observacionesError = true;
       } else {
         circuito.observacionesError = false;
       }
-
+      */
+      circuito.observacionesError = false;
+      
       // Validar ejercicios
       const updatedExercises = circuito.ejercicios.map(ejercicio => {
         let ejercicioIsValid = true;
