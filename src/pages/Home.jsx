@@ -1,9 +1,15 @@
 import { Box, Typography, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 
 const data = [
-  { id: 1, name: 'John Doe', email: 'john.doe@example.com', role: 'Admin' },
-  { id: 2, name: 'Jane Smith', email: 'jane.smith@example.com', role: 'User' },
-  { id: 3, name: 'Sam Green', email: 'sam.green@example.com', role: 'Moderator' },
+  { id: 1, nombre: 'John Doe', email: 'john.doe@example.com', suscripción: 'Mensual' },
+  { id: 2, nombre: 'Jane Smith', email: 'jane.smith@example.com', suscripción: 'Anual' },
+  { id: 3, nombre: 'Sam Green', email: 'sam.green@example.com', suscripción: 'Trimestre' },
+];
+
+const data2 = [
+  { id: 1, nombre: 'Alonso Miau', email: 'alonso.miau@example.com', horario: 'mañana' },
+  { id: 2, nombre: 'Juan Caballero', email: 'juan.caballero@example.com', horario: 'tarde' },
+  { id: 3, nombre: 'Saimon Petricov', email: 'saimon.petricov@example.com', horario: 'tarde' },
 ];
 
 const HomeAdmin = () => {
@@ -52,9 +58,9 @@ const HomeAdmin = () => {
               {data.map((user) => (
                 <TableRow key={user.id}>
                   <TableCell>{user.id}</TableCell>
-                  <TableCell>{user.name}</TableCell>
+                  <TableCell>{user.nombre}</TableCell>
                   <TableCell>{user.email}</TableCell>
-                  <TableCell>{user.role}</TableCell>
+                  <TableCell>{user.suscripción}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -76,12 +82,12 @@ const HomeAdmin = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.map((user) => (
+              {data2.map((user) => (
                 <TableRow key={user.id}>
                   <TableCell>{user.id}</TableCell>
-                  <TableCell>{user.name}</TableCell>
+                  <TableCell>{user.nombre}</TableCell>
                   <TableCell>{user.email}</TableCell>
-                  <TableCell>{user.role}</TableCell>
+                  <TableCell>{user.horario}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
