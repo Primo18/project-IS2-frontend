@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Logo from '../assets/logo.png';
-import Banner from '../assets/banner.png';
+import Banner from '../assets/banner.webp';
 
 
 const darkTheme = createTheme({
