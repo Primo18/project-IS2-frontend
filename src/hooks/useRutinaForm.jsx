@@ -30,6 +30,7 @@ const useRutinaForm = (dataCl, dataEj) => {
       id_usuario: Number(entrenador),
       circuitos: circuitos.map(circuit => ({
         repeticiones: Number(circuit.repeticiones),
+        observaciones: circuit.observaciones,
         ejercicios: circuit.ejercicios.map(ejercicio => ({
           id_ejercicio: ejercicio.ejercicio.value,
           series: Number(ejercicio.series),
