@@ -26,7 +26,14 @@ export default function EditarClientes({id}) {
   const [formData, setFormData] = useState(null);
   
   useEffect(() => {
-    buscarUsuario(id).then(data => setFormData(data));
+    buscarUsuario(id).then(data => {
+      if (data.fecha_nacimiento) {
+        data.fecha_nacimiento = dayjs(data.fecha_nacimiento, 'DD-MM-YYYY').isValid() 
+          ? dayjs(data.fecha_nacimiento, 'DD-MM-YYYY') 
+          : null;
+      }
+      setFormData(data);
+    });
   }, [id]);
 
   const [rutError, setRutError] = useState(false);
@@ -273,7 +280,7 @@ export default function EditarClientes({id}) {
                     <DatePicker 
                         format="DD/MM/YYYY"
                         label="Fecha de Nacimiento"
-                        value={dayjs(formData.fecha_nacimiento, 'DD/MM/YYYY')} // Convertimos la fecha a un objeto dayjs
+                        value={dayjs(formData.fecha_nacimiento, 'DD-MM-YYYY')} // Convertimos la fecha a un objeto dayjs
                         onChange={handleDateChange}
                         slotProps={{ textField: { 
                             fullWidth: true,
