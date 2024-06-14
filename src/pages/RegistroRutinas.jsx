@@ -7,7 +7,6 @@ function RegistroRutinas() {
   const dataCl = useLoaderData().clientes;
   const dataEj = useLoaderData().ejercicios;
   const {
-    cliente,
     entrenador,
     clasificacion,
     circuitos,

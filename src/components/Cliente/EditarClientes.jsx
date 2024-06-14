@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
@@ -10,21 +9,25 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import 'dayjs/locale/es';
 import dayjs from 'dayjs';
 import { useState, useEffect } from 'react';
-import { validate, clean, format, getCheckDigit } from 'rut.js'
+import { validate } from 'rut.js'
 import swal from 'sweetalert2';
+import PropTypes from 'prop-types';
+
 dayjs.locale('es');
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
 async function buscarUsuario(id) {
-    const response = await fetch(`https://project-is2-backend-production.up.railway.app/api/clientes/${id}`);
-    console.log(id);
-    const data = await response.json();
-    console.log(data);
-    return data;
+  const response = await fetch(`${backendUrl}/api/clientes/${id}`);
+  console.log(id);
+  const data = await response.json();
+  console.log(data);
+  return data;
 }
 
-export default function EditarClientes({id}) {
+export default function EditarClientes({ id }) {
   const [formData, setFormData] = useState(null);
-  
+
   useEffect(() => {
     buscarUsuario(id).then(data => setFormData(data));
   }, [id]);
@@ -38,7 +41,7 @@ export default function EditarClientes({id}) {
 
   async function editUser(jsonFormData) {
     try {
-      const response = await fetch(`https://project-is2-backend-production.up.railway.app/api/clientes/${id}`, {
+      const response = await fetch(`{backendUrl}/api/clientes/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -48,7 +51,7 @@ export default function EditarClientes({id}) {
       console.log(jsonFormData);
       if (!response.ok) {
         let message = 'Error en la respuesta del servidor';
-        switch(response.status) {
+        switch (response.status) {
           case 400:
             message = 'Solicitud incorrecta. Por favor, verifica tus datos.';
             break;
@@ -63,7 +66,7 @@ export default function EditarClientes({id}) {
         }
         throw new Error(message); // Lanzamos el error aquí
       }
-  
+
       const data = await response.json();
       console.log(data);
       swal.fire({
@@ -71,7 +74,7 @@ export default function EditarClientes({id}) {
         text: "El usuario ha sido editado exitosamente.",
         icon: "success",
       });
-  
+
     } catch (error) {
       console.error('Error:', error);
       swal.fire({
@@ -88,7 +91,7 @@ export default function EditarClientes({id}) {
       ...formData,
       rut,
     });
-  
+
     if (!validate(rut)) {
       setRutError(true);
     } else {
@@ -111,21 +114,21 @@ export default function EditarClientes({id}) {
   };
 
   const handleSubmit = async (event) => {
-    
+
     event.preventDefault();
-    
+
     // Formatear fecha de nacimiento
     const dataToSend = {
       ...formData,
       fecha_nacimiento: dayjs(formData.fecha_nacimiento).format('DD-MM-YYYY'),
     };
 
-    const { rut, nombre, apellido, email, telefono, fecha_nacimiento } = dataToSend;
+    const { nombre, apellido, email, telefono, fecha_nacimiento } = dataToSend;
     console.log(JSON.stringify(dataToSend));
 
     // Comprobar si datos estan correctos
     let isValid = true;
-  
+
     // Validar nombre y apellido
     if (nombre.trim() === '') {
       setNombreError(true);
@@ -133,7 +136,7 @@ export default function EditarClientes({id}) {
     } else {
       setNombreError(false);
     }
-    
+
     if (apellido.trim() === '') {
       setApellidoError(true);
       isValid = false;
@@ -148,7 +151,7 @@ export default function EditarClientes({id}) {
     } else {
       setEmailError(false);
     }
-  
+
     const telefonoRegex = /^\d{9}$/; // Asume que el teléfono debe tener 9 dígitos
     if (!telefonoRegex.test(telefono)) {
       setTelefonoError(true);
@@ -156,7 +159,7 @@ export default function EditarClientes({id}) {
     } else {
       setTelefonoError(false);
     }
-    
+
     if (!fecha_nacimiento || !dayjs(fecha_nacimiento, 'DD-MM-YYYY').isValid()) {
       setFechaNacimientoError(true);
       isValid = false;
@@ -182,18 +185,18 @@ export default function EditarClientes({id}) {
   }
 
   return (
-      <Container component="main" maxWidth="xs">
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 0 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 0 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
               <TextField
                 name="rut"
                 label="RUT"
@@ -206,94 +209,100 @@ export default function EditarClientes({id}) {
                 required
                 disabled
               />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="nombre"
-                  required
-                  fullWidth
-                  id="nombre"
-                  label="Nombre"
-                  autoFocus
-                  value={formData.nombre}
-                  onChange={handleChange}
-                  error={nombreError}
-                  helperText={nombreError ? 'El nombre es requerido' : ''}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="apellido"
-                  label="Apellido"
-                  name="apellido"
-                  autoComplete="family-name"
-                  value={formData.apellido}
-                  onChange={handleChange}
-                  error={apellidoError}
-                  helperText={apellidoError ? 'El apellido es requerido' : ''}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email"
-                  variant="outlined"
-                  name="email"
-                  autoComplete="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  error={emailError}
-                  helperText={emailError ? 'Email inválido' : ''}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="telefono"
-                  label="Teléfono"
-                  variant="outlined"
-                  name="telefono"
-                  autoComplete="tel"
-                  value={formData.telefono}
-                  error={telefonoError}
-                  helperText={telefonoError ? 'Teléfono inválido' : ''}
-                  onChange={handleChange}
-                />
-              </Grid>
-                <Grid item xs={12}>
-                  <LocalizationProvider 
-                  dateAdapter={AdapterDayjs} 
-                  >
-                    <DatePicker 
-                        format="DD/MM/YYYY"
-                        label="Fecha de Nacimiento"
-                        value={dayjs(formData.fecha_nacimiento, 'DD/MM/YYYY')} // Convertimos la fecha a un objeto dayjs
-                        onChange={handleDateChange}
-                        slotProps={{ textField: { 
-                            fullWidth: true,
-                            error: fechaNacimientoError,
-                            helperText: fechaNacimientoError ? 'Fecha de nacimiento requerida' : ''
-                        } } }
-                        />
-                  </LocalizationProvider>
-                </Grid>
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 , bgcolor: '#EC9C00', ":hover": { bgcolor: '#BA7B00' }}}
-            >
-              Editar
-            </Button>
-          </Box>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                autoComplete="given-name"
+                name="nombre"
+                required
+                fullWidth
+                id="nombre"
+                label="Nombre"
+                autoFocus
+                value={formData.nombre}
+                onChange={handleChange}
+                error={nombreError}
+                helperText={nombreError ? 'El nombre es requerido' : ''}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                fullWidth
+                id="apellido"
+                label="Apellido"
+                name="apellido"
+                autoComplete="family-name"
+                value={formData.apellido}
+                onChange={handleChange}
+                error={apellidoError}
+                helperText={apellidoError ? 'El apellido es requerido' : ''}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="email"
+                label="Email"
+                variant="outlined"
+                name="email"
+                autoComplete="email"
+                value={formData.email}
+                onChange={handleChange}
+                error={emailError}
+                helperText={emailError ? 'Email inválido' : ''}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="telefono"
+                label="Teléfono"
+                variant="outlined"
+                name="telefono"
+                autoComplete="tel"
+                value={formData.telefono}
+                error={telefonoError}
+                helperText={telefonoError ? 'Teléfono inválido' : ''}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <LocalizationProvider
+                dateAdapter={AdapterDayjs}
+              >
+                <DatePicker
+                  format="DD/MM/YYYY"
+                  label="Fecha de Nacimiento"
+                  value={dayjs(formData.fecha_nacimiento, 'DD/MM/YYYY')} // Convertimos la fecha a un objeto dayjs
+                  onChange={handleDateChange}
+                  slotProps={{
+                    textField: {
+                      fullWidth: true,
+                      error: fechaNacimientoError,
+                      helperText: fechaNacimientoError ? 'Fecha de nacimiento requerida' : ''
+                    }
+                  }}
+                />
+              </LocalizationProvider>
+            </Grid>
+          </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2, bgcolor: '#EC9C00', ":hover": { bgcolor: '#BA7B00' } }}
+          >
+            Editar
+          </Button>
         </Box>
-      </Container>
+      </Box>
+    </Container>
   );
 }
+
+EditarClientes.propTypes = {
+  id: PropTypes.string.isRequired,
+};

@@ -1,8 +1,7 @@
-const BASE_URL =
-    "https://project-is2-backend-production.up.railway.app";
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 export const login = async (email, password) => {
-    const url = new URL(`${BASE_URL}/auth/login`);
+    const url = new URL(`${backendUrl}/auth/login`);
     const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -22,7 +21,7 @@ export const login = async (email, password) => {
 };
 
 export async function fetchProfile(token) {
-    const url = new URL(`${BASE_URL}/auth/profile`);
+    const url = new URL(`${backendUrl}/auth/profile`);
 
     try {
         const response = await fetch(url, {

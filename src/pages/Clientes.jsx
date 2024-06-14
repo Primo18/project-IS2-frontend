@@ -14,6 +14,7 @@ import EditarClientes from '../components/Cliente/EditarClientes';
 import { TableContainer, Paper } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 const VISIBLE_FIELDS = ['rut', 'nombre', 'apellido', 'email', 'fecha_nacimiento', 'suscripcion', 'telefono', 'actions'];
 
 function QuickSearchToolbar() {
@@ -81,7 +82,9 @@ export default function ClientesAdmin() {
   };
 
   useEffect(() => {
-    fetch("https://project-is2-backend-production.up.railway.app/api/clientes")
+
+
+    fetch(`${backendUrl}/api/clientes`)
       .then(response => response.json())
       .then(clientes => {
         const columns = [

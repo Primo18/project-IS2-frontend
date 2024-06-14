@@ -1,8 +1,10 @@
 import swal from 'sweetalert2';
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
 export async function registerRutina(jsonFormData) {
   try {
-    const response = await fetch('https://project-is2-backend-production.up.railway.app/rutina/api', {
+    const response = await fetch(backendUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -12,7 +14,7 @@ export async function registerRutina(jsonFormData) {
 
     if (!response.ok) {
       let message = 'Error en la respuesta del servidor';
-      switch(response.status) {
+      switch (response.status) {
         case 400:
           message = 'Solicitud incorrecta. Por favor, verifica tus datos.';
           break;

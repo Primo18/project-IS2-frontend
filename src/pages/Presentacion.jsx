@@ -1,4 +1,3 @@
-import React from 'react';
 import { AppBar, Toolbar, Box, Button, Container, Grid, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -20,10 +19,6 @@ const Presentacion = () => {
     navigate('/login');
   };
 
-  const handleRegister = () => {
-    navigate('/register');
-  };
-
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
@@ -31,7 +26,7 @@ const Presentacion = () => {
         <Toolbar>
           <img src={Logo} alt="Logo" style={{ height: '40px', marginRight: '16px', width: '160px' }} />
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            
+
           </Typography>
           <Box>
             <Button variant="contained" color="primary" onClick={handleLogin} sx={{ mr: 2 }}>

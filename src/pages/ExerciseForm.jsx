@@ -1,5 +1,6 @@
 import { Box, TextField, FormControl, InputLabel, Select, MenuItem, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import PropTypes from 'prop-types';
 
 const ExerciseForm = ({ ejercicio, circuitoId, circuitos, setCircuitos, dataEj }) => {
     const handleExerciseChange = (circuitoId, exerciseId, field, value) => {
@@ -74,6 +75,14 @@ const ExerciseForm = ({ ejercicio, circuitoId, circuitos, setCircuitos, dataEj }
             </IconButton>
         </Box>
     );
+};
+
+ExerciseForm.propTypes = {
+    ejercicio: PropTypes.object.isRequired,
+    circuitoId: PropTypes.string.isRequired,
+    circuitos: PropTypes.array.isRequired,
+    setCircuitos: PropTypes.func.isRequired,
+    dataEj: PropTypes.array.isRequired,
 };
 
 export default ExerciseForm;

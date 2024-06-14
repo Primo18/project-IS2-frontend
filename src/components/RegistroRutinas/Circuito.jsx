@@ -1,8 +1,7 @@
-import React from 'react';
-import { Grid, TextField, Button, Card, Box, Typography, IconButton } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Grid, TextField, Button, Card, Box, Typography } from '@mui/material';
 import Ejercicio from './Ejercicio';
 import { v4 as uuidv4 } from 'uuid';
+import PropTypes from 'prop-types';
 
 function Circuito({ circuito, circuitoIndex, setCircuitos, dataEj }) {
   const addRowEj = (circuitoId) => {
@@ -100,5 +99,12 @@ function Circuito({ circuito, circuitoIndex, setCircuitos, dataEj }) {
     </Card>
   );
 }
+
+Circuito.propTypes = {
+  circuito: PropTypes.object.isRequired,
+  circuitoIndex: PropTypes.number.isRequired,
+  setCircuitos: PropTypes.func.isRequired,
+  dataEj: PropTypes.array.isRequired
+};
 
 export default Circuito;

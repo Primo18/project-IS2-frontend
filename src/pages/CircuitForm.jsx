@@ -2,6 +2,8 @@ import { Box, TextField, Card, Button, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ExerciseForm from './ExerciseForm';
+import Typography from '@mui/material/Typography';
+import PropTypes from 'prop-types';
 
 const CircuitForm = ({ circuito, index, circuitos, setCircuitos, dataEj }) => {
     const handleCircuitoChange = (circuitoId, field, value) => {
@@ -60,7 +62,7 @@ const CircuitForm = ({ circuito, index, circuitos, setCircuitos, dataEj }) => {
             <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={() => addRowEj(circuito.id)}>
                 Agregar Ejercicio
             </Button>
-            {circuito.ejercicios.map((ejercicio, index) => (
+            {circuito.ejercicios.map((ejercicio) => (
                 <ExerciseForm
                     key={ejercicio.id}
                     ejercicio={ejercicio}
@@ -77,6 +79,14 @@ const CircuitForm = ({ circuito, index, circuitos, setCircuitos, dataEj }) => {
             </Box>
         </Card>
     );
+};
+
+CircuitForm.propTypes = {
+    circuito: PropTypes.object.isRequired,
+    index: PropTypes.number.isRequired,
+    circuitos: PropTypes.array.isRequired,
+    setCircuitos: PropTypes.func.isRequired,
+    dataEj: PropTypes.array.isRequired,
 };
 
 export default CircuitForm;

@@ -34,11 +34,14 @@ const Cliente = () => {
             </Typography>
             {rutina.circuitos.map((circuito) => (
               <Paper elevation={2} style={{ margin: '16px 0', padding: '16px' }} key={circuito.id_circuito}>
+                <Typography variant="h6">
+                  Circuito: {circuito.repeticiones} repeticiones
+                </Typography>
                 <Typography variant="body1" gutterBottom>
                   Observaciones: {circuito.observaciones}
                 </Typography>
-                <Typography variant="h6">
-                  Circuito: {circuito.repeticiones} repeticiones
+                <Typography variant="body1" gutterBottom>
+                  Puntuación: {circuito.puntuacion}
                 </Typography>
                 <List>
                   {circuito.ejercicios.map((ejercicio) => (

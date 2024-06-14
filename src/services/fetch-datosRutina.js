@@ -1,7 +1,7 @@
-const BASE_URL = "https://project-is2-backend-production.up.railway.app/rutina";
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 export async function fetchDatosRutina() {
-    const url = new URL(`${BASE_URL}/api`)
+    const url = new URL(`${backendUrl}/api`)
 
     try {
         const response = await fetch(url);

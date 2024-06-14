@@ -1,19 +1,19 @@
-import React from 'react';
 import { Grid, TextField, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Autocomplete from '@mui/material/Autocomplete';
+import PropTypes from 'prop-types';
 
-function Ejercicio({ ejercicio, ejercicioIndex, circuitoId, setCircuitos, dataEj }) {
+function Ejercicio({ ejercicio, circuitoId, setCircuitos, dataEj }) {
   const handleExerciseChange = (circuitoId, exerciseId, field, value) => {
     setCircuitos((prev) =>
       prev.map((circuito) =>
         circuito.id === circuitoId
           ? {
-              ...circuito,
-              ejercicios: circuito.ejercicios.map((ejercicio) =>
-                ejercicio.id === exerciseId ? { ...ejercicio, [field]: value } : ejercicio
-              ),
-            }
+            ...circuito,
+            ejercicios: circuito.ejercicios.map((ejercicio) =>
+              ejercicio.id === exerciseId ? { ...ejercicio, [field]: value } : ejercicio
+            ),
+          }
           : circuito
       )
     );
@@ -95,5 +95,13 @@ function Ejercicio({ ejercicio, ejercicioIndex, circuitoId, setCircuitos, dataEj
     </Grid>
   );
 }
+
+Ejercicio.propTypes = {
+  ejercicio: PropTypes.object.isRequired,
+  ejercicioIndex: PropTypes.number.isRequired,
+  circuitoId: PropTypes.string.isRequired,
+  setCircuitos: PropTypes.func.isRequired,
+  dataEj: PropTypes.array.isRequired,
+};
 
 export default Ejercicio;

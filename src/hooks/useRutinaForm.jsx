@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { registerRutina } from '../services/rutinaService';
 
-const useRutinaForm = (dataCl, dataEj) => {
+const useRutinaForm = () => {
   const [cliente, setCliente] = useState('');
   const [entrenador, setEntrenador] = useState('');
   const [clasificacion, setClasificacion] = useState('');
@@ -123,14 +123,14 @@ const useRutinaForm = (dataCl, dataEj) => {
         if (ejercicio.orden.trim() === '') {
           ejercicioIsValid = false;
           ejercicio.ordenError = true;
-        }else {
+        } else {
           ejercicio.ordenError = false;
         }
 
         if (ejercicio.descanso.trim() === '') {
           ejercicioIsValid = false;
           ejercicio.descansoError = true;
-        }else {
+        } else {
           ejercicio.descansoError = false;
         }
 
