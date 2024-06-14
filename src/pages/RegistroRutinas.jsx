@@ -1,5 +1,5 @@
 import { useLoaderData } from 'react-router-dom';
-import { TextField, Button, Card, Box, Typography, Grid, Autocomplete } from '@mui/material';
+import { TextField, Button, Card, Box, Typography, Grid, Autocomplete, Paper } from '@mui/material';
 import Circuito from '../components/RegistroRutinas/Circuito';
 import useRutinaForm from '../hooks/useRutinaForm';
 
@@ -24,7 +24,7 @@ function RegistroRutinas() {
   return (
     <Box sx={{ maxWidth: 1000, mx: 'auto', mt: 3 }}>
       <Typography variant="h4" textAlign="center" mb={4}>Registro de Rutinas</Typography>
-      <Card variant="outlined" sx={{ p: 2 }}>
+      <Card variant="outlined" sx={{ p: 2 }} component={Paper}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={4}>
             <Autocomplete
@@ -59,16 +59,6 @@ function RegistroRutinas() {
             />
           </Grid>
         </Grid>
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{ bgcolor: '#EC9C00', '&:hover': { bgcolor: '#C68100' }, color: '#000000' }}
-            onClick={addCircuito}
-          >
-            Agregar Circuito
-          </Button>
-        </Box>
       </Card>
 
       {circuitos.map((circuito, circuitoIndex) => (
@@ -85,9 +75,18 @@ function RegistroRutinas() {
           variant="contained"
           color="primary"
           size='large'
-          sx={{ mt: 4, bgcolor: '#EC9C00', '&:hover': { bgcolor: '#C68100' }, color: '#000000' }}
+          sx={{ mt: 4, mr: 3, bgcolor: '#EC9C00', '&:hover': { bgcolor: '#C68100' }, color: '#000000' }}
           onClick={handleSaveRoutine}>
           Guardar Rutina
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          size='large'
+          sx={{ mt: 4, ml: 3, bgcolor: '#EC9C00', '&:hover': { bgcolor: '#C68100' }, color: '#000000' }}
+          onClick={addCircuito}
+        >
+          Agregar Circuito
         </Button>
       </Box>
     </Box>
