@@ -4,7 +4,7 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 // Permite obtener todos los clientes
 export async function fetchClientes() {
-    const url = new URL(`${backendUrl}/clientes`);
+    const url = new URL(`${backendUrl}/api/clientes`);
 
     try {
         const response = await fetch(url);
@@ -16,7 +16,7 @@ export async function fetchClientes() {
 
 // Obtener todos los datos de un cliente
 export async function fetchCliente(id) {
-    const url = new URL(`${backendUrl}/clientes/${id}`);
+    const url = new URL(`${backendUrl}/api/clientes/${id}`);
 
     try {
         const response = await fetch(url);
@@ -28,7 +28,7 @@ export async function fetchCliente(id) {
 
 // Permite obtener todos los datos de una rutina dado un cliente 
 export async function fetchRutinasByClienteId(clienteId) {
-    const url = new URL(`${backendUrl}/clientes/${clienteId}/rutinas`);
+    const url = new URL(`${backendUrl}/api/clientes/${clienteId}/rutinas`);
 
     try {
         const response = await fetch(url);

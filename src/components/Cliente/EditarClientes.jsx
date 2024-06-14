@@ -11,7 +11,6 @@ import dayjs from 'dayjs';
 import { useState, useEffect } from 'react';
 import { validate } from 'rut.js'
 import swal from 'sweetalert2';
-import PropTypes from 'prop-types';
 
 dayjs.locale('es');
 
@@ -26,7 +25,14 @@ async function buscarUsuario(id) {
 }
 
 export default function EditarClientes({ id }) {
-  const [formData, setFormData] = useState(null);
+  const [formData, setFormData] = useState({
+    rut: '',
+    nombre: '',
+    apellido: '',
+    email: '',
+    telefono: '',
+    fecha_nacimiento: null,
+  });
 
   useEffect(() => {
     buscarUsuario(id).then(data => {
@@ -48,7 +54,7 @@ export default function EditarClientes({ id }) {
 
   async function editUser(jsonFormData) {
     try {
-      const response = await fetch(`{backendUrl}/api/clientes/${id}`, {
+      const response = await fetch(`${backendUrl}/api/clientes/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -121,7 +127,6 @@ export default function EditarClientes({ id }) {
   };
 
   const handleSubmit = async (event) => {
-
     event.preventDefault();
 
     // Formatear fecha de nacimiento
@@ -188,7 +193,7 @@ export default function EditarClientes({ id }) {
   };
 
   if (!formData) {
-    return // Renderiza un mensaje de carga si formData es null
+    return <p>Cargando...</p>; // Renderiza un mensaje de carga si formData es null
   }
 
   return (
@@ -309,7 +314,3 @@ export default function EditarClientes({ id }) {
     </Container>
   );
 }
-
-EditarClientes.propTypes = {
-  id: PropTypes.string.isRequired,
-};
