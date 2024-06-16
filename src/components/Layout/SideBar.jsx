@@ -112,6 +112,9 @@ function SideBar() {
             <MenuItem icon={<PersonIcon />} active={location.pathname === '/clientes'}>
               <Link to="/clientes">Clientes</Link>
             </MenuItem>
+            <MenuItem icon={<PersonIcon />} active={location.pathname === '/entrenadores'}>
+              <Link to="/entrenadores">Entrenadores</Link>
+            </MenuItem>
             <MenuItem icon={<MaquinaIcon />} active={location.pathname === '/maquinas'}>
               <Link to="/maquinas">Máquinas</Link>
             </MenuItem>

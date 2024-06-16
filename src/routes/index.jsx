@@ -9,9 +9,11 @@ import LoginPage from '../pages/LoginPage';
 import { ProtectedRoute } from '../components/Login/ProtectedRoute';
 import Cliente from '../pages/Cliente';
 import { fetchCliente, fetchRutinasByClienteId } from '../services/fetch-clientes';
+import { fetchEntrenador, fetchEntrenadores } from '../services/fetch-entrenadores';
 import Layout from '../components/Layout/Layout';
 import { fetchDatosRutina } from '../services/fetch-datosRutina';
 import Profile from '../components/Profile';
+import Entrenador from '../pages/Entrenador';
 
 export const router = createBrowserRouter([
     {
@@ -38,6 +40,27 @@ export const router = createBrowserRouter([
                         element: <Clientes />
                     },
                     {
+                        path: 'entrenadores',
+                        element: <Entrenadores />,
+                        loader: async () => {
+                            try {
+                                const usuarios = await fetchEntrenadores();
+                                return { usuarios };
+                            } catch (error) {
+                                console.error("Error loading data:", error);
+                                return { usuarios: [] };
+                            }
+                        }
+                    },
+                    {
+                        path: 'usuarios/:userId',
+                        element: <Entrenador />,
+                        loader: async ({ params }) => {
+                            const usuario = await fetchEntrenador(params.userId);
+                            return { usuario };
+                        }
+                    },
+                    {
                         path: 'maquinas',
                         element: <Maquinas />
                     },
@@ -53,10 +76,6 @@ export const router = createBrowserRouter([
                                 return { rutina: [] };
                             }
                         },
-                    },
-                    {
-                        path: 'entrenadores',
-                        element: <Entrenadores />
                     },
                     {
                         path: 'clientes/:clienteId/rutinas',

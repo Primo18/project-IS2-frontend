@@ -26,7 +26,7 @@ export default function SignUp() {
     telefono: '',
     fecha_nacimiento: null,
     foto: null,
-    suscripcion: 'mes'
+    especialidad: ''
   });
 
   const [rutError, setRutError] = useState(false);
@@ -35,10 +35,11 @@ export default function SignUp() {
   const [emailError, setEmailError] = useState(false);
   const [telefonoError, setTelefonoError] = useState(false);
   const [fechaNacimientoError, setFechaNacimientoError] = useState(false);
+  const [especialidadError, setEspecialidadError] = useState(false);
 
   async function registerUser(jsonFormData) {
     try {
-      const response = await fetch(`${backendUrl}/api/clientes/`, {
+      const response = await fetch(`${backendUrl}/api/usuarios/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -110,6 +111,15 @@ export default function SignUp() {
     });
   };
 
+  const handleEspecialidadChange = (e) => {
+    setFormData({
+      ...formData,
+      especialidad: e.target.value,
+    });
+  }
+
+
+
   const handleSubmit = async (event) => {
 
     event.preventDefault();
@@ -171,6 +181,11 @@ export default function SignUp() {
       isValid = false;
     } else {
       setFechaNacimientoError(false);
+    }
+
+    if (dataToSend.especialidad.trim() === '') {
+      setEspecialidadError(true);
+      isValid = false;
     }
 
 
@@ -273,6 +288,31 @@ export default function SignUp() {
                 onChange={handleChange}
               />
             </Grid>
+            <Grid item xs={12}>
+              <TextField
+                select
+                fullWidth
+                label="Especialidad"
+                name="especialidad"
+                value={formData.especialidad}
+                onChange={handleEspecialidadChange}
+                SelectProps={{
+                  native: true,
+                }}
+                error={especialidadError}
+                helperText={especialidadError ? 'Especialidad requerida' : ''}
+              >
+                <option value=""></option>
+                <option value="Yoga">Yoga</option>
+                <option value="Crossfit">Crossfit</option>
+                <option value="Pilates">Pilates</option>
+                <option value="Cardio">Cardio</option>
+                <option value="Musculación">Musculación</option>
+                <option value="Funcional">Funcional</option>
+                <option value="Baile">Baile</option>
+              </TextField>
+            </Grid>
+
             <Grid item xs={12}>
               <LocalizationProvider
                 dateAdapter={AdapterDayjs}

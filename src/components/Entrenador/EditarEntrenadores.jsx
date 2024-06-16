@@ -8,16 +8,23 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import 'dayjs/locale/es';
 import dayjs from 'dayjs';
-import { useState } from 'react';
-import { validate, clean, format } from 'rut.js'
+import { useState, useEffect } from 'react';
+import { validate } from 'rut.js'
 import swal from 'sweetalert2';
-
 
 dayjs.locale('es');
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-export default function SignUp() {
+async function buscarUsuario(id) {
+  const response = await fetch(`${backendUrl}/api/usuarios/${id}`);
+  console.log(id);
+  const data = await response.json();
+  console.log(data);
+  return data;
+}
+
+export default function EditarClientes({ id }) {
   const [formData, setFormData] = useState({
     rut: '',
     nombre: '',
@@ -25,9 +32,18 @@ export default function SignUp() {
     email: '',
     telefono: '',
     fecha_nacimiento: null,
-    foto: null,
-    suscripcion: 'mes'
   });
+
+  useEffect(() => {
+    buscarUsuario(id).then(data => {
+      if (data.fecha_nacimiento) {
+        data.fecha_nacimiento = dayjs(data.fecha_nacimiento, 'DD-MM-YYYY').isValid()
+          ? dayjs(data.fecha_nacimiento, 'DD-MM-YYYY')
+          : null;
+      }
+      setFormData(data);
+    });
+  }, [id]);
 
   const [rutError, setRutError] = useState(false);
   const [nombreError, setNombreError] = useState(false);
@@ -36,16 +52,16 @@ export default function SignUp() {
   const [telefonoError, setTelefonoError] = useState(false);
   const [fechaNacimientoError, setFechaNacimientoError] = useState(false);
 
-  async function registerUser(jsonFormData) {
+  async function editUser(jsonFormData) {
     try {
-      const response = await fetch(`${backendUrl}/api/clientes/`, {
-        method: 'POST',
+      const response = await fetch(`${backendUrl}/api/usuarios/${id}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
         body: jsonFormData
       });
-
+      console.log(jsonFormData);
       if (!response.ok) {
         let message = 'Error en la respuesta del servidor';
         switch (response.status) {
@@ -67,8 +83,8 @@ export default function SignUp() {
       const data = await response.json();
       console.log(data);
       swal.fire({
-        title: "Registro exitoso!",
-        text: "El usuario ha sido registrado exitosamente.",
+        title: "Edición exitosa!",
+        text: "El usuario ha sido editado exitosamente.",
         icon: "success",
       });
 
@@ -111,7 +127,6 @@ export default function SignUp() {
   };
 
   const handleSubmit = async (event) => {
-
     event.preventDefault();
 
     // Formatear fecha de nacimiento
@@ -120,20 +135,11 @@ export default function SignUp() {
       fecha_nacimiento: dayjs(formData.fecha_nacimiento).format('DD-MM-YYYY'),
     };
 
-    const { rut, nombre, apellido, email, telefono, fecha_nacimiento } = dataToSend;
+    const { nombre, apellido, email, telefono, fecha_nacimiento } = dataToSend;
     console.log(JSON.stringify(dataToSend));
 
     // Comprobar si datos estan correctos
     let isValid = true;
-
-    // Validar rut
-    if (!validate(rut)) {
-      setRutError(true);
-      isValid = false;
-    } else {
-      setRutError(false);
-      dataToSend.rut = format(clean(rut));
-    }
 
     // Validar nombre y apellido
     if (nombre.trim() === '') {
@@ -173,7 +179,6 @@ export default function SignUp() {
       setFechaNacimientoError(false);
     }
 
-
     // No enviar datos si no son válidos
     if (!isValid) {
       return;
@@ -184,8 +189,12 @@ export default function SignUp() {
 
     // Enviar datos a un servidor
     // Llamada a la función con los datos del formulario
-    registerUser(jsonFormData);
+    editUser(jsonFormData);
   };
+
+  if (!formData) {
+    return <p>Cargando...</p>; // Renderiza un mensaje de carga si formData es null
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -210,8 +219,7 @@ export default function SignUp() {
                 helperText={rutError ? 'RUT inválido' : ''}
                 fullWidth
                 required
-
-
+                disabled
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -280,7 +288,7 @@ export default function SignUp() {
                 <DatePicker
                   format="DD/MM/YYYY"
                   label="Fecha de Nacimiento"
-                  value={formData.fecha_nacimiento}
+                  value={dayjs(formData.fecha_nacimiento, 'DD-MM-YYYY')} // Convertimos la fecha a un objeto dayjs
                   onChange={handleDateChange}
                   slotProps={{
                     textField: {
@@ -297,11 +305,9 @@ export default function SignUp() {
             type="submit"
             fullWidth
             variant="contained"
-
             sx={{ mt: 3, mb: 2, bgcolor: '#EC9C00', ":hover": { bgcolor: '#BA7B00' } }}
-
           >
-            Registrar
+            Editar
           </Button>
         </Box>
       </Box>
