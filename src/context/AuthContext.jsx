@@ -23,8 +23,8 @@ export const AuthProvider = ({ children }) => {
     const login = async (email, password) => {
         const result = await loginService(email, password);
         if (result.success) {
-            setUser(result.data);
-            localStorage.setItem('user', JSON.stringify(result.data));
+            setUser(result.data.user);
+            localStorage.setItem('user', JSON.stringify(result.data.user));
         }
         return result;
     };

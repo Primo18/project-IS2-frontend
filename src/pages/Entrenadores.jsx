@@ -88,6 +88,7 @@ export default function Entrenadores() {
     fetch(`${backendUrl}/api/usuarios`)
       .then(response => response.json())
       .then(usuarios => {
+        console.log("Usuarios recibidos:", usuarios); // Agrega este log para verificar
         const columns = [
           ...Object.keys(usuarios[0]).filter(key => VISIBLE_FIELDS.includes(key)).map(field => ({
             field,
@@ -115,8 +116,11 @@ export default function Entrenadores() {
         const rows = usuarios.map(usuarios => ({ ...usuarios, id: usuarios.id_usuario }));
         setData({ columns, rows });
         setDataChanged(false); // Restablece dataChanged a false después de actualizar los datos
+      })
+      .catch(error => {
+        console.error("Error fetching usuarios:", error); // Agrega este log para verificar errores
       });
-  }, [dataChanged]);
+  }, [dataChanged, navigate]);
 
   const columns = React.useMemo(
     () => data.columns.filter((column) => VISIBLE_FIELDS.includes(column.field)),

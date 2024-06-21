@@ -7,6 +7,7 @@ import RegistroRutinas from '../pages/RegistroRutinas';
 import Entrenadores from '../pages/Entrenadores';
 import LoginPage from '../pages/LoginPage';
 import { ProtectedRoute } from '../components/Login/ProtectedRoute';
+import AdminRoute from '../components/Login/AdminRoute';
 import Cliente from '../pages/Cliente';
 import { fetchCliente, fetchRutinasByClienteId } from '../services/fetch-clientes';
 import { fetchEntrenador, fetchEntrenadores } from '../services/fetch-entrenadores';
@@ -26,22 +27,20 @@ export const router = createBrowserRouter([
     },
     {
         path: '/',
-        element: <Layout />,
+        element: <ProtectedRoute />,
         children: [
             {
-                element: <ProtectedRoute />, // Protege todas las rutas a continuación
+                element: <Layout />,
                 children: [
-                    {
-                        path: 'home',
-                        element: <Home />
-                    },
-                    {
-                        path: 'clientes',
-                        element: <Clientes />
-                    },
+                    { path: 'home', element: <Home /> },
+                    { path: 'clientes', element: <Clientes /> },
                     {
                         path: 'entrenadores',
-                        element: <Entrenadores />,
+                        element: (
+                            <AdminRoute>
+                                <Entrenadores />
+                            </AdminRoute>
+                        ),
                         loader: async () => {
                             try {
                                 const usuarios = await fetchEntrenadores();
@@ -60,12 +59,9 @@ export const router = createBrowserRouter([
                             return { usuario };
                         }
                     },
+                    { path: 'maquinas', element: <Maquinas /> },
                     {
-                        path: 'maquinas',
-                        element: <Maquinas />
-                    },
-                    {
-                        path: "rutinas",
+                        path: 'rutinas',
                         element: <RegistroRutinas />,
                         loader: async () => {
                             try {
@@ -75,7 +71,7 @@ export const router = createBrowserRouter([
                                 console.error("Error loading data:", error);
                                 return { rutina: [] };
                             }
-                        },
+                        }
                     },
                     {
                         path: 'clientes/:clienteId/rutinas',
@@ -86,10 +82,7 @@ export const router = createBrowserRouter([
                             return { cliente, rutinas };
                         }
                     },
-                    {
-                        path: 'profile',
-                        element: <Profile />
-                    }
+                    { path: 'profile', element: <Profile /> }
                 ]
             }
         ]

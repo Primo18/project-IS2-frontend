@@ -73,7 +73,15 @@ const StyledProSidebar = styled(ProSidebar)({
 function SideBar() {
   const [collapsed, setCollapsed] = React.useState(false);
   const location = useLocation();
-  const { user, logout } = useContext(AuthContext);
+  const { user, isLoading, logout } = useContext(AuthContext);
+
+  if (isLoading) {
+    return <Typography>Cargando...</Typography>;
+  }
+
+  if (!user) {
+    return <Typography>No hay información del usuario</Typography>;
+  }
 
   const handleToggleSidebar = () => {
     setCollapsed(!collapsed);
@@ -90,20 +98,27 @@ function SideBar() {
           <Menu iconShape="circle">
             <MenuItem icon={<MenuIcon />} onClick={handleToggleSidebar}></MenuItem>
             {!collapsed && (
-              <>
+              <><Link to="/profile">
                 <MenuItem className="no-hover">
-                  <Link to="/profile">
-                    <LogoCircle>
-                      <ProfileImage src={profileImage} alt="Profile" />
-                    </LogoCircle>
-                  </Link>
+                  <LogoCircle>
+                    <ProfileImage src={profileImage} alt="Profile" />
+                  </LogoCircle>
                 </MenuItem>
                 <MenuItem className="no-hover">
                   <TextContainer>
-                    <Typography variant="h4">Juanito</Typography>
-                    <Typography variant="subtitle1">Administrador</Typography>
+
+                    <Typography variant="h6" gutterBottom>
+                      {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+                    </Typography>
+                    <Typography variant="h6" gutterBottom>
+                      {user.nombre} {user.apellido}
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      {user.email}
+                    </Typography>
                   </TextContainer>
                 </MenuItem>
+              </Link>
               </>
             )}
             <MenuItem icon={<HomeIcon />} active={location.pathname === '/home'}>
@@ -112,9 +127,11 @@ function SideBar() {
             <MenuItem icon={<PersonIcon />} active={location.pathname === '/clientes'}>
               <Link to="/clientes">Clientes</Link>
             </MenuItem>
-            <MenuItem icon={<PersonIcon />} active={location.pathname === '/entrenadores'}>
-              <Link to="/entrenadores">Entrenadores</Link>
-            </MenuItem>
+            {user.role === 'administrador' && (
+              <MenuItem icon={<PersonIcon />} active={location.pathname === '/entrenadores'}>
+                <Link to="/entrenadores">Entrenadores</Link>
+              </MenuItem>
+            )}
             <MenuItem icon={<MaquinaIcon />} active={location.pathname === '/maquinas'}>
               <Link to="/maquinas">Máquinas</Link>
             </MenuItem>
@@ -127,7 +144,7 @@ function SideBar() {
           </Menu>
         </StyledProSidebar>
       </Box>
-    </Box>
+    </Box >
   );
 }
 

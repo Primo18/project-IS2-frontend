@@ -1,3 +1,4 @@
+// components/Layout/Layout.jsx
 import { Outlet, useLocation } from 'react-router-dom';
 import SideBar from './SideBar';
 import Box from '@mui/material/Box';
@@ -11,54 +12,33 @@ const darkTheme = createTheme({
   },
   typography: {
     fontFamily: [
-      'Baloo Tammudu 2', // Fuente principal
-      'Inter Tight', // Segunda fuente
-      'Titillium Web', // Tercera fuente
-      'Arial', // Fallback genérico
-      'sans-serif', // Fallback genérico
+      'Baloo Tammudu 2',
+      'Inter Tight',
+      'Titillium Web',
+      'Arial',
+      'sans-serif',
     ].join(','),
     subtitle2: {
       fontWeight: 600,
-      fontSize: 17
+      fontSize: 17,
     },
     body1: {
       fontWeight: 600,
     },
     body2: {
       fontWeight: 400,
-    }
+    },
   },
 });
 
 const drawerWidth = 240;
 
-const sideBarMap = {
-  '/home': <SideBar />,
-  '/clientes': <SideBar />,
-  '/maquinas': <SideBar />,
-  '/rutinas': <SideBar />,
-  // Se pueden añadir aquí más paginas si es necesario, aunque si es un subpath no se requiere.
-  // Tambien sirve para añadir más SideBars
-};
-
-export const Layout = () => {
-  const location = useLocation();
-
-  // Determina SideBar como el predeterminado
-  const getSideBar = () => {
-    for (const path in sideBarMap) {
-      if (location.pathname.startsWith(path)) {
-        return sideBarMap[path];
-      }
-    }
-    return <SideBar />;
-  };
-
+const Layout = () => {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <Box sx={{ display: 'flex' }}>
-        {getSideBar()}
+        <SideBar />
         <Box
           component="main"
           sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
