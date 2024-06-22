@@ -13,6 +13,7 @@ import { fetchCliente, fetchRutinasByClienteId } from '../services/fetch-cliente
 import { fetchEntrenador, fetchEntrenadores } from '../services/fetch-entrenadores';
 import Layout from '../components/Layout/Layout';
 import { fetchDatosRutina } from '../services/fetch-datosRutina';
+import { fetchMaquinas } from '../services/fetch-maquinas';
 import Profile from '../components/Profile';
 import Entrenador from '../pages/Entrenador';
 
@@ -59,7 +60,18 @@ export const router = createBrowserRouter([
                             return { usuario };
                         }
                     },
-                    { path: 'maquinas', element: <Maquinas /> },
+                    {   path: 'maquinas',
+                        element: <Maquinas />,
+                        loader: async () => {
+                            try {
+                                const datosMaquinas = await fetchMaquinas();
+                                return datosMaquinas;
+                            } catch (error) {
+                                console.error("Error loading maquinas", error);
+                                return { maquinas: [] }
+                            }
+                        }
+                    },
                     {
                         path: 'rutinas',
                         element: <RegistroRutinas />,
