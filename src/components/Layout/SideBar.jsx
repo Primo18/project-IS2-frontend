@@ -98,27 +98,30 @@ function SideBar() {
           <Menu iconShape="circle">
             <MenuItem icon={<MenuIcon />} onClick={handleToggleSidebar}></MenuItem>
             {!collapsed && (
-              <><Link to="/profile">
+              <>
                 <MenuItem className="no-hover">
-                  <LogoCircle>
-                    <ProfileImage src={profileImage} alt="Profile" />
-                  </LogoCircle>
+                  <Link to="/profile">
+                    <LogoCircle>
+                      <ProfileImage src={profileImage} alt="Profile" />
+                    </LogoCircle>
+                  </Link>
                 </MenuItem>
                 <MenuItem className="no-hover">
-                  <TextContainer>
+                  <Link to="/profile">
+                    <TextContainer>
+                      <Typography variant="h6" gutterBottom>
+                        {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+                      </Typography>
+                      <Typography variant="h6" gutterBottom>
+                        {user.nombre} {user.apellido}
+                      </Typography>
+                      <Typography variant="body1" gutterBottom>
+                        {user.email}
+                      </Typography>
+                    </TextContainer>
+                  </Link>
+                </MenuItem>
 
-                    <Typography variant="h6" gutterBottom>
-                      {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
-                    </Typography>
-                    <Typography variant="h6" gutterBottom>
-                      {user.nombre} {user.apellido}
-                    </Typography>
-                    <Typography variant="body1" gutterBottom>
-                      {user.email}
-                    </Typography>
-                  </TextContainer>
-                </MenuItem>
-              </Link>
               </>
             )}
             <MenuItem icon={<HomeIcon />} active={location.pathname === '/home'}>
