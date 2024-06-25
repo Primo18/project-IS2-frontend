@@ -3,7 +3,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Autocomplete from '@mui/material/Autocomplete';
 import PropTypes from 'prop-types';
 
-function Ejercicio({ ejercicio, circuitoId, setCircuitos, dataEj }) {
+function EjercicioEditar({ ejercicio, circuitoId, setCircuitos, dataEj }) {
   const handleExerciseChange = (circuitoId, exerciseId, field, value) => {
     console.log(circuitoId, exerciseId, field, value);
     setCircuitos((prev) =>
@@ -19,15 +19,33 @@ function Ejercicio({ ejercicio, circuitoId, setCircuitos, dataEj }) {
       )
     );
   };
-
-  const deleteExercise = (circuitoId, ejercicioId) => {
+  const handleExerciseSelect = (circuitoId, exerciseId, newValue) => {
+    console.log(circuitoId, exerciseId, newValue);
     setCircuitos((prev) =>
       prev.map((circuito) =>
         circuito.id === circuitoId
-          ? { ...circuito, ejercicios: circuito.ejercicios.filter((ejercicio) => ejercicio.id !== ejercicioId) }
+          ? {
+              ...circuito,
+              ejercicios: circuito.ejercicios.map((ejercicio) =>
+                ejercicio.id === exerciseId
+                  ? { ...ejercicio, id_ejercicio: newValue ? newValue.value : null, nombre: newValue ? newValue.label : '' }
+                  : ejercicio
+              ),
+            }
           : circuito
       )
-    );
+    )
+  }
+  const deleteExercise = (circuitoId, ejercicioId) => {
+    setCircuitos(prev => prev.map(circuito => {
+      if (circuito.id === circuitoId) {
+        return {
+          ...circuito,
+          ejercicios: circuito.ejercicios.filter(ejercicio => ejercicio.id !== ejercicioId)
+        };
+      }
+      return circuito;
+    }));
   };
 
   return (
@@ -36,12 +54,13 @@ function Ejercicio({ ejercicio, circuitoId, setCircuitos, dataEj }) {
         <Autocomplete
           options={dataEj}
           getOptionLabel={(option) => option.label}
+          isOptionEqualToValue={(option, value) => option.id === value.id_ejercicio}
           renderInput={(params) => (
             <TextField {...params} label="Ejercicio" error={ejercicio.ejercicioError} helperText={ejercicio.ejercicioError ? 'Campo requerido' : ''} />
           )}
-          onChange={(event, newValue) => handleExerciseChange(circuitoId, ejercicio.id, 'ejercicio', newValue)}
+          value={dataEj.find(e => e.value === ejercicio.id_ejercicio) || null}
+          onChange={(event, newValue) => handleExerciseSelect(circuitoId, ejercicio.id, newValue)}
           fullWidth
-          isOptionEqualToValue={(option, value) => option.id === value.id} // Asegurarse de comparar por un campo único
         />
       </Grid>
       <Grid item xs={12} sm={2}>
@@ -92,12 +111,11 @@ function Ejercicio({ ejercicio, circuitoId, setCircuitos, dataEj }) {
           <DeleteIcon />
         </IconButton>
       </Grid>
-      {/* Add more inputs for frecuencia, orden, and descanso similar to above if needed */}
     </Grid>
   );
 }
 
-Ejercicio.propTypes = {
+EjercicioEditar.propTypes = {
   ejercicio: PropTypes.object.isRequired,
   ejercicioIndex: PropTypes.number.isRequired,
   circuitoId: PropTypes.string.isRequired,
@@ -105,4 +123,4 @@ Ejercicio.propTypes = {
   dataEj: PropTypes.array.isRequired,
 };
 
-export default Ejercicio;
+export default EjercicioEditar;

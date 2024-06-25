@@ -1,16 +1,34 @@
 import React, { useState } from 'react';
-import { Paper, Typography, Grid, Box, Avatar, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton, Collapse, Card, CardContent, CardMedia, Divider, List, ListItem, ListItemText, TableSortLabel, TextField, Toolbar } from '@mui/material';
+import { Card, CardContent, Paper, Typography, Grid, Box, Avatar, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton, Collapse, Divider, List, ListItem, ListItemText, TableSortLabel, TextField, Toolbar } from '@mui/material';
 import { useLoaderData } from 'react-router-dom';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import EditIcon from '@mui/icons-material/Edit';
+import EditarRutinas from '../components/EditarRutinas/EditarRutinas';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
 
-const Cliente = () => {
+function Cliente() {
   const { cliente, rutinas } = useLoaderData();
   const [expanded, setExpanded] = useState({});
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('fecha_rutina');
   const [searchTerm, setSearchTerm] = useState('');
+  const [openEditar, setOpenEditar] = useState(false);
+  const [idToEdit, setIdToEdit] = useState(null);
+  const [dataChanged, setDataChanged] = useState(false);
+
+  const handleClickOpenEditar = (id) => {
+    setIdToEdit(id);
+    setOpenEditar(true);
+    console.log(`Editar rutina con id: ${id}`);
+  };
+
+  const handleCloseEditar = () => {
+    setOpenEditar(false);
+    setDataChanged(true);
+  };
 
   const handleExpandClick = (id) => {
     setExpanded((prev) => ({
@@ -111,6 +129,7 @@ const Cliente = () => {
                   </TableSortLabel>
                 </TableCell>
                 <TableCell align="right">Acciones</TableCell>
+                <TableCell align="right">Editar</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -124,9 +143,14 @@ const Cliente = () => {
                         {expanded[rutina.id_rutina] ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                       </IconButton>
                     </TableCell>
+                    <TableCell align="right">
+                      <IconButton onClick={() => handleClickOpenEditar(rutina.id_rutina)}>
+                        <EditIcon sx={{ color: '#EC9C00' }} />
+                      </IconButton>
+                    </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell colSpan={3} style={{ padding: 0, borderBottom: 'none' }}>
+                    <TableCell colSpan={4} style={{ padding: 0, borderBottom: 'none' }}>
                       <Collapse in={expanded[rutina.id_rutina]} timeout="auto" unmountOnExit>
                         <Box sx={{ margin: 2 }}>
                           {rutina.circuitos.map((circuito) => (
@@ -154,7 +178,7 @@ const Cliente = () => {
                                           />
                                         ) : (
                                           <Box sx={{ width: 150, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#EC9C00' }}>
-                                            <FitnessCenterIcon sx={{ fontSize: 60, color: '#222222', backgroundColor: '#EC9C00' }} />
+                                                                                        <FitnessCenterIcon sx={{ fontSize: 60, color: '#222222', backgroundColor: '#EC9C00' }} />
                                           </Box>
                                         )}
                                         <CardContent>
@@ -174,7 +198,7 @@ const Cliente = () => {
                               </List>
                               <Typography variant="h6" color="textSecondary" align="center" sx={{ marginTop: 2, color: "#EC9C00" }}>
                                 Puntuación: {circuito.puntuacion}
-                                </Typography>
+                              </Typography>
                             </Box>
                           ))}
                         </Box>
@@ -187,6 +211,28 @@ const Cliente = () => {
           </Table>
         </TableContainer>
       </Grid>
+      <Dialog
+        open={openEditar}
+        onClose={handleCloseEditar}
+        PaperProps={{
+          style: {
+            backgroundColor: 'rgb(0.13, 0.13, 0.13)', // Establece el color de fondo a #222222
+            width: '80vw', // Ajusta el ancho del diálogo al 80% del viewport width
+            maxWidth: '80vw', // Asegura que el ancho máximo también sea del 80% del viewport width
+            height: '80vh', // Ajusta la altura del diálogo al 80% del viewport height
+            maxHeight: '80vh' // Asegura que la altura máxima también sea del 80% del viewport height
+          },
+        }}
+        sx={{
+          '& .MuiBackdrop-root': {
+            backdropFilter: 'blur(4px)', // Efecto de desenfoque
+          }
+        }}
+      >
+        <DialogContent style={{ paddingTop: '0px' }}>
+          <EditarRutinas id_rutina_prop={idToEdit} />
+        </DialogContent>
+      </Dialog>
     </Grid>
   );
 };

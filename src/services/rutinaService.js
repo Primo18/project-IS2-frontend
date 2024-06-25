@@ -4,7 +4,8 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 export async function registerRutina(jsonFormData) {
   try {
-    const response = await fetch(backendUrl, {
+    const url = new URL(`${backendUrl}/api/rutina`);
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -45,5 +46,20 @@ export async function registerRutina(jsonFormData) {
       text: error.message,
       icon: "error",
     });
+  }
+}
+
+export async function fetchRutinaById(id_rutina) {
+  try {
+    const response = await fetch(`${backendUrl}/api/rutina/${id_rutina}`);
+    if (!response.ok) {
+      throw new Error('Error en la respuesta del servidor');
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error:', error);
+    return { rutina: [] };
   }
 }

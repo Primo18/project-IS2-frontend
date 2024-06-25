@@ -1,18 +1,17 @@
+// editRutinaForm.js
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { registerRutina } from '../services/rutinaService';
-import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
 
-const useRutinaForm = () => {
-  const [cliente, setCliente] = useState('');
+const editRutinaForm = () => {
+  const [cliente, setCliente] = useState(null);
   const [entrenador, setEntrenador] = useState('');
   const [clasificacion, setClasificacion] = useState('');
-  const [circuitos, setCircuitos] = useState([{ id: uuidv4(), circuito: '', puntuacion: '', repeticiones: '', observaciones: '', descanso:'', ejercicios: [{ id: uuidv4(), ejercicio: '', series: '', frecuencia: '', orden: '', descanso: '' }] }]);
+  const [circuitos, setCircuitos] = useState([{ id: uuidv4(), circuito: '', puntuacion: '', repeticiones: '', observaciones: '', ejercicios: [{ id: uuidv4(), ejercicio: '', series: '', frecuencia: '', orden: '', descanso: '' }] }]);
   const [clienteError, setClienteError] = useState(false);
   const [entrenadorError, setEntrenadorError] = useState(false);
   const [clasificacionError, setClasificacionError] = useState(false);
-  const { user, isLoading } = useContext(AuthContext);
+
   const addCircuito = () => {
     const newCircuito = {
       id: uuidv4(),
@@ -20,25 +19,23 @@ const useRutinaForm = () => {
       puntuacion: '',
       repeticiones: '',
       observaciones: '',
-      descanso: '',
       ejercicios: [{ id: uuidv4(), ejercicio: '', series: '', frecuencia: '', orden: '', descanso: '' }]
     };
     setCircuitos([...circuitos, newCircuito]);
   };
 
   const handleSaveRoutine = () => {
-    console.log(user);
-    
     const routineData = {
       clasificacion,
       id_cliente: cliente.value,
-      id_usuario: Number(user.id_usuario),
+      id_usuario: Number(entrenador),
       circuitos: circuitos.map(circuit => ({
+        id_circuito: circuit.id_circuito,
         repeticiones: Number(circuit.repeticiones),
         observaciones: circuit.observaciones,
-        descanso: circuit.descanso,
+        puntuacion: circuit.puntuacion,
         ejercicios: circuit.ejercicios.map(ejercicio => ({
-          id_ejercicio: ejercicio.ejercicio.value,
+          id_ejercicio: ejercicio.id_ejercicio,
           series: Number(ejercicio.series),
           frecuencia: ejercicio.frecuencia,
           orden: Number(ejercicio.orden),
@@ -50,18 +47,26 @@ const useRutinaForm = () => {
     const jsonData = JSON.stringify(routineData, null, 2);
     console.log(jsonData);
 
-    // Comprobar si datos estan correctos
+    // Comprobar si datos están correctos
     let isValid = true;
 
     // Validar cliente
-    if (cliente === '') {
+    if (!cliente) {
       setClienteError(true);
       isValid = false;
     } else {
       setClienteError(false);
     }
 
-    // Validar clasificacion
+    // Validar entrenador
+    if (entrenador === '') {
+      setEntrenadorError(true);
+      isValid = false;
+    } else {
+      setEntrenadorError(false);
+    }
+
+    // Validar clasificación
     if (clasificacion.trim() === '') {
       setClasificacionError(true);
       isValid = false;
@@ -73,38 +78,17 @@ const useRutinaForm = () => {
     const updatedCircuitos = circuitos.map(circuito => {
       let circuitoIsValid = true;
 
-      /* 
-      if (circuito.puntuacion.trim() === '') {
-        circuitoIsValid = false;
-        circuito.puntuacionError = true;
-      } else {
-        circuito.puntuacionError = false;
-      }
-      */
       circuito.puntuacionError = false;
 
-      if (circuito.repeticiones.trim() === '') {
+      if (circuito.repeticiones === '') {
         circuitoIsValid = false;
         circuito.repeticionesError = true;
       } else {
         circuito.repeticionesError = false;
       }
-      /*
-      if (circuito.observaciones.trim() === '') {
-        circuitoIsValid = false;
-        circuito.observacionesError = true;
-      } else {
-        circuito.observacionesError = false;
-      }
-      */
+
       circuito.observacionesError = false;
-      
-      if (circuito.descanso.trim() === '') {
-        circuitoIsValid = false;
-        circuito.descansoError = true;
-      }else {
-        circuito.descansoError = false;
-      }
+
       // Validar ejercicios
       const updatedExercises = circuito.ejercicios.map(ejercicio => {
         let ejercicioIsValid = true;
@@ -116,28 +100,28 @@ const useRutinaForm = () => {
           ejercicio.ejercicioError = false;
         }
 
-        if (ejercicio.series.trim() === '') {
+        if (ejercicio.series === '') {
           ejercicioIsValid = false;
           ejercicio.seriesError = true;
         } else {
           ejercicio.seriesError = false;
         }
 
-        if (ejercicio.frecuencia.trim() === '') {
+        if (ejercicio.frecuencia === '') {
           ejercicioIsValid = false;
           ejercicio.frecuenciaError = true;
         } else {
           ejercicio.frecuenciaError = false;
         }
 
-        if (ejercicio.orden.trim() === '') {
+        if (ejercicio.orden === '') {
           ejercicioIsValid = false;
           ejercicio.ordenError = true;
         } else {
           ejercicio.ordenError = false;
         }
 
-        if (ejercicio.descanso.trim() === '') {
+        if (ejercicio.descanso === '') {
           ejercicioIsValid = false;
           ejercicio.descansoError = true;
         } else {
@@ -164,17 +148,22 @@ const useRutinaForm = () => {
       return;
     }
 
+    return;
+    
     registerRutina(jsonData);
   };
 
   return {
     cliente,
+    entrenador,
     clasificacion,
     circuitos,
     clienteError,
+    entrenador,
     entrenadorError,
     clasificacionError,
     setCliente,
+    setEntrenador,
     setClasificacion,
     setCircuitos,
     handleSaveRoutine,
@@ -182,4 +171,4 @@ const useRutinaForm = () => {
   };
 };
 
-export default useRutinaForm;
+export default editRutinaForm;

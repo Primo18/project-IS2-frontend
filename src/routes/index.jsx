@@ -94,7 +94,7 @@ export const router = createBrowserRouter([
                             return { cliente, rutinas };
                         }
                     },
-                    { path: 'profile', element: <Profile /> }
+                    { path: 'profile', element: <Profile /> },
                 ]
             }
         ]
