@@ -1,13 +1,13 @@
 // editRutinaForm.js
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { registerRutina } from '../services/rutinaService';
+import { editRutina } from '../services/rutinaService';
 
 const editRutinaForm = () => {
   const [cliente, setCliente] = useState(null);
   const [entrenador, setEntrenador] = useState('');
   const [clasificacion, setClasificacion] = useState('');
-  const [circuitos, setCircuitos] = useState([{ id: uuidv4(), circuito: '', puntuacion: '', repeticiones: '', observaciones: '', ejercicios: [{ id: uuidv4(), ejercicio: '', series: '', frecuencia: '', orden: '', descanso: '' }] }]);
+  const [circuitos, setCircuitos] = useState([{ id: uuidv4(), circuito: '', puntuacion: '', repeticiones: '', observaciones: '', descanso:'', ejercicios: [{ id: uuidv4(), ejercicio: '', series: '', frecuencia: '', orden: '', descanso: '' }] }]);
   const [clienteError, setClienteError] = useState(false);
   const [entrenadorError, setEntrenadorError] = useState(false);
   const [clasificacionError, setClasificacionError] = useState(false);
@@ -20,13 +20,15 @@ const editRutinaForm = () => {
       repeticiones: '',
       observaciones: '',
       estado:'',
+      descanso:'',
       ejercicios: [{ id: uuidv4(), ejercicio: '', series: '', frecuencia: '', orden: '', descanso: '' }]
     };
     setCircuitos([...circuitos, newCircuito]);
   };
 
-  const handleSaveRoutine = () => {
+  const handleSaveRoutine = (id_rutina) => {
     const routineData = {
+      id_rutina: id_rutina,
       clasificacion,
       id_cliente: cliente.value,
       id_usuario: Number(entrenador),
@@ -34,8 +36,8 @@ const editRutinaForm = () => {
         id_circuito: circuit.id_circuito,
         repeticiones: Number(circuit.repeticiones),
         observaciones: circuit.observaciones,
-        puntuacion: circuit.puntuacion,
         estado: circuit.estado,
+        descanso: circuit.descanso,
         ejercicios: circuit.ejercicios.map(ejercicio => ({
           id_ejercicio: ejercicio.id_ejercicio,
           series: Number(ejercicio.series),
@@ -86,7 +88,7 @@ const editRutinaForm = () => {
       // Validar ejercicios
       const updatedExercises = circuito.ejercicios.map(ejercicio => {
         let ejercicioIsValid = true;
-
+        console.log(ejercicio.ejercicio);
         if (ejercicio.ejercicio === '') {
           ejercicioIsValid = false;
           ejercicio.ejercicioError = true;
@@ -142,9 +144,9 @@ const editRutinaForm = () => {
       return;
     }
 
-    return;
+    //return;
     
-    registerRutina(jsonData);
+    editRutina(jsonData);
   };
 
   return {

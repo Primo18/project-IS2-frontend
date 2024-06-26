@@ -117,9 +117,10 @@ function EditarRutinas({ id_rutina_prop }) {
           color="primary"
           size='large'
           sx={{ mt: 4, mr: 3, bgcolor: '#EC9C00', '&:hover': { bgcolor: '#C68100' }, color: '#000000' }}
-          onClick={handleSaveRoutine}>
+          onClick={() => handleSaveRoutine(id_rutina_prop)}>
           Guardar Rutina
         </Button>
+        {/*
         <Button
           variant="contained"
           color="primary"
@@ -129,6 +130,7 @@ function EditarRutinas({ id_rutina_prop }) {
         >
           Agregar Circuito
         </Button>
+        */}
       </Box>
     </Box>
   );

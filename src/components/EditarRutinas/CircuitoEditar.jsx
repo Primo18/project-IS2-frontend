@@ -32,7 +32,7 @@ function CircuitoEditar({ circuito, circuitoIndex, setCircuitos, dataEj }) {
     <Card component={Paper} variant="outlined" sx={{ mt: 4, p: 2 }}>
       <Typography variant="h6">Circuito {circuitoIndex + 1}</Typography>
       <Grid container spacing={2} mt={2}>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={2}>
           <TextField
             label="Repeticiones"
             type="number"
@@ -67,6 +67,17 @@ function CircuitoEditar({ circuito, circuitoIndex, setCircuitos, dataEj }) {
           )}
         />
         </Grid>
+        <Grid item xs={12} md={2}>
+        <TextField
+            label="Descanso"
+            value={circuito.descanso}
+            onChange={(e) => handleCircuitoChange(circuito.id, 'descanso', e.target.value)}
+            fullWidth
+            sx={{ mb: 2 }}
+            error={circuito.descansoError}
+            helperText={circuito.descansoError ? 'Campo requerido' : ''}
+          />
+        </Grid>
       </Grid>
       
       {circuito.ejercicios.map((ejercicio, ejercicioIndex) => (
@@ -79,7 +90,7 @@ function CircuitoEditar({ circuito, circuitoIndex, setCircuitos, dataEj }) {
          dataEj={dataEj}
        />
      ))}
-
+    {/*
      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
        <Button
          variant="contained"
@@ -96,7 +107,9 @@ function CircuitoEditar({ circuito, circuitoIndex, setCircuitos, dataEj }) {
          Eliminar
        </Button>
      </Box>
+     */}
    </Card>
+   
  );
 }
 

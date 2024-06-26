@@ -28,7 +28,7 @@ function EjercicioEditar({ ejercicio, circuitoId, setCircuitos, dataEj }) {
               ...circuito,
               ejercicios: circuito.ejercicios.map((ejercicio) =>
                 ejercicio.id === exerciseId
-                  ? { ...ejercicio, id_ejercicio: newValue ? newValue.value : null, nombre: newValue ? newValue.label : '' }
+                  ? { ...ejercicio, id_ejercicio: newValue ? newValue.value : null, ejercicio: newValue ? newValue.label : '' }
                   : ejercicio
               ),
             }
@@ -105,12 +105,13 @@ function EjercicioEditar({ ejercicio, circuitoId, setCircuitos, dataEj }) {
           helperText={ejercicio.descansoError ? 'Campo requerido' : ''}
         />
       </Grid>
-
+      {/* Delete button 
       <Grid item xs={12} sm={1}>
         <IconButton color="secondary" onClick={() => deleteExercise(circuitoId, ejercicio.id)}>
           <DeleteIcon />
         </IconButton>
       </Grid>
+      */}
     </Grid>
   );
 }
