@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Presentacion from '../pages/Presentacion';
-import Home from '../pages/Home';
+import HomeAdmin from '../pages/HomeAdmin';
+import HomeEntrenador from '../pages/HomeEntrenador';
 import Clientes from '../pages/Clientes';
 import Maquinas from '../pages/Maquinas';
 import RegistroRutinas from '../pages/RegistroRutinas';
@@ -33,7 +34,8 @@ export const router = createBrowserRouter([
             {
                 element: <Layout />,
                 children: [
-                    { path: 'home', element: <Home /> },
+                    { path: 'HomeAdmin', element: <HomeAdmin /> },
+                    {path: 'HomeEntrenador',element: <HomeEntrenador/>},
                     { path: 'clientes', element: <Clientes /> },
                     {
                         path: 'entrenadores',
@@ -94,7 +96,7 @@ export const router = createBrowserRouter([
                             return { cliente, rutinas };
                         }
                     },
-                    { path: 'profile', element: <Profile /> },
+                    { path: 'profile', element: <Profile /> }
                 ]
             }
         ]
