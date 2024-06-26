@@ -75,7 +75,7 @@ function EditarRutinas({ id_rutina_prop }) {
       <Typography variant="h4" textAlign="center" mb={4}>Registro de Rutinas</Typography>
       <Card variant="outlined" sx={{ p: 2 }} component={Paper}>
         <Grid container spacing={2}>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={6}>
             <Autocomplete
               options={datosRutina.clientes}
               getOptionLabel={(option) => option.label}
@@ -89,18 +89,7 @@ function EditarRutinas({ id_rutina_prop }) {
               disabled
             />
           </Grid>
-          <Grid item xs={12} md={4}>
-            <TextField
-              label="Entrenador"
-              value={entrenador}
-              onChange={(e) => setEntrenador(e.target.value)}
-              fullWidth
-              error={entrenadorError}
-              helperText={entrenadorError ? 'Campo requerido' : ''}
-              disabled
-            />
-          </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={6}>
             <TextField
               label="Clasificación"
               value={clasificacion}

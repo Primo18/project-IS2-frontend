@@ -1,4 +1,4 @@
-import { Grid, TextField, Button, Card, Box, Typography, Paper } from '@mui/material';
+import { Grid, TextField, Button, Card, Box, Typography, Paper, Autocomplete } from '@mui/material';
 import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
 import EjercicioEditar from './EjercicioEditar';
@@ -34,17 +34,6 @@ function CircuitoEditar({ circuito, circuitoIndex, setCircuitos, dataEj }) {
       <Grid container spacing={2} mt={2}>
         <Grid item xs={12} md={4}>
           <TextField
-            label="Puntuación"
-            value={circuito.puntuacion || ''}
-            onChange={(e) => handleCircuitoChange(circuito.id, 'puntuacion', e.target.value)}
-            fullWidth
-            sx={{ mb: 2 }}
-            error={circuito.puntuacionError}
-            helperText={circuito.puntuacionError ? 'Campo requerido' : ''}
-          />
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <TextField
             label="Repeticiones"
             type="number"
             value={circuito.repeticiones}
@@ -63,6 +52,20 @@ function CircuitoEditar({ circuito, circuitoIndex, setCircuitos, dataEj }) {
             fullWidth
             sx={{ mb: 2 }}
           />
+        </Grid>
+        <Grid item xs={12} md={4}>
+        <Autocomplete
+          options={[{ label: 'Completado', value: 1 }, { label: 'No Completado', value: 0 }]}
+          getOptionLabel={(option) => option.label}
+          isOptionEqualToValue={(option, value) => option.value === value.value}
+          value={circuito.estado === 1 ? { label: 'Completado', value: 1 } : { label: 'No Completado', value: 0 }}
+          onChange={(event, newValue) => {
+            handleCircuitoChange(circuito.id, 'estado', newValue.value);
+          }}
+          renderInput={(params) => (
+            <TextField {...params} label="Estado Circuito" fullWidth />
+          )}
+        />
         </Grid>
       </Grid>
       

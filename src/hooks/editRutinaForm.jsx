@@ -19,6 +19,7 @@ const editRutinaForm = () => {
       puntuacion: '',
       repeticiones: '',
       observaciones: '',
+      estado:'',
       ejercicios: [{ id: uuidv4(), ejercicio: '', series: '', frecuencia: '', orden: '', descanso: '' }]
     };
     setCircuitos([...circuitos, newCircuito]);
@@ -34,6 +35,7 @@ const editRutinaForm = () => {
         repeticiones: Number(circuit.repeticiones),
         observaciones: circuit.observaciones,
         puntuacion: circuit.puntuacion,
+        estado: circuit.estado,
         ejercicios: circuit.ejercicios.map(ejercicio => ({
           id_ejercicio: ejercicio.id_ejercicio,
           series: Number(ejercicio.series),
@@ -56,14 +58,6 @@ const editRutinaForm = () => {
       isValid = false;
     } else {
       setClienteError(false);
-    }
-
-    // Validar entrenador
-    if (entrenador === '') {
-      setEntrenadorError(true);
-      isValid = false;
-    } else {
-      setEntrenadorError(false);
     }
 
     // Validar clasificación
