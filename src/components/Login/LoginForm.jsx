@@ -6,7 +6,7 @@ export const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
-    const { login } = useContext(AuthContext);
+    const {login} = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -15,7 +15,14 @@ export const LoginForm = () => {
             const result = await login(email, password);
             if (result.success) {
                 setMessage('¡Inicio de sesión exitoso!');
-                navigate('/home'); // Redirige a la página de inicio
+                const { role } = result.data.user; // Extract role from result.data
+                if (role === 'entrenador') {
+                    navigate('/HomeEntrenador');
+                } else if (role === 'administrador') {
+                    navigate('/HomeAdmin');
+                } else {
+                    setMessage('Rol desconocido. Contacte al administrador.');
+                }
             } else {
                 setMessage('Error en el inicio de sesión: ' + result.message);
             }
