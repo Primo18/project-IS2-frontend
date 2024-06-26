@@ -7,12 +7,14 @@ function RegistroRutinas() {
   const dataCl = useLoaderData().clientes;
   const dataEj = useLoaderData().ejercicios;
   const {
+    entrenador,
     clasificacion,
     circuitos,
     clienteError,
     entrenadorError,
     clasificacionError,
     setCliente,
+    setEntrenador,
     setClasificacion,
     setCircuitos,
     handleSaveRoutine,
@@ -20,11 +22,17 @@ function RegistroRutinas() {
   } = useRutinaForm(dataCl, dataEj);
 
   return (
-    <Box sx={{ maxWidth: 1000, mx: 'auto', mt: 3 }}>
-      <Typography variant="h4" textAlign="center" mb={4}>Registro de Rutinas</Typography>
-      <Card variant="outlined" sx={{ p: 2 }} component={Paper}>
+    <Box sx={{ maxWidth: 1000, mx: 'auto', mt: 3}}>
+      <Grid container spacing={3} >
+        <Grid item xs={12} md={6} sx={{ml:'200px'}} >
+          <Paper sx={{ p: 2,borderRadius: 2, textAlign: 'center' }}>
+            <Typography variant="h5">Registro de Rutinas</Typography>
+          </Paper>
+        </Grid>
+      </Grid>
+      <Card variant="outlined" sx={{ p: 2, mt:'15px' }} component={Paper}>
         <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={4}>
             <Autocomplete
               options={dataCl}
               getOptionKey={(option) => option.value} // Utiliza el ID del cliente como clave
@@ -36,7 +44,17 @@ function RegistroRutinas() {
               fullWidth
             />
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={4}>
+            <TextField
+              label="Entrenador"
+              value={entrenador}
+              onChange={(e) => setEntrenador(e.target.value)}
+              fullWidth
+              error={entrenadorError}
+              helperText={entrenadorError ? 'Campo requerido' : ''}
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
             <TextField
               label="Clasificación"
               value={clasificacion}
