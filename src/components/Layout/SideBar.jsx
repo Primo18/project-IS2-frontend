@@ -98,34 +98,34 @@ function SideBar() {
           <Menu iconShape="circle">
             <MenuItem icon={<MenuIcon />} onClick={handleToggleSidebar}></MenuItem>
             {!collapsed && (
-              <>
+              <><Link to="/profile">
                 <MenuItem className="no-hover">
-                  <Link to="/profile">
-                    <LogoCircle>
-                      <ProfileImage src={profileImage} alt="Profile" />
-                    </LogoCircle>
-                  </Link>
+                  <LogoCircle>
+                    <ProfileImage src={profileImage} alt="Profile" />
+                  </LogoCircle>
                 </MenuItem>
                 <MenuItem className="no-hover">
-                  <Link to="/profile">
-                    <TextContainer>
-                      <Typography variant="h6" gutterBottom>
-                        {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
-                      </Typography>
-                      <Typography variant="h6" gutterBottom>
-                        {user.nombre} {user.apellido}
-                      </Typography>
-                      <Typography variant="body1" gutterBottom>
-                        {user.email}
-                      </Typography>
-                    </TextContainer>
-                  </Link>
-                </MenuItem>
+                  <TextContainer>
 
+                    <Typography variant="h6" gutterBottom>
+                      {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+                    </Typography>
+                    <Typography variant="h6" gutterBottom>
+                      {user.nombre} {user.apellido}
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      {user.email}
+                    </Typography>
+                  </TextContainer>
+                </MenuItem>
+              </Link>
               </>
             )}
-            <MenuItem icon={<HomeIcon />} active={location.pathname === '/home'}>
-              <Link to="/home">Home</Link>
+            <MenuItem
+                icon={<HomeIcon />}
+                active={location.pathname === (user.role === 'administrador' ? '/homeadmin' : '/homeentrenador')}
+            >
+                <Link to={user.role === 'administrador' ? '/homeadmin' : '/homeentrenador'}>Home</Link>
             </MenuItem>
             <MenuItem icon={<PersonIcon />} active={location.pathname === '/clientes'}>
               <Link to="/clientes">Clientes</Link>
