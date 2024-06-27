@@ -7,6 +7,7 @@ import {
   Button, Select, MenuItem, TextField, Typography
 } from '@mui/material';
 import { UpdateMaquina } from '../services/maquinaService';
+import swal from 'sweetalert2';
 
 const estados = ['disponible', 'mantencion', 'reparacion'];
 
@@ -17,7 +18,7 @@ function Maquinas() {
   const [open, setOpen] = useState(false);
   const [newState, setNewState] = useState('');
   const [descripcion, setDescripcion] = useState('');
-  const [reporter, setReporter] = useState('');
+  const [reporte, setReporter] = useState('');
   const [error, setError] = useState('');
 
   const handleButtonClick = (machine) => {
@@ -49,7 +50,7 @@ function Maquinas() {
       return;
     }
 
-    if (newState !== 'disponible' && (!descripcion || !reporter)) {
+    if (newState !== 'disponible' && (!descripcion || !reporte)) {
       setError('Debe proporcionar una descripción y un reportero.');
       return;
     }
@@ -60,7 +61,7 @@ function Maquinas() {
           id_maquina: selectedMachine.id_maquina,
           estado: newState,
           descripcion: newState !== 'disponible' ? descripcion : '',
-          reporter: newState !== 'disponible' ? reporter : '',
+          reporte: newState !== 'disponible' ? reporte : '',
         };
 
         const jsonData = JSON.stringify(maquinaData);
@@ -70,12 +71,13 @@ function Maquinas() {
         setMachines((prevMachines) =>
           prevMachines.map((machine) =>
             machine.id_maquina === selectedMachine.id_maquina
-              ? { ...machine, estado: newState, descripcion: maquinaData.descripcion, reporter: maquinaData.reporter }
+              ? { ...machine, estado: newState, descripcion: selectedMachine.descripcion, reporte: selectedMachine.reporte}
               : machine
           )
         );
 
         handleClose();
+        window.location.reload(true);
       } catch (error) {
         console.error('Error updating machine:', error);
       }
@@ -112,7 +114,7 @@ function Maquinas() {
                     <TableCell>{machine.nombre_maquina}</TableCell>
                     <TableCell>{machine.estado}</TableCell>
                     <TableCell>{machine.descripcion || ''}</TableCell>
-                    <TableCell>{machine.reporter || ''}</TableCell>
+                    <TableCell>{machine.reporte || ''}</TableCell>
                     <TableCell>
                       <Button sx={{
                         backgroundColor: '#EC9C00',
@@ -165,7 +167,7 @@ function Maquinas() {
                   margin="dense"
                   label="Reportado por"
                   fullWidth
-                  value={reporter}
+                  value={reporte}
                   onChange={(e) => setReporter(e.target.value)}
                 />
               </>

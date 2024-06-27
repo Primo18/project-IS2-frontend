@@ -1,29 +1,108 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { useLoaderData } from 'react-router-dom';
 import { Box, Typography, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton, Dialog, DialogContent, DialogTitle, Button, DialogActions } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import CloseIcon from '@mui/icons-material/Close';
+import { AuthContext } from '../context/AuthContext';
+import { fetchRutinasActivas } from '../services/rutinaService';
+import { fetchMaquinas } from '../services/fetch-maquinas';
+import { UpdateMaquina } from '../services/maquinaService';
+import swal from 'sweetalert2';
 
 const HomeAdmin = () => {
+  const [machines, setMachines] = useState([]);
   const [userName, setUserName] = useState('');
   const [activeClients, setActiveClients] = useState(0);
-  const [maquinasData, setMaquinasData] = useState([]);
   const [openTrainerDialog, setOpenTrainerDialog] = useState(false);
   const [openMachineDialog, setOpenMachineDialog] = useState(false);
   const [selectedTrainer, setSelectedTrainer] = useState(null);
   const [selectedMachine, setSelectedMachine] = useState(null);
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+  const { user } = useContext(AuthContext);
+  const [rutinas, setRutinas] = useState([]);
+  const [uniqueTrainers, setUniqueTrainers] = useState({});
+  const [clients, setClients] = useState([]);
+
+  useEffect(() => {
+    if (user) {
+      setUserName(user.nombre);
+    }
+    const getRutinasActivas = async () => {
+      try {
+        const data = await fetchRutinasActivas();
+    
+        setRutinas(data);
+        setActiveClients(data.length);
+        }
+        catch (error) {
+        console.error('Error al obtener rutinas activas:', error);
+      }
+    };
+    const getMachines = async () => {
+      try {
+        const data = await fetchMaquinas();
+        if (data) {
+          const filteredMaquinas = data.filter(machine => machine.estado === 'mantencion' || machine.estado === 'reparacion' );
+    
+          setMachines(filteredMaquinas);
+        }
+  
+        }
+        catch (error) {
+        console.error('Error al obtener maquinas:', error);
+      }
+    };
+
+    getMachines();
+    getRutinasActivas();
+  }, [user]);
+  
+
+  useEffect(() => {
+    // Declaramos una función para obtener entrenadores únicos
+    const getUniqueTrainers = () => {
+      const uniqueTrainers = {};
+      rutinas.forEach((rutina) => {
+        const id = rutina.entrenador.id_entrenador;
+        if (!uniqueTrainers[id]) {
+          uniqueTrainers[id] = rutina.entrenador;
+        }
+      });
+      return uniqueTrainers;
+    };
+  
+    // Llamamos a la función para obtener los entrenadores únicos
+    const trainers = getUniqueTrainers();
+    setUniqueTrainers(trainers);
+  }, [rutinas]);
+
+  const findClientsByTrainerId = (trainerId) => {
+    // Filtrar las rutinas que corresponden al entrenador con trainerId
+    const filteredRutinas = rutinas.filter(rutina => rutina.entrenador.id_entrenador === trainerId);
+  
+    // Extraer los clientes de las rutinas filtradas
+    const clients = filteredRutinas.map(rutina => rutina.cliente);
+  
+    return clients;
+  };
 
   const handleClickOpenVer = (id) => {
-    const entrenador = simulatedTrainers.find((trainer) => trainer.id === id);
+    const entrenador = rutinas.find((rutina) => rutina.entrenador.id_entrenador === id);
     setSelectedTrainer(entrenador);
     setOpenTrainerDialog(true);
+  
+    // Obtener clientes correspondientes al entrenador seleccionado
+    const clients = findClientsByTrainerId(id);
+    console.log('Clientes del entrenador:', clients);
+    // Aquí puedes hacer algo con la lista de clientes, como almacenarla en el estado o mostrarla en algún componente
+    setClients(clients);
   };
 
   const handleClickOpenVerMaquina = (id) => {
-    const maquina = maquinasData.find((maquina) => maquina.id === id);
-    setSelectedMachine(maquina);
+    setSelectedMachine(id);
     setOpenMachineDialog(true);
+    console.log(id)
   };
 
   const handleCloseTrainerDialog = () => {
@@ -42,79 +121,40 @@ const HomeAdmin = () => {
     setOpenConfirmDialog(false);
   };
 
-  const handleConfirmarArreglo = () => {
-    // Cambiar el estado de la máquina a funcional y cerrar el diálogo
-    const updatedMaquinasData = maquinasData.map((maquina) =>
-      maquina.id === selectedMachine.id ? { ...maquina, estado: 'Funcional' } : maquina
-    );
-    setMaquinasData(updatedMaquinasData);
+  const handleConfirmarArreglo = async () => {
+    try {
+      // Preparar los datos de la máquina actualizados
+      const maquinaData = {
+        id_maquina: selectedMachine.id_maquina,
+        estado: 'disponible',
+        descripcion: '',
+        reporte: '',
+      };
+
+      // Convertir a JSON si es necesario
+      const jsonData = JSON.stringify(maquinaData);
+      console.log(jsonData);
+
+      // Llamar al servicio para actualizar la máquina
+      const updatedMachine = await UpdateMaquina(jsonData);
+
+      // Actualizar el estado local de las máquinas
+      setMachines((prevMachines) =>
+        prevMachines.map((machine) =>
+          machine.id_maquina === selectedMachine.id_maquina
+            ? { ...machine, estado: 'disponible', descripcion: maquinaData.descripcion, reporte: maquinaData.reporte }
+            : machine
+        )
+      );
+
+      // Cerrar el diálogo u realizar otras acciones después de actualizar
+    } catch (error) {
+      console.error('Error al actualizar la máquina:', error);
+    }
     handleCloseConfirmDialog();
     handleCloseMachineDialog();
+    window.location.reload(true);
   };
-
-  useEffect(() => {
-    const simulatedUserName = 'John Doe';
-    const simulatedActiveClients = 150;
-
-    const simulatedMaquinaData = [
-      { id: 1, nombre: 'Cinta de correr A', reporte: 'No enciende', reportadoPor: 'John Doe',foto: 'https://via.placeholder.com/100'},
-      { id: 2, nombre: 'Bicicleta estática B', reporte: 'Pantalla rota', reportadoPor: 'Jane Smith',foto: 'https://via.placeholder.com/100' },
-      { id: 3, nombre: 'Máquina de remo C', reporte: 'Ruido extraño', reportadoPor: 'Sam Green',foto: 'https://via.placeholder.com/100', },
-      { id: 4, nombre: 'Máquina elíptica D', reporte: 'No responde', reportadoPor: 'Alice Blue',foto: 'https://via.placeholder.com/100',},
-      { id: 5, nombre: 'Pesas ajustables E', reporte: 'Cable roto', reportadoPor: 'Bob Brown',foto: 'https://via.placeholder.com/100', },
-      { id: 6, nombre: 'Banco de abdominales F', reporte: 'Error de software', reportadoPor: 'Charlie Black',foto: 'https://via.placeholder.com/100', }
-    ];
-
-    setUserName(simulatedUserName);
-    setActiveClients(simulatedActiveClients);
-    setMaquinasData(simulatedMaquinaData);
-  }, []);
-
-  const simulatedTrainers = [
-    {
-      id: 1,
-      nombre: 'John',
-      apellido: 'Doe',
-      especialidad: 'Agilidad',
-      foto: 'https://via.placeholder.com/100',
-      clientes: [
-        { id: 101, nombre: 'Cliente 1', apellido: 'Apellido 1'},
-        { id: 102, nombre: 'Cliente 2', apellido: 'Apellido 2'},
-        { id: 103, nombre: 'Cliente 3', apellido: 'Apellido 3'},
-        { id: 104, nombre: 'Cliente 4', apellido: 'Apellido 4'},
-        { id: 104, nombre: 'Cliente 5', apellido: 'Apellido 5'},
-      ]
-    },
-    {
-      id: 2,
-      nombre: 'Jane',
-      apellido: 'Smith',
-      especialidad: 'Fuerza',
-      foto: 'https://via.placeholder.com/100',
-      clientes: [
-        { id: 101, nombre: 'Cliente 1', apellido: 'Apellido 1'},
-        { id: 102, nombre: 'Cliente 2', apellido: 'Apellido 2'},
-        { id: 103, nombre: 'Cliente 3', apellido: 'Apellido 3'},
-        { id: 104, nombre: 'Cliente 4', apellido: 'Apellido 4'},
-        { id: 104, nombre: 'Cliente 5', apellido: 'Apellido 5'},
-      ]
-    }
-    ,
-    {
-      id: 3,
-      nombre: 'Juanito',
-      apellido: 'Minecraft',
-      especialidad: 'Salto',
-      foto: 'https://via.placeholder.com/100',
-      clientes: [
-        { id: 101, nombre: 'Cliente 1', apellido: 'Apellido 1'},
-        { id: 102, nombre: 'Cliente 2', apellido: 'Apellido 2'},
-        { id: 103, nombre: 'Cliente 3', apellido: 'Apellido 3'},
-        { id: 104, nombre: 'Cliente 4', apellido: 'Apellido 4'},
-        { id: 104, nombre: 'Cliente 5', apellido: 'Apellido 5'},
-      ]
-    }
-  ];
 
   return (
     <Box sx={{ p: 3 }}>
@@ -150,14 +190,14 @@ const HomeAdmin = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {simulatedTrainers.map((trainer) => (
-                  <TableRow key={trainer.id}>
-                    <TableCell>{trainer.id}</TableCell>
-                    <TableCell>{trainer.nombre}</TableCell>
-                    <TableCell>{trainer.apellido}</TableCell>
-                    <TableCell>{trainer.especialidad}</TableCell>
+                {Object.values(uniqueTrainers).map((entrenador) => (
+                  <TableRow key={entrenador.id_entrenador}>
+                    <TableCell>{entrenador.id_entrenador}</TableCell>
+                    <TableCell>{entrenador.nombre}</TableCell>
+                    <TableCell>{entrenador.apellido}</TableCell>
+                    <TableCell>{entrenador.especialidad}</TableCell>
                     <TableCell>
-                      <IconButton onClick={() => handleClickOpenVer(trainer.id)}>
+                      <IconButton onClick={() => handleClickOpenVer(entrenador.id_entrenador)}>
                         <AccountCircleIcon sx={{ color: '#EC9C00' }} />
                       </IconButton>
                     </TableCell>
@@ -180,20 +220,20 @@ const HomeAdmin = () => {
                 <TableRow>
                   <TableCell>ID</TableCell>
                   <TableCell>Nombre</TableCell>
-                  <TableCell>Reporte</TableCell>
+                  <TableCell>Descripcion</TableCell>
                   <TableCell>Reportado Por</TableCell>
                   <TableCell>Acción</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {maquinasData.map((maquina) => (
-                  <TableRow key={maquina.id}>
-                    <TableCell>{maquina.id}</TableCell>
-                    <TableCell>{maquina.nombre}</TableCell>
-                    <TableCell>{maquina.reporte}</TableCell>
-                    <TableCell>{maquina.reportadoPor}</TableCell>
+                {machines.map((machine) => (
+                  <TableRow key={machine.id_maquina} hover>
+                    <TableCell>{machine.id_maquina}</TableCell>
+                    <TableCell>{machine.nombre_maquina}</TableCell>
+                    <TableCell>{machine.descripcion || ''}</TableCell>
+                    <TableCell>{machine.reporte || ''}</TableCell>
                     <TableCell>
-                      <IconButton onClick={() => handleClickOpenVerMaquina(maquina.id)}>
+                      <IconButton onClick={() => handleClickOpenVerMaquina(machine)}>
                         <FitnessCenterIcon sx={{ color: '#EC9C00' }} />
                       </IconButton>
                     </TableCell>
@@ -244,14 +284,14 @@ const HomeAdmin = () => {
                   width: 100,
                   height: 100,
                   borderRadius: '50%',
-                  backgroundImage: `url(${selectedTrainer.foto})`,
+                  backgroundImage: `url(${selectedTrainer.entrenador.foto})`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   mb: 2,
                 }}
               />
-              <Typography variant="h5">{selectedTrainer.nombre} {selectedTrainer.apellido}</Typography>
-              <Typography variant="h7">Especialidad: {selectedTrainer.especialidad}</Typography>
+              <Typography variant="h5">{selectedTrainer.entrenador.nombre} {selectedTrainer.entrenador.apellido}</Typography>
+              <Typography variant="h7">Especialidad: {selectedTrainer.entrenador.especialidad}</Typography>
               <Box sx={{ width: '80%', height: 2, backgroundColor: '#EC9C00', my: 2 }} />
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, ml: 1, justifyContent: 'flex-start', width: '90%' }}>
                 <Typography variant="h6">Clientes Entrenando</Typography>
@@ -267,9 +307,9 @@ const HomeAdmin = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {selectedTrainer.clientes.map((cliente) => (
+                    {clients.map((cliente) => (
                       <TableRow key={cliente.id}>
-                        <TableCell style={{ color: 'white' }}>{cliente.id}</TableCell>
+                        <TableCell style={{ color: 'white' }}>{cliente.id_cliente}</TableCell>
                         <TableCell style={{ color: 'white' }}>{cliente.nombre}</TableCell>
                         <TableCell style={{ color: 'white' }}>{cliente.apellido}</TableCell>
                       </TableRow>
@@ -322,12 +362,13 @@ const HomeAdmin = () => {
                   height: 100,
                   borderRadius: '50%',
                   backgroundImage: `url(${selectedMachine.foto})`,
+                  backgroundColor:'#EC9C00',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   mb: 2,
                 }}
               />
-              <Typography variant="h5">{selectedMachine.nombre}</Typography>
+              <Typography variant="h5">{selectedMachine.nombre_maquina}</Typography>
               <Box sx={{ width: '80%', height: 2, backgroundColor: '#EC9C00', my: 2 }} />
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, ml: 1, justifyContent: 'flex-start', width: '90%' }}>
                 <Typography variant="h6">Reporte</Typography>
@@ -336,13 +377,13 @@ const HomeAdmin = () => {
                 <Typography variant="h6">Descripción del problema</Typography>
               </Box>
               <Box sx={{ width: '90%', color: 'white', p: 2, borderRadius: 2, border: '1px solid #CCCCCC' }}>
-                <Typography variant="body1" sx={{ textAlign: 'left' }}>{selectedMachine.reporte}</Typography>
+                <Typography variant="body1" sx={{ textAlign: 'left' }}>{selectedMachine.descripcion}</Typography>
               </Box>
               <Box sx={{ width: '90%', backgroundColor: '#D9D9D9', color: 'black', p: 1, borderRadius: 2, mt: 2 }}>
                 <Typography variant="h6">Persona/personas que reportaron</Typography>
               </Box>
               <Box sx={{ width: '90%', color: 'white', p: 2, borderRadius: 2, border: '1px solid #CCCCCC' }}>
-                <Typography variant="body1" sx={{ textAlign: 'left' }}>{selectedMachine.reportadoPor}</Typography>
+                <Typography variant="body1" sx={{ textAlign: 'left' }}>{selectedMachine.reporte}</Typography>
               </Box>
               <Button
                 variant="contained"
