@@ -64,6 +64,22 @@ export async function fetchRutinaById(id_rutina) {
   }
 }
 
+export async function fetchRutinasActivas() {
+  try {
+    const response = await fetch(`${backendUrl}/api/rutina/activas`);
+    if (!response.ok) {
+      throw new Error('Error en la respuesta del servidor');
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error:', error);
+    return { rutina: [] };
+  }
+}
+
+
 export async function editRutina(jsonFormData) {
 try{
   const url = new URL(`${backendUrl}/api/rutina`);
