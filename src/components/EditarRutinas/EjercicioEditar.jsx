@@ -61,6 +61,7 @@ function EjercicioEditar({ ejercicio, circuitoId, setCircuitos, dataEj }) {
           value={dataEj.find(e => e.value === ejercicio.id_ejercicio) || null}
           onChange={(event, newValue) => handleExerciseSelect(circuitoId, ejercicio.id, newValue)}
           fullWidth
+          disabled
         />
       </Grid>
       <Grid item xs={12} sm={2}>
