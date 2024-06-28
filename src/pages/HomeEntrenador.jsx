@@ -81,7 +81,7 @@ const HomeEntrenador = () => {
       circuitos: selectedClient.circuitos.map(circuito => ({ 
         ...circuito, 
         observaciones: observaciones[circuito.id_circuito] || circuito.observaciones,
-        estado: checkboxStates[circuito.id_circuito] ? 1 : 0 
+        estado: checkboxStates[circuito.id_circuito] ? 0 : 1
       })) 
     };
     setSelectedClient(updatedClient);
@@ -91,7 +91,7 @@ const HomeEntrenador = () => {
       estado: selectedClient.estado,
       circuitos: selectedClient.circuitos.map(circuito => ({
         id_circuito: circuito.id_circuito,
-        estado: checkboxStates[circuito.id_circuito] ? 1 : 0,
+        estado: checkboxStates[circuito.id_circuito] ? 0 : 1,
         observaciones: observaciones[circuito.id_circuito] || 'Sin observaciones'
       }))
     };
@@ -111,10 +111,10 @@ const HomeEntrenador = () => {
   const handleConfirmTerminarRutina = () => {
     const rutinaData = {
       id_rutina: selectedClient.id_rutina,
-      estado: 1,
+      estado: 0,
       circuitos: selectedClient.circuitos.map(circuito => ({
         id_circuito: circuito.id_circuito,
-        estado: checkboxStates[circuito.id_circuito] ? 1 : 0,
+        estado: checkboxStates[circuito.id_circuito] ? 0 : 1,
         observaciones: observaciones[circuito.id_circuito] || 'Sin observaciones'
       }))
     };
@@ -141,7 +141,7 @@ const HomeEntrenador = () => {
       setObservaciones(initialObservations);
 
       const initialCheckboxStates = selectedClient.circuitos.reduce((acc, circuito) => {
-        acc[circuito.id_circuito] = circuito.estado === 1;
+        acc[circuito.id_circuito] = circuito.estado === 0;
         return acc;
       }, {});
       setCheckboxStates(initialCheckboxStates);
