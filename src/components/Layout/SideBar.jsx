@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { ProSidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
 import { styled } from '@mui/material/styles';
-import profileImage from '../../assets/Profile.png';
+import juan from '../../assets/juan.jpg';
+import ana from '../../assets/ana.webp';
 import HomeIcon from '@mui/icons-material/Home';
 import MaquinaIcon from '@mui/icons-material/FitnessCenter';
 import RutinaIcon from '@mui/icons-material/Route';
@@ -102,7 +103,7 @@ function SideBar() {
                 <MenuItem className="no-hover">
                   <Link to="/profile">
                     <LogoCircle>
-                      <ProfileImage src={profileImage} alt="Profile" />
+                      <ProfileImage src={user.role === 'administrador' ? juan : ana} alt="Profile" />
                     </LogoCircle>
                   </Link>
                 </MenuItem>
@@ -124,11 +125,11 @@ function SideBar() {
 
               </>
             )}
-           <MenuItem
-                icon={<HomeIcon />}
-                active={location.pathname === (user.role === 'administrador' ? '/homeadmin' : '/homeentrenador')}
+            <MenuItem
+              icon={<HomeIcon />}
+              active={location.pathname === (user.role === 'administrador' ? '/homeadmin' : '/homeentrenador')}
             >
-                <Link to={user.role === 'administrador' ? '/homeadmin' : '/homeentrenador'}>Home</Link>
+              <Link to={user.role === 'administrador' ? '/homeadmin' : '/homeentrenador'}>Home</Link>
             </MenuItem>
             <MenuItem icon={<PersonIcon />} active={location.pathname === '/clientes'}>
               <Link to="/clientes">Clientes</Link>
