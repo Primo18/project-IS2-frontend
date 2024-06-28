@@ -1,13 +1,30 @@
-import { Paper, Typography, Grid, Divider, Box } from '@mui/material';
+import { Paper, Typography, Grid, Divider, Box, Avatar } from '@mui/material';
+import { styled } from '@mui/system';
 import { useLoaderData } from 'react-router-dom';
+import ana from '../assets/ana.webp';
+import juan from '../assets/juan.jpg';
+
+const ProfileImage = styled('img')(({ theme }) => ({
+  width: '100%',
+  height: '100%',
+  objectFit: 'cover',
+  borderRadius: '50%',
+}));
 
 const Entrenador = () => {
   const { usuario } = useLoaderData();
+
+  const profileImage = usuario.role === 'administrador' ? juan : ana;
 
   return (
     <Grid container spacing={3} padding={3} justifyContent="center">
       <Grid item xs={12} md={8}>
         <Paper elevation={3} sx={{ padding: 3 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: 3 }}>
+            <Avatar sx={{ width: 100, height: 100 }}>
+              <ProfileImage src={profileImage} alt="Profile" />
+            </Avatar>
+          </Box>
           <Typography variant="h4" gutterBottom align="center" sx={{ color: "#EC9C00" }}>
             {usuario.nombre} {usuario.apellido}
           </Typography>

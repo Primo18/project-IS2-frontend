@@ -31,11 +31,11 @@ const HomeAdmin = () => {
     const getRutinasActivas = async () => {
       try {
         const data = await fetchRutinasActivas();
-    
+
         setRutinas(data);
         setActiveClients(data.length);
-        }
-        catch (error) {
+      }
+      catch (error) {
         console.error('Error al obtener rutinas activas:', error);
       }
     };
@@ -43,13 +43,13 @@ const HomeAdmin = () => {
       try {
         const data = await fetchMaquinas();
         if (data) {
-          const filteredMaquinas = data.filter(machine => machine.estado === 'mantencion' || machine.estado === 'reparacion' );
-    
+          const filteredMaquinas = data.filter(machine => machine.estado === 'mantencion' || machine.estado === 'reparacion');
+
           setMachines(filteredMaquinas);
         }
-  
-        }
-        catch (error) {
+
+      }
+      catch (error) {
         console.error('Error al obtener maquinas:', error);
       }
     };
@@ -57,7 +57,7 @@ const HomeAdmin = () => {
     getMachines();
     getRutinasActivas();
   }, [user]);
-  
+
 
   useEffect(() => {
     // Declaramos una función para obtener entrenadores únicos
@@ -71,7 +71,7 @@ const HomeAdmin = () => {
       });
       return uniqueTrainers;
     };
-  
+
     // Llamamos a la función para obtener los entrenadores únicos
     const trainers = getUniqueTrainers();
     setUniqueTrainers(trainers);
@@ -80,10 +80,10 @@ const HomeAdmin = () => {
   const findClientsByTrainerId = (trainerId) => {
     // Filtrar las rutinas que corresponden al entrenador con trainerId
     const filteredRutinas = rutinas.filter(rutina => rutina.entrenador.id_entrenador === trainerId);
-  
+
     // Extraer los clientes de las rutinas filtradas
     const clients = filteredRutinas.map(rutina => rutina.cliente);
-  
+
     return clients;
   };
 
@@ -91,7 +91,7 @@ const HomeAdmin = () => {
     const entrenador = rutinas.find((rutina) => rutina.entrenador.id_entrenador === id);
     setSelectedTrainer(entrenador);
     setOpenTrainerDialog(true);
-  
+
     // Obtener clientes correspondientes al entrenador seleccionado
     const clients = findClientsByTrainerId(id);
     console.log('Clientes del entrenador:', clients);
@@ -166,7 +166,7 @@ const HomeAdmin = () => {
         </Grid>
         <Grid item xs={12} md={6}>
           <Paper sx={{ p: 2, borderRadius: 2, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Typography variant="h6" sx={{ mr: 1 }}>Clientes Activos :</Typography>
+            <Typography variant="h6" sx={{ mr: 1 }}>Rutinas Activos :</Typography>
             <Typography variant="h5" sx={{ ml: 2 }}>{activeClients}</Typography>
           </Paper>
         </Grid>
@@ -175,7 +175,7 @@ const HomeAdmin = () => {
       <Box sx={{ mt: 2 }}>
         <Paper sx={{ p: 2, borderRadius: 2, height: '340px', display: 'flex', flexDirection: 'column' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-            <Typography variant="h6">Entrenadores Activos</Typography>
+            <Typography variant="h6">Entrenadores Activas</Typography>
             <Box sx={{ ml: 1, width: 10, height: 10, bgcolor: 'green', borderRadius: '50%' }}></Box>
           </Box>
           <TableContainer sx={{ flex: 1, overflow: 'auto' }}>
@@ -362,7 +362,7 @@ const HomeAdmin = () => {
                   height: 100,
                   borderRadius: '50%',
                   backgroundImage: `url(${selectedMachine.foto})`,
-                  backgroundColor:'#EC9C00',
+                  backgroundColor: '#EC9C00',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   mb: 2,
@@ -388,9 +388,12 @@ const HomeAdmin = () => {
               <Button
                 variant="contained"
                 color="primary"
-                sx={{ mt: 2, width: '50%',backgroundColor: '#EC9C00',
+                sx={{
+                  mt: 2, width: '50%', backgroundColor: '#EC9C00',
                   '&:hover': {
-                    backgroundColor: '#BF7B00', }}}
+                    backgroundColor: '#BF7B00',
+                  }
+                }}
                 onClick={handleOpenConfirmDialog}
               >
                 Confirmar Arreglo
@@ -440,14 +443,15 @@ const HomeAdmin = () => {
             height: '100%',
           }}
         >
-          <Typography sx={{mt:'30px'}}variant="h6">¿Confirmar arreglo de la máquina?</Typography>
+          <Typography sx={{ mt: '30px' }} variant="h6">¿Confirmar arreglo de la máquina?</Typography>
         </DialogContent>
         <DialogActions>
           <Button sx={{
-        backgroundColor: '#EC9C00',
-        '&:hover': {
-          backgroundColor: '#BF7B00',
-        }, mb:'10px', mr:'30px'}} onClick={handleConfirmarArreglo} color="primary" variant="contained">
+            backgroundColor: '#EC9C00',
+            '&:hover': {
+              backgroundColor: '#BF7B00',
+            }, mb: '10px', mr: '30px'
+          }} onClick={handleConfirmarArreglo} color="primary" variant="contained">
             Confirmar
           </Button>
         </DialogActions>
