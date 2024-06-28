@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { Card, CardContent, Paper, Typography, Grid, Box, Avatar, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton, Collapse, Divider, List, ListItem, ListItemText, TableSortLabel, TextField, Toolbar } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Card, CardContent, Paper, Typography, Grid, Box, Avatar, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton, Collapse, Divider, List, ListItem, ListItemText, TableSortLabel, TextField, Toolbar, Dialog, DialogContent } from '@mui/material';
 import { useLoaderData } from 'react-router-dom';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import EditIcon from '@mui/icons-material/Edit';
 import EditarRutinas from '../components/EditarRutinas/EditarRutinas';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
+import RutinasChart from '../components/RutinasChart';
+import fetchDataGraph from '../services/fetchDataGraph';
 
 function Cliente() {
   const { cliente, rutinas } = useLoaderData();
@@ -18,6 +18,20 @@ function Cliente() {
   const [openEditar, setOpenEditar] = useState(false);
   const [idToEdit, setIdToEdit] = useState(null);
   const [dataChanged, setDataChanged] = useState(false);
+  const [dataChart, setDataChart] = useState([]);
+
+  useEffect(() => {
+    async function fetchGraphData() {
+      try {
+        const data = await fetchDataGraph(cliente.id_cliente);
+        setDataChart(data);
+      } catch (error) {
+        console.error('Error fetching graph data:', error);
+      }
+    }
+    console.log(rutinas);
+    fetchGraphData();
+  }, [cliente.id_cliente]);
 
   const handleClickOpenEditar = (id) => {
     setIdToEdit(id);
@@ -63,7 +77,7 @@ function Cliente() {
   return (
     <Grid container spacing={3} padding={3} justifyContent="center">
       <Grid item xs={12} md={8}>
-        <Paper elevation={3} sx={{ padding: 3 }}>
+        <Paper elevation={3} sx={{ padding: 3, height: '100%' }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
             <Avatar 
               src={cliente.fotoPerfil} // URL de la foto de perfil del cliente
@@ -75,7 +89,7 @@ function Cliente() {
             </Typography>
           </Box>
           <Divider sx={{ marginY: 2, backgroundColor: '#EC9C00' }} />
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 1 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 1, height: '100%' }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', maxWidth: 600 }}>
               <Typography variant="body1" sx={{ flex: 1 }}><strong>Email:</strong></Typography>
               <Typography variant="body1" sx={{ flex: 2 }}>{cliente.email}</Typography>
@@ -96,7 +110,12 @@ function Cliente() {
         </Paper>
       </Grid>
       <Grid item xs={12} md={8}>
-        <TableContainer component={Paper}>
+        <Paper elevation={3} sx={{ padding: 3, height: '100%' }}>
+          <RutinasChart data={dataChart} />
+        </Paper>
+      </Grid>
+      <Grid item xs={12} md={8}>
+        <TableContainer component={Paper} sx={{ height: '100%' }}>
           <Toolbar>
             <TextField
               variant="outlined"
@@ -128,8 +147,11 @@ function Cliente() {
                     Nombre de la Rutina
                   </TableSortLabel>
                 </TableCell>
+                <TableCell align="left">Entrenador</TableCell>
+                <TableCell align="left">Estado</TableCell>
                 <TableCell align="right">Acciones</TableCell>
                 <TableCell align="right">Editar</TableCell>
+                
               </TableRow>
             </TableHead>
             <TableBody>
@@ -138,6 +160,8 @@ function Cliente() {
                   <TableRow>
                     <TableCell>{rutina.fecha_rutina}</TableCell>
                     <TableCell>{rutina.clasificacion}</TableCell>
+                    <TableCell>{rutina.entrenador_nombre +' '+ rutina.entrenador_apellido}</TableCell>
+                    <TableCell>{rutina.estado === 1 ? 'Terminada' : 'Activa'}</TableCell>
                     <TableCell align="right">
                       <IconButton onClick={() => handleExpandClick(rutina.id_rutina)}>
                         {expanded[rutina.id_rutina] ? <ExpandLessIcon /> : <ExpandMoreIcon />}
@@ -155,7 +179,7 @@ function Cliente() {
                         <Box sx={{ margin: 2 }}>
                           {rutina.circuitos.map((circuito) => (
                             <Box key={circuito.id_circuito} sx={{ marginBottom: 2 }}>
-                              <Typography variant="h6" sx={{ color: "#EC9C00" }}>
+                                                            <Typography variant="h6" sx={{ color: "#EC9C00" }}>
                                 Circuito
                               </Typography>
                               <Typography variant="body1" color="textSecondary">
@@ -178,7 +202,7 @@ function Cliente() {
                                           />
                                         ) : (
                                           <Box sx={{ width: 150, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#EC9C00' }}>
-                                                                                        <FitnessCenterIcon sx={{ fontSize: 60, color: '#222222', backgroundColor: '#EC9C00' }} />
+                                            <FitnessCenterIcon sx={{ fontSize: 60, color: '#222222', backgroundColor: '#EC9C00' }} />
                                           </Box>
                                         )}
                                         <CardContent>
@@ -196,9 +220,6 @@ function Cliente() {
                                   </React.Fragment>
                                 ))}
                               </List>
-                              <Typography variant="h6" color="textSecondary" align="center" sx={{ marginTop: 2, color: "#EC9C00" }}>
-                                Puntuación: {circuito.puntuacion}
-                              </Typography>
                             </Box>
                           ))}
                         </Box>
@@ -235,6 +256,6 @@ function Cliente() {
       </Dialog>
     </Grid>
   );
-};
+}
 
 export default Cliente;
