@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Presentacion from '../pages/Presentacion';
-import Home from '../pages/Home';
+import HomeAdmin from '../pages/HomeAdmin';
+import HomeEntrenador from '../pages/HomeEntrenador';
 import Clientes from '../pages/Clientes';
 import Maquinas from '../pages/Maquinas';
 import RegistroRutinas from '../pages/RegistroRutinas';
@@ -16,7 +17,6 @@ import { fetchDatosRutina } from '../services/fetch-datosRutina';
 import { fetchMaquinas } from '../services/fetch-maquinas';
 import Profile from '../components/Profile';
 import Entrenador from '../pages/Entrenador';
-import HomeEntrenador from '../pages/HomeEntrenador';
 
 export const router = createBrowserRouter([
     {
@@ -34,8 +34,8 @@ export const router = createBrowserRouter([
             {
                 element: <Layout />,
                 children: [
-                    { path: 'HomeEntrenador',element: <HomeEntrenador/> },
-                    { path: 'home', element: <Home /> },
+                    { path: 'HomeAdmin', element: <HomeAdmin /> },
+                    {path: 'HomeEntrenador',element: <HomeEntrenador/>},
                     { path: 'clientes', element: <Clientes /> },
                     {
                         path: 'entrenadores',
@@ -96,7 +96,7 @@ export const router = createBrowserRouter([
                             return { cliente, rutinas };
                         }
                     },
-                    { path: 'profile', element: <Profile /> },
+                    { path: 'profile', element: <Profile /> }
                 ]
             }
         ]
