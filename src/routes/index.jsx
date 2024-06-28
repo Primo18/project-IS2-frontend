@@ -16,6 +16,7 @@ import { fetchDatosRutina } from '../services/fetch-datosRutina';
 import { fetchMaquinas } from '../services/fetch-maquinas';
 import Profile from '../components/Profile';
 import Entrenador from '../pages/Entrenador';
+import HomeEntrenador from '../pages/HomeEntrenador';
 
 export const router = createBrowserRouter([
     {
@@ -33,6 +34,7 @@ export const router = createBrowserRouter([
             {
                 element: <Layout />,
                 children: [
+                    { path: 'HomeEntrenador',element: <HomeEntrenador/> },
                     { path: 'home', element: <Home /> },
                     { path: 'clientes', element: <Clientes /> },
                     {
