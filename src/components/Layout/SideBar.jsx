@@ -124,8 +124,11 @@ function SideBar() {
 
               </>
             )}
-            <MenuItem icon={<HomeIcon />} active={location.pathname === '/home'}>
-              <Link to="/home">Home</Link>
+           <MenuItem
+                icon={<HomeIcon />}
+                active={location.pathname === (user.role === 'administrador' ? '/homeadmin' : '/homeentrenador')}
+            >
+                <Link to={user.role === 'administrador' ? '/homeadmin' : '/homeentrenador'}>Home</Link>
             </MenuItem>
             <MenuItem icon={<PersonIcon />} active={location.pathname === '/clientes'}>
               <Link to="/clientes">Clientes</Link>
