@@ -175,7 +175,7 @@ const HomeAdmin = () => {
       <Box sx={{ mt: 2 }}>
         <Paper sx={{ p: 2, borderRadius: 2, height: '340px', display: 'flex', flexDirection: 'column' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-            <Typography variant="h6">Entrenadores Activas</Typography>
+            <Typography variant="h6">Entrenadores Activos</Typography>
             <Box sx={{ ml: 1, width: 10, height: 10, bgcolor: 'green', borderRadius: '50%' }}></Box>
           </Box>
           <TableContainer sx={{ flex: 1, overflow: 'auto' }}>
