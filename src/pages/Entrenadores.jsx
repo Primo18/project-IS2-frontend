@@ -11,7 +11,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AddIcon from '@mui/icons-material/Add';
 import RegistroEntrenadores from '../components/Entrenador/RegistroEntrenadores';
 import EditarEntrenadores from '../components/Entrenador/EditarEntrenadores';
-import { TableContainer, Paper } from '@mui/material';
+import { TableContainer, Paper,Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Typography } from '@mui/material';
 
@@ -129,7 +129,14 @@ export default function Entrenadores() {
 
   return (
     <Box sx={{ p: 3 }}>
-      <Typography variant="h4" textAlign="center" mb={4}>Entrenadores</Typography>
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={6}>
+          <Paper sx={{ p: 2, borderRadius: 2, textAlign: 'center' }}>
+            <Typography variant="h5">Entrenadores</Typography>
+          </Paper>
+        </Grid>
+      </Grid>
+      <Box sx={{ mt: 2 }}>
       <TableContainer component={Paper} sx={{}}>
         <Box sx={{ height: 'calc(100vh - 200px)', width: '100%', overflow: 'auto' }}>
           <DataGrid
@@ -182,6 +189,7 @@ export default function Entrenadores() {
           </Dialog>
         </Box>
       </TableContainer>
+      </Box>
     </Box>
   );
 }
