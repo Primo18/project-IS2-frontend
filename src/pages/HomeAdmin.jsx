@@ -166,7 +166,7 @@ const HomeAdmin = () => {
         </Grid>
         <Grid item xs={12} md={6}>
           <Paper sx={{ p: 2, borderRadius: 2, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Typography variant="h6" sx={{ mr: 1 }}>Rutinas Activos :</Typography>
+            <Typography variant="h6" sx={{ mr: 1 }}>Rutinas Activas :</Typography>
             <Typography variant="h5" sx={{ ml: 2 }}>{activeClients}</Typography>
           </Paper>
         </Grid>
